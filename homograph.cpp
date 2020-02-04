@@ -22,9 +22,12 @@ int main()
  * ************************************************/
 string promptUser()
 {
+   string tempPath = "";
    // prompt the user for a filepath
-
+   cout << "Enter a filepath: ";
+   cin >> tempPath;
    // return filepath
+   return tempPath;
 }
 
 /**************************************************
