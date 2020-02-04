@@ -52,7 +52,7 @@ void comparePath( string path )
    vector <string> testPaths { "pathA...", "pathB...", "pathC..." };
 
     // Compare user input with list of paths
-    if ( find( testPaths.begin(), testPaths.end(), path ) != testPaths.end()) {
+    if ( find( testPaths.begin(), testPaths.end(), path ) != testPaths.end() ) {
         cout << "Filepath matches forbidden path. Not allowed.";
     }
     else {
