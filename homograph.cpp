@@ -5,7 +5,7 @@
 using namespace std;
 
 string promptUser();
-void comparePath(string path);
+void comparePath( string path );
 
 int main()
 {
@@ -15,8 +15,8 @@ int main()
    // Prompt user for file path
    filepath = promptUser();
 
-   // Compare path to forbidden path
-   comparePath(filepath);
+   // Compare path to forbidden paths
+   comparePath( filepath );
 }
 
 /**************************************************
@@ -28,10 +28,13 @@ string promptUser()
 {
    // Create temporary string variable
    string tempPath = "";
+
    // Prompt the user for a filepath
    cout << "Enter a filepath: ";
+
    // Save user input into the variable
    cin >> tempPath;
+   
    // Return user input
    return tempPath;
 }
@@ -39,21 +42,20 @@ string promptUser()
 /**************************************************
  * COMPARE PATH
  * This function will compare the user's path with a
- * list of forbiden path homographs. It will then
+ * list of forbidden path homographs. It will then
  * display whether the paths are the same or different.
  * ************************************************/
-void comparePath(string path)
+void comparePath( string path )
 {
-   // Create a vector to hold list of forbiden paths
-   // Replace "pathA..." with forbiden paths
-   vector <string> testPaths {"pathA...", "pathB...", "pathC..."};
+   // Create a vector to hold list of forbidden paths
+   // Replace "pathA..." with forbidden paths
+   vector <string> testPaths { "pathA...", "pathB...", "pathC..." };
 
     // Compare user input with list of paths
-    if (find(testPaths.begin(), testPaths.end(), path) != testPaths.end()) {
-        cout << "Filepath matches forbiden path. Not allowed.";
+    if ( find( testPaths.begin(), testPaths.end(), path ) != testPaths.end()) {
+        cout << "Filepath matches forbidden path. Not allowed.";
     }
     else {
-        cout << "Filepath does not match forbiden path. Access Granted.";
+        cout << "Filepath does not match forbidden path. Access Granted.";
     }
-
 }
