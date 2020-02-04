@@ -48,12 +48,12 @@ void comparePath(string path)
    // Replace "pathA..." with forbiden paths
    vector <string> testPaths {"pathA...", "pathB...", "pathC..."};
 
-   // Compare user input with list of paths
-   if ( find(testPaths.begin(), testPaths.end(), path) != testPaths.end() ) {
-      //Do something if true
-   }
-   else {
-      // Do something if false
-   }
+    // Compare user input with list of paths
+    if (find(testPaths.begin(), testPaths.end(), path) != testPaths.end()) {
+        cout << "Filepath matches forbiden path. Not allowed.";
+    }
+    else {
+        cout << "Filepath does not match forbiden path. Access Granted.";
+    }
 
 }
