@@ -22,27 +22,33 @@
 #include <cctype>
 #include <filesystem>
 
-#define FORBIDDEN_PATH "/home/user/secret/password.txt";
-
 using namespace std;
 
 string promptUser();
 string toLowerCase(string path);
-void comparePath( string path );
+void comparePath(string path);
 
 int main()
 {
-   // Create a string variable to hold filepath
-   string filepath = "";
+	// Create a string variable to hold filepath
+	string filepath = "";
 
-   // Prompt user for file path
-   filepath = promptUser();
+	// Prompt user for file path
+	filepath = promptUser();
 
-   // Transform user input to lowercase
-   filepath = toLowerCase(filepath);
+	// Transform user input to lowercase
+	filepath = toLowerCase(filepath);
 
-   // Compare path to forbidden paths
-   comparePath( filepath );
+	if ( filepath[0] != '/' ) {
+		filepath.insert( 0, 1, '/' );
+	}
+
+	cout << "File path: " << filepath << "\n";
+
+	// Compare path to forbidden paths
+	comparePath(filepath);
+
+	system("pause");
 }
 
 /**************************************************
@@ -52,29 +58,30 @@ int main()
  * ************************************************/
 string promptUser()
 {
-   // Create temporary string variable
-   string tempPath = "";
+	// Create temporary string variable
+	string tempPath = "";
 
-   // Prompt the user for a filepath
-   cout << "Enter a filepath: ";
+	// Prompt the user for a filepath
+	cout << "Enter a filepath: ";
 
-   // Save user input into the variable
-   cin >> tempPath;
-   
-   // Return user input
-   return tempPath;
+	// Save user input into the variable
+	cin >> tempPath;
+
+	// Return user input
+	return tempPath;
 }
 
 /**************************************************
  * TO LOWER CASE
- * This function will tranform the filepath to a 
+ * This function will tranform the filepath to a
  * lower case version of the path.
  * ************************************************/
-string toLowerCase( string path ) {
-    transform ( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
-        return tolower( letter );
-    } );
-    return path;
+string toLowerCase(string path) {
+	transform(path.begin(), path.end(), path.begin(), [](unsigned char letter) {
+		return tolower(letter);
+		});
+
+	return path;
 }
 
 /**************************************************
@@ -83,17 +90,17 @@ string toLowerCase( string path ) {
  * list of forbidden path homographs. It will then
  * display whether the paths are the same or different.
  * ************************************************/
-void comparePath( string path )
+void comparePath(string path)
 {
-   // Create a vector to hold list of forbidden paths
-   // Replace "pathA..." with forbidden paths
-   vector <string> testPaths { "pathA...", "pathB...", "pathC..." };
+	// Create a vector to hold list of forbidden paths
+	// Replace "pathA..." with forbidden paths
+	vector <string> testPaths{ "/home/user/secret/password.txt" };
 
-    // Compare user input with list of paths
-    if ( find( testPaths.begin(), testPaths.end(), path ) != testPaths.end() ) {
-        cout << "Filepath matches forbidden path. Not allowed.";
-    }
-    else {
-        cout << "Filepath does not match forbidden path. Access Granted.";
-    }
+	// Compare user input with list of paths
+	if (find(testPaths.begin(), testPaths.end(), path) != testPaths.end()) {
+		cout << "Filepath matches forbidden path. Not allowed.";
+	}
+	else {
+		cout << "Filepath does not match forbidden path. Access Granted.";
+	}
 }
