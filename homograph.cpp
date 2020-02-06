@@ -20,8 +20,9 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
+#include <filesystem>
 
-#define FORBIDDEN_PATH "\\secret\\password.txt";
+#define FORBIDDEN_PATH "/home/user/secret/password.txt";
 
 using namespace std;
 
