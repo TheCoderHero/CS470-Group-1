@@ -2,6 +2,7 @@
 * Program:
 *   Lab 05, Homographs
 *   Brother Helfrich, CS 470
+*
 * Authors:
 *   Osvaldo Carrillo Lira
 *   Aaron Eiche
@@ -11,8 +12,14 @@
 *   Jordon Thompson
 *
 * Summary:
-*   A program that that takes a user provided filepath and tests it
-*   for homograph attacks.
+*   This program prompts the user for a file path. It then compares the
+*	the user input to a list of forbidden files and determines if they
+*	are trying to access a forbidden file. Next, the program runs a
+*	comparison on the user input against a set of Non-Homograph test
+*	cases and a set of Homograph test cases and displays the results
+*	of the comparison. Lastly, the program runs the user input into a
+*	canonicalization function that proves the Non-Homograph and
+*	Homograph test cases.
  ************************************************************************/
 
 #include <iostream>
@@ -24,8 +31,10 @@
 using namespace std;
 
 string promptUser();
-string toLowerCase(string path);
-void comparePath(string path);
+string toLowerCase( string path );
+void comparePath( string path );
+void comparePathNonHomographs( string path );
+void comparePathHomographs( string path );
 
 int main()
 {
@@ -36,16 +45,16 @@ int main()
 	filepath = promptUser();
 
 	// Transform user input to lowercase
-	filepath = toLowerCase(filepath);
+	filepath = toLowerCase( filepath );
 
 	if ( filepath[0] != '/' ) {
 		filepath.insert( 0, 1, '/' );
 	}
 
-	cout << "File path: " << filepath << "\n";
+	cout << "File path entered: " << filepath << "\n";
 
 	// Compare path to forbidden paths
-	comparePath(filepath);
+	comparePath( filepath );
 }
 
 /**************************************************
@@ -73,31 +82,54 @@ string promptUser()
  * This function will tranform the filepath to a
  * lower case version of the path.
  * ************************************************/
-string toLowerCase(string path) {
-	transform(path.begin(), path.end(), path.begin(), [](unsigned char letter) {
-		return tolower(letter);
-		});
+string toLowerCase( string path ) {
+	transform( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
+		return tolower( letter );
+		} );
 
 	return path;
 }
 
 /**************************************************
  * COMPARE PATH
- * This function will compare the user's path with a
- * list of forbidden path homographs. It will then
- * display whether the paths are the same or different.
+ * This function will compare the user's path with 
+ * a list of forbidden paths. It will then display 
+ * whether the paths are the same or different.
  * ************************************************/
-void comparePath(string path)
+void comparePath( string path )
 {
 	// Create a vector to hold list of forbidden paths
-	// Replace "pathA..." with forbidden paths
 	vector <string> testPaths{ "/home/user/secret/password.txt" };
 
 	// Compare user input with list of paths
-	if (find(testPaths.begin(), testPaths.end(), path) != testPaths.end()) {
-		cout << "Filepath matches forbidden path. Not allowed.";
+	if (find( testPaths.begin(), testPaths.end(), path) != testPaths.end() ) {
+		cout << "Filepath matches forbidden path. Access Denied.";
 	}
 	else {
 		cout << "Filepath does not match forbidden path. Access Granted.";
 	}
+}
+
+/**************************************************
+ * COMPARE PATH NON HOMOGRAPHS
+ * This function will compare the user's path with 
+ * a set of Non-Homograph test cases. It will then
+ * display whether the paths pass of fail the
+ * Non-Homograph comparison.
+ * ************************************************/
+void comparePathNonHomographs( string path )
+{
+
+}
+
+/**************************************************
+ * COMPARE PATH HOMOGRAPHS
+ * This function will compare the user's path with 
+ * a set of Homograph test cases. It will then
+ * display whether the paths pass or fail the
+ * Homograph comparison.
+ * ************************************************/
+void comparePathHomographs( string path )
+{
+
 }
