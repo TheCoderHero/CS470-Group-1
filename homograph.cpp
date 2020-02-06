@@ -1,10 +1,32 @@
+/***********************************************************************
+* Program:
+*   Lab 05, Homographs
+*   Brother Helfrich, CS 470
+* Authors:
+*   Osvaldo Carrillo Lira
+*   Aaron Eiche
+*   Zach Heiner
+*   Collin Steel
+*   John Tanner
+*   Jordon Thompson
+*
+* Summary:
+*   A program that that takes a user provided filepath and tests it
+*   for homograph attacks.
+ ************************************************************************/
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cctype>
+
+#define FORBIDDEN_PATH "\\secret\\password.txt";
+
 using namespace std;
 
 string promptUser();
+string toLowerCase(string path);
 void comparePath( string path );
 
 int main()
@@ -14,6 +36,9 @@ int main()
 
    // Prompt user for file path
    filepath = promptUser();
+
+   // Transform user input to lowercase
+   filepath = toLowerCase(filepath);
 
    // Compare path to forbidden paths
    comparePath( filepath );
@@ -37,6 +62,18 @@ string promptUser()
    
    // Return user input
    return tempPath;
+}
+
+/**************************************************
+ * TO LOWER CASE
+ * This function will tranform the filepath to a 
+ * lower case version of the path.
+ * ************************************************/
+string toLowerCase( string path ) {
+    transform ( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
+        return tolower( letter );
+    } );
+    return path;
 }
 
 /**************************************************
