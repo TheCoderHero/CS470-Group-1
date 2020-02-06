@@ -47,8 +47,6 @@ int main()
 
 	// Compare path to forbidden paths
 	comparePath(filepath);
-
-	system("pause");
 }
 
 /**************************************************
