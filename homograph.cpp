@@ -28,8 +28,12 @@
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
+
+#include<stdio.h>
+#include <direct.h> //#include <unistd.h> for linux
 using namespace std;
-namespace fs = filesystem;
+//namespace fs = filesystem;
+//namespace fs = std::filesystem;
 
 string handleUserInput(string path);
 string promptUser(string path);
@@ -37,46 +41,75 @@ string toLowerCase( string path );
 void comparePath( string path );
 void comparePathNonHomographs( string path );
 void comparePathHomographs( string path );
-void createAllStrings(string filepath);
+string canonized(string path);
 
 int main()
 {
-	// Variable to hold menu option choice
-	int menuOption = 0;
+   // Variable to hold menu option choice
+   int menuOption = 0;
 
-	do {
+   do {
 
-		// Create a string variable to hold filepath
-		string filepath = "";
+      // Create a string variable to hold filepath
+      string filepath = "";
 
-		cout << "Please choose from the following menu items: \n";
-		cout << "1. Test Non-Homograph file path attacks\n";
-		cout << "2. Test Homograph file path attacks\n";
-		cout << "3. Test personalized file paths against Homograph attacks\n";
-		cout << "4. Exit Program\n";
-		cout << "Menu Selection: ";
-		cin >> menuOption;
-		
-		// Menu option logic
-		if( menuOption == 1 ) {
-			// Prompt user for file path
-			filepath = handleUserInput(filepath);
-			comparePathNonHomographs(filepath);
-		}
-		else if ( menuOption == 2 ) {
-			// Prompt user for file path
-			filepath = handleUserInput(filepath);
-		}
-		else if ( menuOption == 3 ) {
-			// Prompt user for file path
-			filepath = handleUserInput(filepath);
-			comparePath( filepath );
-		}
+      cout << "Please choose from the following menu items: \n";
+      cout << "1. Test Non-Homograph file path attacks\n";
+      cout << "2. Test Homograph file path attacks\n";
+      cout << "3. Test personalized file paths against Homograph attacks\n";
+      cout << "4. Exit Program\n";
+      cout << "Menu Selection: ";
+      cin >> menuOption;
 
-	} while ( menuOption != 4 );
+      // Menu option logic
+      if (menuOption == 1) {
+         // Prompt user for file path
+         filepath = handleUserInput(filepath);
+         comparePathNonHomographs(filepath);
+      }
+      else if (menuOption == 2) {
+         // Prompt user for file path
+         filepath = handleUserInput(filepath);
+      }
+      else if (menuOption == 3) {
+         // Prompt user for file path
+         filepath = handleUserInput(filepath);
+         comparePath(filepath);
+      }
 
-	return 0;
+   } while (menuOption != 4);
+
+   return 0;
 }
+
+int main()
+{
+	// Create a string variable to hold filepath
+	string filepath = "";
+
+	// Prompt user for file path
+	filepath = promptUser(filepath);
+   filepath = canonized(filepath);
+   cout << filepath;
+   cin >> filepath;
+   /*
+	// Transform user input to lowercase
+	filepath = toLowerCase( filepath );
+
+	if ( filepath[0] != '/' ) {
+		filepath.insert( 0, 1, '/' );
+	}
+
+	cout << "File path entered: " << filepath << "\n";
+
+	// Compare path to forbidden paths
+	comparePath( filepath );
+	comparePathNonHomographs(filepath);
+
+   // Compare path to forbidden paths
+   comparePath( filepath );*/
+}
+
 
 /**************************************************
  * PROMPT USER
@@ -98,10 +131,7 @@ string promptUser(string path)
 	return tempPath;
 }
 
-filename1: "./something/filename.txt
-transformed "/something/filename.txt
 
-string curDir = _getcwd(charPath, sizeof(currentDirPath));
 /**************************************************
  * TO LOWER CASE
  * This function will tranform the filepath to a
@@ -144,6 +174,34 @@ string handleUserInput( string path ) {
 }
 
 
+
+/**************************************************
+ * CANONIZED
+ * This function will convert the path into a 
+ * standardized path so it can be compared
+ * ************************************************/
+string canonized(const string path)
+{
+   string charPath;
+   charPath = getcwd(NULL, 0);
+
+   for (size_t i = 0; i < path.length(); i++)
+   {
+      if (path[i] == '.')
+      {
+         if (path[i + 1] == '.')
+         {
+            if (path[i + 1] == '/')
+            {
+               //charPath
+            }
+         }
+         else if (path[i + 1] == '/')
+            return charPath.append(path);
+
+      }
+   }
+}
 
 /**************************************************
  * COMPARE PATH
@@ -210,3 +268,5 @@ void comparePathHomographs( string path )
 {
 
 }
+
+
