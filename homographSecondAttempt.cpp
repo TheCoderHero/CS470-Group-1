@@ -30,6 +30,7 @@
 #include <string>
 #include <algorithm>
 #include <cctype>
+#include <vector>
 
 using namespace std;
 
@@ -40,6 +41,7 @@ void toLowerCase( string &path );
 void cleanFileNameOne( string workingDIR, string &path );
 void canonizeFilePath( string &path );
 void compareFilePaths( string path1, string path2 );
+void splitString(string path, vector<string>& set, char delim = '/'); 
 
 int main()
 {
