@@ -27,8 +27,9 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
-
+#include <filesystem>
 using namespace std;
+namespace fs = std::filesystem;
 
 string promptUser();
 string toLowerCase( string path );
@@ -55,6 +56,7 @@ int main()
 
 	// Compare path to forbidden paths
 	comparePath( filepath );
+	comparePathNonHomographs(filepath);
 }
 
 /**************************************************
@@ -118,8 +120,30 @@ void comparePath( string path )
  * Non-Homograph comparison.
  * ************************************************/
 void comparePathNonHomographs( string path )
-{
+{	
+string currentDirectory = "/home/user/cse453"; //std::cout << "Current path is " << fs::current_path() << '\n';
+string fobiddenFile = "/home/user/secret/password.txt";
+string userPathFile = "./../../secret/password.txt";
+string pattern = ("./..");
+string secondPattern = ("../");
+size_t ocurrences = userPathFile.find("./..");
 
+
+if (ocurrences != string::npos) {
+	userPathFile.erase(0, pattern.length());
+	std::cout << "EXp: " << userPathFile << '\n';
+}
+
+size_t i = userPathFile.find(secondPattern);
+while (i != std::string::npos)
+{
+	userPathFile.erase(i, secondPattern.length());	
+	i = userPathFile.find(secondPattern, i);
+}	
+
+cout << "\n Final Path" << userPathFile << "\n";
+	
+	
 }
 
 /**************************************************
