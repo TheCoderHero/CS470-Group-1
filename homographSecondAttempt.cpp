@@ -35,10 +35,9 @@
 using namespace std;
 
 string getWorkingDirectory();
-string handleUserInput(string path);
-string promptUser(string path);
-string toLowerCase(string path);
-string canonizePath(string workingDIR, string path);
+string handleUserInput( string path );
+string promptUser( string path );
+string toLowerCase( string path );
 
 int main()
 {
@@ -65,15 +64,15 @@ int main()
         // Menu option logic
         if (menuOption == 1) {
             // Prompt user for file paths
-            filepath1 = handleUserInput( filepath1);
-            filepath2 = handleUserInput( filepath2);
+            filepath1 = handleUserInput( filepath1 );
+            filepath2 = handleUserInput( filepath2 );
         }
         else if (menuOption == 2) {
             // Prompt user for file path
-            filepath1 = handleUserInput(filepath1);
+            filepath1 = handleUserInput( filepath1 );
         }
 
-    } while (menuOption != 3);
+    } while ( menuOption != 3 );
 
     return 0;
 }
@@ -84,9 +83,9 @@ int main()
  * of the user.
  * ************************************************/
 string getWorkingDirectory() {
-    char buff[FILENAME_MAX];
-    GetCurrentDir(buff, FILENAME_MAX);
-    string current_working_dir(buff);
+    char buff[ FILENAME_MAX ];
+    GetCurrentDir( buff, FILENAME_MAX );
+    string current_working_dir( buff );
     return current_working_dir;
 }
 
@@ -94,9 +93,9 @@ string getWorkingDirectory() {
  * HANDLE USER INPUT
  *
  * ************************************************/
-string handleUserInput(string path) {
-    promptUser(path);
-    toLowerCase(path);
+string handleUserInput( string path ) {
+    promptUser( path );
+    toLowerCase( path );
     return path;
 }
 
@@ -105,18 +104,15 @@ string handleUserInput(string path) {
  * This function will prompt the user for a filepath
  * and return a string
  * ************************************************/
-string promptUser(string path) {
-    // Create temporary string variable
-    string tempPath = "";
-
+string promptUser( string path ) {
     // Prompt the user for a filepath
     cout << "Enter a filepath: ";
 
     // Save user input into the variable
-    cin >> tempPath;
+    cin >> path;
 
     // Return user input
-    return tempPath;
+    return path;
 }
 
 
@@ -125,19 +121,10 @@ string promptUser(string path) {
  * This function will tranform the filepath to a
  * lower case version of the path.
  * ************************************************/
-string toLowerCase(string path) {
-    transform(path.begin(), path.end(), path.begin(), [](unsigned char letter) {
-        return tolower(letter);
-        });
-
+string toLowerCase( string path ) {
+    // Transform each character in the path to lower case
+    transform( path.begin(), path.end(), path.begin(), [](unsigned char letter ) {
+        return tolower( letter );
+        } );
     return path;
-}
-
- /**************************************************
-  * CANONIZE PATH
-  * This function will convert the path into an
-  * absolute path so it can be compared.
-  * ************************************************/
-string canonizePath(string workingDIR, string path) {
-    return "Need to fix this function!";
 }
