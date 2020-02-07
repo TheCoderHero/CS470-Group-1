@@ -20,11 +20,11 @@
 
 #define WINDOWS
 #ifdef WINDOWS
-    #include <direct.h>
-    #define GetCurrentDir _getcwd
+#include <direct.h>
+#define GetCurrentDir _getcwd
 #else
-    #include <unistd.h>
-    #define GetCurrentDir getcwd
+#include <unistd.h>
+#define GetCurrentDir getcwd
 #endif
 
 #include <iostream>
@@ -35,9 +35,10 @@
 using namespace std;
 
 string getWorkingDirectory();
-string handleUserInput( string path );
-string promptUser( string path );
-string toLowerCase( string path );
+void handleUserInput(string &path);
+void promptUser(string &path);
+void toLowerCase(string &path);
+void cleanFileNameOne(string &path);
 
 int main()
 {
@@ -64,15 +65,17 @@ int main()
         // Menu option logic
         if (menuOption == 1) {
             // Prompt user for file paths
-            filepath1 = handleUserInput( filepath1 );
-            filepath2 = handleUserInput( filepath2 );
+            handleUserInput(filepath1);
+            cleanFileNameOne(filepath1);
+            cout << "Current File Path: " << workingDIR << filepath1 << "\n";
+            handleUserInput(filepath2);
         }
         else if (menuOption == 2) {
             // Prompt user for file path
-            filepath1 = handleUserInput( filepath1 );
+            handleUserInput(filepath1);
         }
 
-    } while ( menuOption != 3 );
+    } while (menuOption != 3);
 
     return 0;
 }
@@ -83,20 +86,19 @@ int main()
  * of the user.
  * ************************************************/
 string getWorkingDirectory() {
-    char buff[ FILENAME_MAX ];
-    GetCurrentDir( buff, FILENAME_MAX );
-    string current_working_dir( buff );
-    return current_working_dir;
+    char buff[FILENAME_MAX];
+    GetCurrentDir(buff, FILENAME_MAX);
+    string current_working_dir(buff);
+    return current_working_dir.append("\\");
 }
 
 /**************************************************
  * HANDLE USER INPUT
  *
  * ************************************************/
-string handleUserInput( string path ) {
+void handleUserInput(string &path) {
     promptUser( path );
     toLowerCase( path );
-    return path;
 }
 
 /**************************************************
@@ -104,15 +106,12 @@ string handleUserInput( string path ) {
  * This function will prompt the user for a filepath
  * and return a string
  * ************************************************/
-string promptUser( string path ) {
+void promptUser(string &path) {
     // Prompt the user for a filepath
     cout << "Enter a filepath: ";
 
     // Save user input into the variable
     cin >> path;
-
-    // Return user input
-    return path;
 }
 
 
@@ -121,10 +120,19 @@ string promptUser( string path ) {
  * This function will tranform the filepath to a
  * lower case version of the path.
  * ************************************************/
-string toLowerCase( string path ) {
+void toLowerCase(string &path) {
     // Transform each character in the path to lower case
-    transform( path.begin(), path.end(), path.begin(), [](unsigned char letter ) {
-        return tolower( letter );
-        } );
-    return path;
+    transform(path.begin(), path.end(), path.begin(), [](unsigned char letter) {
+        return tolower(letter);
+        });
+}
+
+/**************************************************
+ * CLEAN FILE NAME ONE
+ * Removes unecessary prepend symbols to filename.
+ * ************************************************/
+void cleanFileNameOne( string &path ) {
+    while (path[0] == '.' || path[0] == '/') {
+        path.erase(path.begin());
+    }
 }
