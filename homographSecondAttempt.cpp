@@ -157,3 +157,37 @@ void canonizeFilePath( string &path ) {
 void compareFilePaths( string path1, string path2 ) {
 
 }
+
+/**************************************************
+ * SPLIT STRING
+ * takes a string, a string vector, and a delimiter
+ * Splits the string into its constituent parts.
+ * ************************************************/
+void splitString(string path, vector<string>& set, char delim)
+{
+    //counters
+    int current, previous = 0;
+    
+    //find the first instance of the delimiter
+    current = path.find(delim);
+
+    if(current == 0){
+        cout << "WE ARE AT ROOT";
+    }
+
+    // //while the current position is not the null position of the string
+    while (current != std::string::npos) {
+
+        //place the substring from previous to the new position into our set.
+        set.push_back(path.substr(previous, current - previous));
+        
+        //Set the last position to the current.
+        previous = current + 1;
+        
+        //call it again.
+        current = path.find(delim, previous);
+    }
+    
+    //Add the substring after the last delimiter.
+    set.push_back(path.substr(previous, path.size() - previous));
+}
