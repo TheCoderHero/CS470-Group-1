@@ -18,8 +18,7 @@
 *   which transforms the file path into a standard "canonized" file path.
  ************************************************************************/
 
-//#define WINDOWS
-#ifdef WINDOWS
+#ifdef _WIN32
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
