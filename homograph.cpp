@@ -29,34 +29,53 @@
 #include <cctype>
 #include <filesystem>
 using namespace std;
-namespace fs = std::filesystem;
+namespace fs = filesystem;
 
-string promptUser();
+string handleUserInput(string path);
+string promptUser(string path);
 string toLowerCase( string path );
 void comparePath( string path );
 void comparePathNonHomographs( string path );
 void comparePathHomographs( string path );
+void createAllStrings(string filepath);
 
 int main()
 {
-	// Create a string variable to hold filepath
-	string filepath = "";
+	// Variable to hold menu option choice
+	int menuOption = 0;
 
-	// Prompt user for file path
-	filepath = promptUser();
+	do {
 
-	// Transform user input to lowercase
-	filepath = toLowerCase( filepath );
+		// Create a string variable to hold filepath
+		string filepath = "";
 
-	if ( filepath[0] != '/' ) {
-		filepath.insert( 0, 1, '/' );
-	}
+		cout << "Please choose from the following menu items: \n";
+		cout << "1. Test Non-Homograph file path attacks\n";
+		cout << "2. Test Homograph file path attacks\n";
+		cout << "3. Test personalized file paths against Homograph attacks\n";
+		cout << "4. Exit Program\n";
+		cout << "Menu Selection: ";
+		cin >> menuOption;
+		
+		// Menu option logic
+		if( menuOption == 1 ) {
+			// Prompt user for file path
+			filepath = handleUserInput(filepath);
+			comparePathNonHomographs(filepath);
+		}
+		else if ( menuOption == 2 ) {
+			// Prompt user for file path
+			filepath = handleUserInput(filepath);
+		}
+		else if ( menuOption == 3 ) {
+			// Prompt user for file path
+			filepath = handleUserInput(filepath);
+			comparePath( filepath );
+		}
 
-	cout << "File path entered: " << filepath << "\n";
+	} while ( menuOption != 4 );
 
-	// Compare path to forbidden paths
-	comparePath( filepath );
-	comparePathNonHomographs(filepath);
+	return 0;
 }
 
 /**************************************************
@@ -64,7 +83,7 @@ int main()
  * This function will prompt the user for a filepath
  * and return a string
  * ************************************************/
-string promptUser()
+string promptUser(string path)
 {
 	// Create temporary string variable
 	string tempPath = "";
@@ -79,6 +98,10 @@ string promptUser()
 	return tempPath;
 }
 
+filename1: "./something/filename.txt
+transformed "/something/filename.txt
+
+string curDir = _getcwd(charPath, sizeof(currentDirPath));
 /**************************************************
  * TO LOWER CASE
  * This function will tranform the filepath to a
@@ -87,10 +110,40 @@ string promptUser()
 string toLowerCase( string path ) {
 	transform( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
 		return tolower( letter );
-		} );
+	} );
 
 	return path;
 }
+
+/**************************************************
+ * MAKE FILE PATH COMPLETE
+ * 
+ * ************************************************/
+void makeFilePathComplete( string path ) {
+	if ( path[0] != '/' ) {
+		path.insert( 0, 1, '/' );
+	}
+}
+
+string * createAllStrings(string path)
+{
+   
+}
+
+
+
+/**************************************************
+ * HANDLE USER INPUT
+ * 
+ * ************************************************/
+string handleUserInput( string path ) {
+	promptUser(path);
+	toLowerCase(path);
+	makeFilePathComplete(path);
+	return path;
+}
+
+
 
 /**************************************************
  * COMPARE PATH
