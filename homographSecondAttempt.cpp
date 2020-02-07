@@ -38,7 +38,7 @@ string getWorkingDirectory();
 void handleUserInput(string &path);
 void promptUser(string &path);
 void toLowerCase(string &path);
-void cleanFileNameOne(string &path);
+void cleanFileNameOne(string workingDIR, string &path);
 
 int main()
 {
@@ -66,8 +66,8 @@ int main()
         if (menuOption == 1) {
             // Prompt user for file paths
             handleUserInput(filepath1);
-            cleanFileNameOne(filepath1);
-            cout << "Current File Path: " << workingDIR << filepath1 << "\n";
+            cleanFileNameOne(workingDIR, filepath1);
+            cout << "First filename input: " << filepath1 << "\n";
             handleUserInput(filepath2);
         }
         else if (menuOption == 2) {
@@ -89,7 +89,7 @@ string getWorkingDirectory() {
     char buff[FILENAME_MAX];
     GetCurrentDir(buff, FILENAME_MAX);
     string current_working_dir(buff);
-    return current_working_dir.append("\\");
+    return current_working_dir.append("/");
 }
 
 /**************************************************
@@ -131,8 +131,9 @@ void toLowerCase(string &path) {
  * CLEAN FILE NAME ONE
  * Removes unecessary prepend symbols to filename.
  * ************************************************/
-void cleanFileNameOne( string &path ) {
+void cleanFileNameOne( string workingDIR, string &path ) {
     while (path[0] == '.' || path[0] == '/') {
         path.erase(path.begin());
     }
+    path = workingDIR + path;
 }
