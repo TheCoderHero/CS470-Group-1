@@ -12,20 +12,19 @@
 *   Jordon Thompson
 *
 * Summary:
-*   This program prompts the user for a file path. It then compares the
-*	the user input to a list of forbidden files and determines if they
-*	are trying to access a forbidden file. Next, the program runs a
-*	comparison on the user input against a set of Non-Homograph test
-*	cases and a set of Homograph test cases and displays the results
-*	of the comparison. Lastly, the program runs the user input into a
-*	canonicalization function that proves the Non-Homograph and
-*	Homograph test cases.
+*   This program prompts the user for 2 file patha. It then compares the
+*	the user's input to determines if the two file paths are Homographs
+*   of Non-Homographs. The program also contains a canonize function
+*   which transforms the file path into a standard "canonized" file path.
  ************************************************************************/
 
 #define WINDOWS
 #ifdef WINDOWS
     #include <direct.h>
     #define GetCurrentDir _getcwd
+#else
+    #include <unistd.h>
+    #define GetCurrentDir getcwd
 #endif
 
 #include <iostream>
