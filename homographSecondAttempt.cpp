@@ -35,10 +35,12 @@
 using namespace std;
 
 string getWorkingDirectory();
-void handleUserInput(string &path);
-void promptUser(string &path);
-void toLowerCase(string &path);
-void cleanFileNameOne(string workingDIR, string &path);
+void handleUserInput( string &path );
+void promptUser( string &path );
+void toLowerCase( string &path );
+void cleanFileNameOne( string workingDIR, string &path );
+void canonizeFilePath( string &path );
+void compareFilePaths( string path1, string path2 );
 
 int main()
 {
@@ -65,17 +67,20 @@ int main()
         // Menu option logic
         if (menuOption == 1) {
             // Prompt user for file paths
-            handleUserInput(filepath1);
-            cleanFileNameOne(workingDIR, filepath1);
+            handleUserInput( filepath1 );
+            cleanFileNameOne( workingDIR, filepath1 );
             cout << "First filename input: " << filepath1 << "\n";
-            handleUserInput(filepath2);
+            handleUserInput( filepath2 );
+            canonizeFilePath( filepath2 );
+            compareFilePaths( filepath1, filepath2 );
         }
         else if (menuOption == 2) {
             // Prompt user for file path
-            handleUserInput(filepath1);
+            handleUserInput( filepath1 );
+            canonizeFilePath( filepath1 );
         }
 
-    } while (menuOption != 3);
+    } while ( menuOption != 3 );
 
     return 0;
 }
@@ -136,4 +141,20 @@ void cleanFileNameOne( string workingDIR, string &path ) {
         path.erase(path.begin());
     }
     path = workingDIR + path;
+}
+
+/**************************************************
+ * CANONIZE FILE PATH
+ * Takes a file path and canonizes it.
+ * ************************************************/
+void canonizeFilePath( string &path ) {
+
+}
+
+/**************************************************
+ * COMPARE FILE PATHS
+ * Takes 2 file paths and compares them
+ * ************************************************/
+void compareFilePaths( string path1, string path2 ) {
+
 }
