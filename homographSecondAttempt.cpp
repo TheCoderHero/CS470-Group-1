@@ -139,15 +139,5 @@ string toLowerCase(string path) {
   * absolute path so it can be compared.
   * ************************************************/
 string canonizePath(string workingDIR, string path) {
-    for (size_t i = 0; i < path.length(); i++) {
-        if (path[i] == '.') {
-            if (path[i + 1] == '.') {
-                if (path[i + 1] == '/') {
-                    //charPath
-                }
-            }
-            else if (path[i + 1] == '/')
-                return workingDIR.append(path);
-        }
-    }
+    return "Need to fix this function!";
 }
