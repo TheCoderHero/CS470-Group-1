@@ -72,6 +72,7 @@ int main()
             cleanFileNameOne( workingDIR, filepath1 );
             cout << "First filename input: " << filepath1 << "\n";
             handleUserInput( filepath2 );
+            canonizeFilePath( filepath1);
             canonizeFilePath( filepath2 );
             compareFilePaths( filepath1, filepath2 );
         }
