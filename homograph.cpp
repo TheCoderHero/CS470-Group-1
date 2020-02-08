@@ -111,7 +111,7 @@ int main()
          // Compare for Homograph Attacks
          compareFilePaths(filepath1, filepath2);
       }
-      else if( menuOption != 1 && menuOption != 2 )
+      else if (menuOption != 1 && menuOption != 2)
       {
          // Handle invalid menu input (int)
          cout << "\nInvalid Menu Selection. Please Try Again.\n\n";
@@ -150,7 +150,9 @@ void promptUser(string &path)
 
 /**************************************************
  * CANONIZE FILE PATH
- * Takes a file path and canonizes it.
+ * Takes a file path and changes it to a canon using
+ * the reliable canons property. The returned canon 
+ * token is the absolute filepath.
  * Function handles the following Linux Symbols:
  * cases:
  * / - root
