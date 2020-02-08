@@ -111,7 +111,7 @@ int main()
          // Compare for Homograph Attacks
          compareFilePaths(filepath1, filepath2);
       }
-      else
+      else if( menuOption != 1 && menuOption != 2 )
       {
          // Handle invalid menu input (int)
          cout << "Invalid Menu Selection. Please Try Again.\n\n";
