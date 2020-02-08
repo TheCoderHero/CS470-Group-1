@@ -12,8 +12,8 @@
 *   Jordon Thompson
 *
 * Summary:
-*   This program prompts the user for 2 file patha. It then compares the
-*	the user's input to determines if the two file paths are Homographs
+*   This program prompts the user for 2 file paths. It then compares the
+*   the user's input to determines if the two file paths are Homographs
 *   of Non-Homographs. The program also contains a canonize function
 *   which transforms the file path into a standard "canonized" file path.
  ************************************************************************/
@@ -41,7 +41,7 @@ void toLowerCase( string &path );
 void cleanFileNameOne( string workingDIR, string &path );
 void canonizeFilePath( string &path );
 void compareFilePaths( string path1, string path2 );
-void splitString(string path, vector<string>& set, char delim = '/'); 
+void splitString( string path, vector<string>& set, char delim = '/' ); 
 
 int main()
 {
@@ -92,17 +92,17 @@ int main()
  * of the user.
  * ************************************************/
 string getWorkingDirectory() {
-    char buff[FILENAME_MAX];
-    GetCurrentDir(buff, FILENAME_MAX);
-    string current_working_dir(buff);
-    return current_working_dir.append("/");
+    char buff[ FILENAME_MAX ];
+    GetCurrentDir( buff, FILENAME_MAX );
+    string current_working_dir( buff );
+    return current_working_dir.append( "/" );
 }
 
 /**************************************************
  * HANDLE USER INPUT
  *
  * ************************************************/
-void handleUserInput(string &path) {
+void handleUserInput( string &path ) {
     promptUser( path );
     toLowerCase( path );
 }
@@ -112,7 +112,7 @@ void handleUserInput(string &path) {
  * This function will prompt the user for a filepath
  * and return a string
  * ************************************************/
-void promptUser(string &path) {
+void promptUser( string &path ) {
     // Prompt the user for a filepath
     cout << "Enter a filepath: ";
 
@@ -126,11 +126,11 @@ void promptUser(string &path) {
  * This function will tranform the filepath to a
  * lower case version of the path.
  * ************************************************/
-void toLowerCase(string &path) {
+void toLowerCase( string &path ) {
     // Transform each character in the path to lower case
-    transform(path.begin(), path.end(), path.begin(), [](unsigned char letter) {
-        return tolower(letter);
-        });
+    transform( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
+        return tolower( letter );
+        } );
 }
 
 /**************************************************
@@ -138,8 +138,8 @@ void toLowerCase(string &path) {
  * Removes unecessary prepend symbols to filename.
  * ************************************************/
 void cleanFileNameOne( string workingDIR, string &path ) {
-    while (path[0] == '.' || path[0] == '/') {
-        path.erase(path.begin());
+    while ( path[0] == '.' || path[0] == '/' ) {
+        path.erase( path.begin() );
     }
     path = workingDIR + path;
 }
@@ -157,7 +157,12 @@ void canonizeFilePath( string &path ) {
  * Takes 2 file paths and compares them
  * ************************************************/
 void compareFilePaths( string path1, string path2 ) {
-
+    if( path1 == path2 ) {
+        cout << "Paths are Homographs\n";
+    }
+    else {
+        cout << "Paths are Non-Homographs\n";
+    }
 }
 
 /**************************************************
