@@ -17,7 +17,7 @@
 *   of Non-Homographs. The program also contains a canonize function
 *   which transforms the file path into a standard "canonized" file path.
  ************************************************************************/
-#define WINDOWS
+//#define WINDOWS
 #ifdef WINDOWS
 #include <direct.h>
 #define GetCurrentDir _getcwd
