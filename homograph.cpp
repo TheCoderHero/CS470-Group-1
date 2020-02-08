@@ -63,8 +63,7 @@ int main()
 
       cout << "Please choose from the following menu items:\n";
       cout << "1. Compare File Paths For Homograph Attacks\n";
-      cout << "2. Test Canonization Function\n";
-      cout << "3. Exit Program\n";
+      cout << "2. Exit Program\n";
       cout << "Menu Selection: ";
       cin >> menuOption;
 
@@ -95,13 +94,9 @@ int main()
          cout << "Canon Token2: " << filepath2 << '\n';
          compareFilePaths(filepath1, filepath2);
       }
-      else if (menuOption == 2) {
-         // Prompt user for file path
-         handleUserInput(filepath1);
-      }
       else
-         menuOption = 3;
-   } while (menuOption != 3);
+         menuOption = 2;
+   } while (menuOption != 2);
 
    return 0;
 }
