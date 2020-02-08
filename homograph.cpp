@@ -89,9 +89,10 @@ int main()
          // Canonize both sets
          filepath1 = canonizePath(set1);
          filepath2 = canonizePath(set2);
-
-         cout << filepath1 << '\n';
-         cout << filepath2 << '\n';
+         
+         cout << "\nResults of Canonicalization Function:\n";
+         cout << "Canon Token1: " << filepath1 << '\n';
+         cout << "Canon Token2: " << filepath2 << '\n';
          compareFilePaths(filepath1, filepath2);
       }
       else if (menuOption == 2) {
