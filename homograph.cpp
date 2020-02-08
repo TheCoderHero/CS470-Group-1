@@ -35,78 +35,87 @@
 using namespace std;
 
 string getWorkingDirectory();
-void handleUserInput(string& path);
-void promptUser(string& path);
-void toLowerCase(string& path);
-string canonizePath(vector<string>& set);
+void handleUserInput(string &path);
+void promptUser(string &path);
+void toLowerCase(string &path);
+string canonizePath(vector<string> &set);
 void compareFilePaths(string path1, string path2);
-void splitString(string path, vector<string>& set, char delim);
+void splitString(string path, vector<string> &set, char delim);
 
 int main()
 {
-    // Variable to hold menu option choice
-    int menuOption = 0;
+   // Variable to hold menu option choice
+   int menuOption = 0;
 
-    do {
+   do
+   {
 
-        // Obtain the working directory of the user
-        string workingDIR = getWorkingDirectory();
+      // Obtain the working directory of the user
+      string workingDIR = getWorkingDirectory();
 
-        // Create a string variable to hold filepath
-        string filepath1 = "";
-        string filepath2 = "";
-        string canonicalizedPath1 = "";
-        string canonicalizedPath2 = "";
-        vector<string> set1;
-        vector<string> set2;
+      // Create a string variable to hold filepath
+      string filepath1 = "";
+      string filepath2 = "";
+      string canonicalizedPath1 = "";
+      string canonicalizedPath2 = "";
+      vector<string> set1;
+      vector<string> set2;
 
-        cout << "Please choose from the following menu items:\n";
-        cout << "1. Compare File Paths For Homograph Attacks\n";
-        cout << "2. Exit Program\n";
-        cout << "Menu Selection: ";
+      cout << "Please choose from the following menu items:\n";
+      cout << "1. Compare File Paths For Homograph Attacks\n";
+      cout << "2. Exit Program\n";
+      cout << "Menu Selection: ";
 
-        // Get user menu selection
-        cin >> menuOption;
+      // Get user menu selection
+      cin >> menuOption;
 
-        // Handle menu selection error
-        if (cin.fail()) {
-            cout << "Invalid Menu Selection. Please Try Again.\n\n";
-            cin.clear();
-            cin.ignore(1000, '\n');
-        }
+      // Handle menu selection error
+      if (cin.fail())
+      {
+         cout << "Invalid Menu Selection. Please Try Again.\n\n";
+         cin.clear();
+         cin.ignore(1000, '\n');
+      }
 
-        // Menu logic
-        if (menuOption == 1) {
+      // Menu logic
+      if (menuOption == 1)
+      {
 
-            // Prompt user for first file path
-            promptUser(filepath1);
+         // Prompt user for first file path
+         promptUser(filepath1);
 
-            if (filepath1[0] != '/')
-                filepath1 = getWorkingDirectory() + filepath1;
+         if (filepath1[0] != '/')
+            filepath1 = getWorkingDirectory() + filepath1;
 
-            // Prompt user for second file path
-            promptUser(filepath2);
-            if (filepath2[0] != '/')
-                filepath2 = getWorkingDirectory() + filepath2;
+         // Prompt user for second file path
+         promptUser(filepath2);
+         if (filepath2[0] != '/')
+            filepath2 = getWorkingDirectory() + filepath2;
 
-            // Split the paths and store them as sets
-            splitString(filepath1, set1, '/');
-            splitString(filepath2, set2, '/');
+         // Split the paths and store them as sets
+         splitString(filepath1, set1, '/');
+         splitString(filepath2, set2, '/');
 
-            // Canonize both sets
-            filepath1 = canonizePath(set1);
-            filepath2 = canonizePath(set2);
+         // Canonize both sets
+         filepath1 = canonizePath(set1);
+         filepath2 = canonizePath(set2);
 
-            // Compare for Homograph Attacks
-            compareFilePaths(filepath1, filepath2);
-        }
-        else {
-            cout << "Invalid Menu Selection. Please Try Again.\n\n";
-            menuOption = 0;
-        }
-    } while (menuOption != 2);
+         // Display tokens for the two filepaths
+         cout << "\nResults of Canonicalization Function:\n";
+         cout << "Canon Token1: " << filepath1 << '\n';
+         cout << "Canon Token2: " << filepath2 << '\n';
 
-    return 0;
+         // Compare for Homograph Attacks
+         compareFilePaths(filepath1, filepath2);
+      }
+      else
+      {
+         cout << "Invalid Menu Selection. Please Try Again.\n\n";
+         menuOption = 0;
+      }
+   } while (menuOption != 2);
+
+   return 0;
 }
 
 /**************************************************
@@ -114,9 +123,10 @@ int main()
  * This function returns the working directory
  * of the user.
  * ************************************************/
-string getWorkingDirectory() {
-    string current_working_dir = GetCurrentDir(NULL, 0);
-    return current_working_dir.append("/");
+string getWorkingDirectory()
+{
+   string current_working_dir = GetCurrentDir(NULL, 0);
+   return current_working_dir.append("/");
 }
 
 /**************************************************
@@ -124,14 +134,14 @@ string getWorkingDirectory() {
  * This function will prompt the user for a filepath
  * and return a string
  * ************************************************/
-void promptUser(string& path) {
-    // Prompt the user for a filepath
-    cout << "Enter a filepath: ";
+void promptUser(string &path)
+{
+   // Prompt the user for a filepath
+   cout << "Enter a filepath: ";
 
-    // Save user input into the variable
-    cin >> path;
+   // Save user input into the variable
+   cin >> path;
 }
-
 
 /**************************************************
  * CANONIZE FILE PATH
@@ -143,62 +153,71 @@ void promptUser(string& path) {
  * . - current directory
  * .. - previous directory
  * ************************************************/
-string canonizePath(vector<string>& set) {
+string canonizePath(vector<string> &set)
+{
 
-    // Create variable to hold canonicalized path
-    string canonPath = "";
+   // Create variable to hold canonicalized path
+   string canonPath = "";
 
-    // Create vector of strings for temp storage
-    vector<string> returnSet;
-    for (vector<string>::iterator it = set.begin(); it != set.end(); it++)
-    {
-        if (*it == "~") {
-            returnSet.clear();
-            returnSet.push_back("/" + set[1]);
-            returnSet.push_back(set[2]);
-
-        }
-        else if (*it == ".") {
-        }
-        else if (*it == "..") {
-            //removes the previous dir
-            returnSet.pop_back();
-            //removes the ..
-        }
-        else {
-            //adds the item to the path
-            returnSet.push_back(*it);
-        }
-    }
-    for (vector<string>::iterator it = returnSet.begin(); it != returnSet.end(); it++)
-    {
-        //if (*it == "home")
-          // canonPath = "/";
-        if (it != returnSet.end()) {
-            canonPath.append(*it + "/");
-        }
-        else {
-            canonPath.append(*it);
-        }
-    }
-    return canonPath;
+   // Create vector of strings for temp storage
+   vector<string> returnSet;
+   for (vector<string>::iterator it = set.begin(); it != set.end(); it++)
+   {
+      if (*it == "~")
+      {
+         returnSet.clear();
+         returnSet.push_back("/" + set[1]);
+         returnSet.push_back(set[2]);
+      }
+      else if (*it == ".")
+      {
+      }
+      else if (*it == "..")
+      {
+         //removes the previous dir
+         returnSet.pop_back();
+         //removes the ..
+      }
+      else
+      {
+         //adds the item to the path
+         returnSet.push_back(*it);
+      }
+   }
+   for (vector<string>::iterator it = returnSet.begin(); it != returnSet.end(); it++)
+   {
+      //if (*it == "home")
+      // canonPath = "/";
+      if (it != returnSet.end())
+      {
+         canonPath.append(*it + "/");
+      }
+      else
+      {
+         canonPath.append(*it);
+      }
+   }
+   return canonPath;
 }
 
 /**************************************************
  * COMPARE FILE PATHS
  * Takes 2 file paths and compares them
  * ************************************************/
-void compareFilePaths(string path1, string path2) {
-    if (path1 == path2) {
-        cout << "\n";
-        cout << "Paths are Homographs\n";
-        cout << "\n";
-    }
-    else {
-        cout << "\n";
-        cout << "Paths are Non-Homographs\n";
-        cout << "\n";
-    }
+void compareFilePaths(string path1, string path2)
+{
+   if (path1 == path2)
+   {
+      cout << "\n";
+      cout << "Paths are Homographs\n";
+      cout << "\n";
+   }
+   else
+   {
+      cout << "\n";
+      cout << "Paths are Non-Homographs\n";
+      cout << "\n";
+   }
 }
 
 /**************************************************
@@ -207,26 +226,28 @@ void compareFilePaths(string path1, string path2) {
  * Splits the string by the delimiter by taking the
  * substring and storing it in the string vector.
  * ************************************************/
-void splitString(string path, vector<string>& set, char delim) {
-    // Counters
-    int current, previous = 0;
+void splitString(string path, vector<string> &set, char delim)
+{
+   // Counters
+   int current, previous = 0;
 
-    // Find the first instance of the delimiter
-    current = path.find(delim);
+   // Find the first instance of the delimiter
+   current = path.find(delim);
 
-    // While the current position is not the null position of the string
-    while (current != std::string::npos) {
+   // While the current position is not the null position of the string
+   while (current != std::string::npos)
+   {
 
-        // Place the substring from previous to the new position into our set.
-        set.push_back(path.substr(previous, current - previous));
+      // Place the substring from previous to the new position into our set.
+      set.push_back(path.substr(previous, current - previous));
 
-        // Set the last position to the current.
-        previous = current + 1;
+      // Set the last position to the current.
+      previous = current + 1;
 
-        // Call it again.
-        current = path.find(delim, previous);
-    }
+      // Call it again.
+      current = path.find(delim, previous);
+   }
 
-    // Add the substring after the last delimiter.
-    set.push_back(path.substr(previous, path.size() - previous));
+   // Add the substring after the last delimiter.
+   set.push_back(path.substr(previous, path.size() - previous));
 }
