@@ -90,7 +90,6 @@ int main()
         else if (menuOption == 2) {
             // Prompt user for file path
             handleUserInput( filepath1 );
-            canonizeFilePath( filepath1 );
         }
 
     } while ( menuOption != 3 );

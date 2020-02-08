@@ -12,122 +12,123 @@
 *   Jordon Thompson
 *
 * Summary:
-*   This program prompts the user for a file path. It then compares the
-*	the user input to a list of forbidden files and determines if they
-*	are trying to access a forbidden file. Next, the program runs a
-*	comparison on the user input against a set of Non-Homograph test
-*	cases and a set of Homograph test cases and displays the results
-*	of the comparison. Lastly, the program runs the user input into a
-*	canonicalization function that proves the Non-Homograph and
-*	Homograph test cases.
+*   This program prompts the user for 2 file paths. It then compares the
+*   the user's input to determines if the two file paths are Homographs
+*   of Non-Homographs. The program also contains a canonize function
+*   which transforms the file path into a standard "canonized" file path.
  ************************************************************************/
+
+#ifdef _WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
 
 #include <iostream>
 #include <string>
-#include <vector>
 #include <algorithm>
 #include <cctype>
-#include <filesystem>
+#include <vector>
 
-#include<stdio.h>
-#include <direct.h> //#include <unistd.h> for linux
 using namespace std;
-//namespace fs = filesystem;
-//namespace fs = std::filesystem;
 
-string handleUserInput(string path);
-string promptUser(string path);
-string toLowerCase( string path );
-void comparePath( string path );
-void comparePathNonHomographs( string path );
-void comparePathHomographs( string path );
-
-int main()
-{
-   // Variable to hold menu option choice
-   int menuOption = 0;
-
-   do {
-
-      // Create a string variable to hold filepath
-      string filepath = "";
-
-      cout << "Please choose from the following menu items: \n";
-      cout << "1. Test Non-Homograph file path attacks\n";
-      cout << "2. Test Homograph file path attacks\n";
-      cout << "3. Test personalized file paths against Homograph attacks\n";
-      cout << "4. Exit Program\n";
-      cout << "Menu Selection: ";
-      cin >> menuOption;
-
-      // Menu option logic
-      if (menuOption == 1) {
-         // Prompt user for file path
-         filepath = handleUserInput(filepath);
-         comparePathNonHomographs(filepath);
-      }
-      else if (menuOption == 2) {
-         // Prompt user for file path
-         filepath = handleUserInput(filepath);
-      }
-      else if (menuOption == 3) {
-         // Prompt user for file path
-         filepath = handleUserInput(filepath);
-         comparePath(filepath);
-      }
-
-   } while (menuOption != 4);
-
-   return 0;
-}
+string getWorkingDirectory();
+void handleUserInput( string &path );
+void promptUser( string &path );
+void toLowerCase( string &path );
+string canonizePath( vector<string>& set );
+void compareFilePaths( string path1, string path2 );
+void splitString( string path, vector<string>& set, char delim = '/' );
 
 int main()
 {
-	// Create a string variable to hold filepath
-	string filepath = "";
+    // Variable to hold menu option choice
+    int menuOption = 0;
 
-	// Prompt user for file path
-	filepath = promptUser(filepath);
-   filepath = canonized(filepath);
-   cout << filepath;
-   cin >> filepath;
-   /*
-	// Transform user input to lowercase
-	filepath = toLowerCase( filepath );
+    do {
 
-	if ( filepath[0] != '/' ) {
-		filepath.insert( 0, 1, '/' );
-	}
+        // Obtain the working directory of the user
+        string workingDIR = getWorkingDirectory();
+        cout << "Current working directory is: " << workingDIR << "\n";
 
-	cout << "File path entered: " << filepath << "\n";
+        // Create a string variable to hold filepath
+        string filepath1 = "";
+        string filepath2 = "";
+        string canonicalizedPath1 = "";
+        string canonicalizedPath2 = "";
+        vector<string> set1;
+        vector<string> set2;
 
-	// Compare path to forbidden paths
-	comparePath( filepath );
-	comparePathNonHomographs(filepath);
+        cout << "Please choose from the following menu items:\n";
+        cout << "1. Compare File Paths For Homograph Attacks\n";
+        cout << "2. Test Canonization Function\n";
+        cout << "3. Exit Program\n";
+        cout << "Menu Selection: ";
+        cin >> menuOption;
 
-   // Compare path to forbidden paths
-   comparePath( filepath );*/
+        // Menu logic
+        if (menuOption == 1) {
+
+            // Prompt user for file paths
+            handleUserInput( filepath1 );
+
+            //Prompt user for second file path - No edits
+            handleUserInput( filepath2 );
+
+            // Split the paths and store tham as sets
+            splitString( filepath1, set1 );
+            splitString( filepath1, set2 );
+
+            // Canonize both sets
+            filepath1 = canonizePath( set1 );
+            filepath2 = canonizePath( set2 );
+
+            compareFilePaths( filepath1, filepath2 );
+        }
+        else if (menuOption == 2) {
+            // Prompt user for file path
+            handleUserInput( filepath1 );
+        }
+
+    } while ( menuOption != 3 );
+
+    return 0;
 }
 
+/**************************************************
+ * GET WORKING DIRECTORY
+ * This function returns the working directory
+ * of the user.
+ * ************************************************/
+string getWorkingDirectory() {
+    char buff[ FILENAME_MAX ];
+    GetCurrentDir( buff, FILENAME_MAX );
+    string current_working_dir( buff );
+    return current_working_dir.append( "/" );
+}
+
+/**************************************************
+ * HANDLE USER INPUT
+ *
+ * ************************************************/
+void handleUserInput( string &path ) {
+    promptUser( path );
+    toLowerCase( path );
+}
 
 /**************************************************
  * PROMPT USER
  * This function will prompt the user for a filepath
  * and return a string
  * ************************************************/
-string promptUser(string path)
-{
-	// Create temporary string variable
-	string tempPath = "";
+void promptUser( string &path ) {
+    // Prompt the user for a filepath
+    cout << "Enter a filepath: ";
 
-	// Prompt the user for a filepath
-	cout << "Enter a filepath: ";
-
-	// Save user input into the variable
-	cin >> tempPath;
-
-	// Return user input
-	return tempPath;
+    // Save user input into the variable
+    cin >> path;
 }
 
 
@@ -136,107 +137,107 @@ string promptUser(string path)
  * This function will tranform the filepath to a
  * lower case version of the path.
  * ************************************************/
-string toLowerCase( string path ) {
-	transform( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
-		return tolower( letter );
-	} );
-
-	return path;
+void toLowerCase( string &path ) {
+    // Transform each character in the path to lower case
+    transform( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
+        return tolower( letter );
+        } );
 }
 
 /**************************************************
- * MAKE FILE PATH COMPLETE
- * 
+ * CANONIZE FILE PATH
+ * Takes a file path and canonizes it.
  * ************************************************/
-void makeFilePathComplete( string path ) {
-	if ( path[0] != '/' ) {
-		path.insert( 0, 1, '/' );
-	}
+string canonizePath(vector<string>& set) {
+   string canonPath = "";
+   if (*set.begin() != "home")
+   {
+      canonPath = _getcwd(NULL, 0) + '/';
+   }
+   vector<string> returnSet;
+   for (vector<string>::iterator it = set.begin(); it != set.end(); it++)
+   {
+      /*
+      cases:
+      / - root
+      ~ - user home: /home/{username}
+      . - current directory
+      .. - previous directory
+      */
+      if (*it == ".") {
+         cout << "Remove from path: " << *it << "\n";
+      }
+      else if (*it == "..") {
+         cout << "Remove from path .. and previous dir: " << *(it - 1) << "\n";
+         //removes the previous dir
+         returnSet.pop_back();
+         //removes the ..
+      }      
+      else {
+         //adds the item to the path
+         cout << "Add to path: " << *it << "\n";
+         returnSet.push_back(*it);
+      }
+   }
+   for (vector<string>::iterator it = returnSet.begin(); it != returnSet.end(); it++)
+   {
+      if (*it == "home")
+         canonPath = "/";
+      if (it != returnSet.end()) {
+         canonPath.append(*it + "/");
+      }
+      else {
+         canonPath.append(*it);
+      }
+   }
+   cout << '\n';
+   cout << canonPath << '\n';
+   return canonPath;
 }
 
-string * createAllStrings(string path)
+/**************************************************
+ * COMPARE FILE PATHS
+ * Takes 2 file paths and compares them
+ * ************************************************/
+void compareFilePaths( string path1, string path2 ) {
+    if( path1 == path2 ) {
+        cout << "Paths are Homographs\n";
+    }
+    else {
+        cout << "Paths are Non-Homographs\n";
+    }
+}
+
+/**************************************************
+ * SPLIT STRING
+ * takes a string, a string vector, and a delimiter
+ * Splits the string into its constituent parts.
+ * ************************************************/
+void splitString(string path, vector<string>& set, char delim)
 {
-   
+    //counters
+    int current, previous = 0;
+    
+    //find the first instance of the delimiter
+    current = path.find(delim);
+
+    if(current == 0){
+        cout << "WE ARE AT ROOT";
+    }
+
+    // //while the current position is not the null position of the string
+    while (current != std::string::npos) {
+
+        //place the substring from previous to the new position into our set.
+        set.push_back(path.substr(previous, current - previous));
+        
+        //Set the last position to the current.
+        previous = current + 1;
+        
+        //call it again.
+        current = path.find(delim, previous);
+    }
+    
+    //Add the substring after the last delimiter.
+    set.push_back(path.substr(previous, path.size() - previous));
 }
-
-
-
-/**************************************************
- * HANDLE USER INPUT
- * 
- * ************************************************/
-string handleUserInput( string path ) {
-	promptUser(path);
-	toLowerCase(path);
-	makeFilePathComplete(path);
-	return path;
-}
-
-
-/**************************************************
- * COMPARE PATH
- * This function will compare the user's path with 
- * a list of forbidden paths. It will then display 
- * whether the paths are the same or different.
- * ************************************************/
-void comparePath( string path )
-{
-	// Create a vector to hold list of forbidden paths
-	vector <string> testPaths{ "/home/user/secret/password.txt" };
-
-	// Compare user input with list of paths
-	if (find( testPaths.begin(), testPaths.end(), path) != testPaths.end() ) {
-		cout << "Filepath matches forbidden path. Access Denied.";
-	}
-	else {
-		cout << "Filepath does not match forbidden path. Access Granted.";
-	}
-}
-
-/**************************************************
- * COMPARE PATH NON HOMOGRAPHS
- * This function will compare the user's path with 
- * a set of Non-Homograph test cases. It will then
- * display whether the paths pass of fail the
- * Non-Homograph comparison.
- * ************************************************/
-void comparePathNonHomographs( string path )
-{	
-string currentDirectory = "/home/user/cse453"; //std::cout << "Current path is " << fs::current_path() << '\n';
-string fobiddenFile = "/home/user/secret/password.txt";
-string userPathFile = "./../../secret/password.txt";
-string pattern = ("./..");
-string secondPattern = ("../");
-size_t ocurrences = userPathFile.find("./..");
-
-
-if (ocurrences != string::npos) {
-	userPathFile.erase(0, pattern.length());
-	std::cout << "EXp: " << userPathFile << '\n';
-}
-
-size_t i = userPathFile.find(secondPattern);
-while (i != std::string::npos)
-{
-	userPathFile.erase(i, secondPattern.length());	
-	i = userPathFile.find(secondPattern, i);
-}	
-
-cout << "\n Final Path" << userPathFile << "\n";
-	
-	
-}
-
-/**************************************************
- * COMPARE PATH HOMOGRAPHS
- * This function will compare the user's path with 
- * a set of Homograph test cases. It will then
- * display whether the paths pass or fail the
- * Homograph comparison.
- * ************************************************/
-void comparePathHomographs( string path )
-{
-
-}
-
-
