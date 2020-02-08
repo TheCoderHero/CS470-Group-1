@@ -54,11 +54,16 @@ int main()
       // Create a string variable to hold filepath
       string filepath1 = "";
       string filepath2 = "";
+
+      // Create string variables to hold canonicalized paths
       string canonicalizedPath1 = "";
       string canonicalizedPath2 = "";
+
+      // Create vector variables to hold path sets
       vector<string> set1;
       vector<string> set2;
 
+      // Print menu options
       cout << "Please choose from the following menu items:\n";
       cout << "1. Compare File Paths For Homograph Attacks\n";
       cout << "2. Exit Program\n";
@@ -108,6 +113,7 @@ int main()
       }
       else
       {
+         // Handle invalid menu input (int)
          cout << "Invalid Menu Selection. Please Try Again.\n\n";
          menuOption = 0;
       }
@@ -130,7 +136,8 @@ string getWorkingDirectory()
 /**************************************************
  * PROMPT USER
  * This function will prompt the user for a filepath
- * and return a string
+ * and store the user input into the referenced
+ * variable.
  * ************************************************/
 void promptUser(string &path)
 {
@@ -144,7 +151,7 @@ void promptUser(string &path)
 /**************************************************
  * CANONIZE FILE PATH
  * Takes a file path and canonizes it.
- * Function handles the following Linux Symbols
+ * Function handles the following Linux Symbols:
  * cases:
  * / - root
  * ~ - user home: /home/{username}
@@ -172,20 +179,17 @@ string canonizePath(vector<string> &set)
       }
       else if (*it == "..")
       {
-         //removes the previous dir
+         // Removes the previous dir
          returnSet.pop_back();
-         //removes the ..
       }
       else
       {
-         //adds the item to the path
+         // Adds the item to the path
          returnSet.push_back(*it);
       }
    }
    for (vector<string>::iterator it = returnSet.begin(); it != returnSet.end(); it++)
    {
-      //if (*it == "home")
-      // canonPath = "/";
       if (it != returnSet.end())
       {
          canonPath.append(*it + "/");
