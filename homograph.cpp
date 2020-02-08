@@ -35,9 +35,7 @@
 using namespace std;
 
 string getWorkingDirectory();
-void handleUserInput(string &path);
 void promptUser(string &path);
-void toLowerCase(string &path);
 string canonizePath(vector<string> &set);
 void compareFilePaths(string path1, string path2);
 void splitString(string path, vector<string> &set, char delim);
