@@ -75,7 +75,7 @@ int main()
       // Handle menu selection error
       if (cin.fail())
       {
-         cout << "Invalid Menu Selection. Please Try Again.\n\n";
+         menuOption = 0;
          cin.clear();
          cin.ignore(1000, '\n');
       }
