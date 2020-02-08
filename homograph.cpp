@@ -114,7 +114,7 @@ int main()
       else if( menuOption != 1 && menuOption != 2 )
       {
          // Handle invalid menu input (int)
-         cout << "Invalid Menu Selection. Please Try Again.\n\n";
+         cout << "\nInvalid Menu Selection. Please Try Again.\n\n";
          menuOption = 0;
       }
    } while (menuOption != 2);
