@@ -38,7 +38,6 @@ string getWorkingDirectory();
 void handleUserInput( string &path );
 void promptUser( string &path );
 void toLowerCase( string &path );
-void cleanFileNameOne( string workingDIR, string &path );
 string canonizePath( vector<string>& set );
 void compareFilePaths( string path1, string path2 );
 void splitString( string path, vector<string>& set, char delim = '/' );
@@ -59,7 +58,8 @@ int main()
         string filepath2 = "";
         string canonicalizedPath1 = "";
         string canonicalizedPath2 = "";
-        vector<string> set;
+        vector<string> set1;
+        vector<string> set2;
 
         cout << "Please choose from the following menu items:\n";
         cout << "1. Compare File Paths For Homograph Attacks\n";
@@ -68,15 +68,23 @@ int main()
         cout << "Menu Selection: ";
         cin >> menuOption;
 
-        // Menu option logic
+        // Menu logic
         if (menuOption == 1) {
+
             // Prompt user for file paths
             handleUserInput( filepath1 );
-            cleanFileNameOne( workingDIR, filepath1 );
-            cout << "First filename input: " << filepath1 << "\n";
+
+            //Prompt user for second file path - No edits
             handleUserInput( filepath2 );
-            splitString( )
-            //Split String filename 2
+
+            // Split the paths and store tham as sets
+            splitString( filepath1, set1 );
+            splitString( filepath1, set2 );
+
+            // Canonize both sets
+            filepath1 = canonizePath( set1 );
+            filepath2 = canonizePath( set2 );
+
             compareFilePaths( filepath1, filepath2 );
         }
         else if (menuOption == 2) {
@@ -135,17 +143,6 @@ void toLowerCase( string &path ) {
     transform( path.begin(), path.end(), path.begin(), []( unsigned char letter ) {
         return tolower( letter );
         } );
-}
-
-/**************************************************
- * CLEAN FILE NAME ONE
- * Removes unecessary prepend symbols to filename.
- * ************************************************/
-void cleanFileNameOne( string workingDIR, string &path ) {
-    while ( path[0] == '.' || path[0] == '/' ) {
-        path.erase( path.begin() );
-    }
-    path = workingDIR + path;
 }
 
 /**************************************************

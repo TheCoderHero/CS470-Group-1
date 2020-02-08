@@ -41,7 +41,6 @@ string toLowerCase( string path );
 void comparePath( string path );
 void comparePathNonHomographs( string path );
 void comparePathHomographs( string path );
-string canonized(string path);
 
 int main()
 {
@@ -173,35 +172,6 @@ string handleUserInput( string path ) {
 	return path;
 }
 
-
-
-/**************************************************
- * CANONIZED
- * This function will convert the path into a 
- * standardized path so it can be compared
- * ************************************************/
-string canonized(const string path)
-{
-   string charPath;
-   charPath = getcwd(NULL, 0);
-
-   for (size_t i = 0; i < path.length(); i++)
-   {
-      if (path[i] == '.')
-      {
-         if (path[i + 1] == '.')
-         {
-            if (path[i + 1] == '/')
-            {
-               //charPath
-            }
-         }
-         else if (path[i + 1] == '/')
-            return charPath.append(path);
-
-      }
-   }
-}
 
 /**************************************************
  * COMPARE PATH
