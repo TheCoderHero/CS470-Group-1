@@ -39,9 +39,9 @@ void handleUserInput( string &path );
 void promptUser( string &path );
 void toLowerCase( string &path );
 void cleanFileNameOne( string workingDIR, string &path );
-void canonizeFilePath( string &path );
+string canonizePath( vector<string>& set );
 void compareFilePaths( string path1, string path2 );
-void splitString( string path, vector<string>& set, char delim = '/' ); 
+void splitString( string path, vector<string>& set, char delim = '/' );
 
 int main()
 {
@@ -57,6 +57,9 @@ int main()
         // Create a string variable to hold filepath
         string filepath1 = "";
         string filepath2 = "";
+        string canonicalizedPath1 = "";
+        string canonicalizedPath2 = "";
+        vector<string> set;
 
         cout << "Please choose from the following menu items:\n";
         cout << "1. Compare File Paths For Homograph Attacks\n";
@@ -72,8 +75,8 @@ int main()
             cleanFileNameOne( workingDIR, filepath1 );
             cout << "First filename input: " << filepath1 << "\n";
             handleUserInput( filepath2 );
-            canonizeFilePath( filepath1);
-            canonizeFilePath( filepath2 );
+            splitString( )
+            //Split String filename 2
             compareFilePaths( filepath1, filepath2 );
         }
         else if (menuOption == 2) {
@@ -149,8 +152,51 @@ void cleanFileNameOne( string workingDIR, string &path ) {
  * CANONIZE FILE PATH
  * Takes a file path and canonizes it.
  * ************************************************/
-void canonizeFilePath( string &path ) {
-
+string canonizePath(vector<string>& set) {
+   string canonPath = "";
+   if (*set.begin() != "home")
+   {
+      canonPath = _getcwd(NULL, 0) + '/';
+   }
+   vector<string> returnSet;
+   for (vector<string>::iterator it = set.begin(); it != set.end(); it++)
+   {
+      /*
+      cases:
+      / - root
+      ~ - user home: /home/{username}
+      . - current directory
+      .. - previous directory
+      */
+      if (*it == ".") {
+         cout << "Remove from path: " << *it << "\n";
+      }
+      else if (*it == "..") {
+         cout << "Remove from path .. and previous dir: " << *(it - 1) << "\n";
+         //removes the previous dir
+         returnSet.pop_back();
+         //removes the ..
+      }      
+      else {
+         //adds the item to the path
+         cout << "Add to path: " << *it << "\n";
+         returnSet.push_back(*it);
+      }
+   }
+   for (vector<string>::iterator it = returnSet.begin(); it != returnSet.end(); it++)
+   {
+      if (*it == "home")
+         canonPath = "/";
+      if (it != returnSet.end()) {
+         canonPath.append(*it + "/");
+      }
+      else {
+         canonPath.append(*it);
+      }
+   }
+   cout << '\n';
+   cout << canonPath << '\n';
+   return canonPath;
 }
 
 /**************************************************
