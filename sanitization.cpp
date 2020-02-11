@@ -79,7 +79,7 @@ string queryGeneration(string username, string password){
  * 
  * **************************************************/
 void testVulnerabilities(string sqlString){
-   // I don't think we need this function - John Tanner
+s
 }
 
 /*****************************************************
