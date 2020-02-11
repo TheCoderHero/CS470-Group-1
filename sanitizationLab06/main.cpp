@@ -22,6 +22,11 @@ void  feedVulnerabilitiesTautology();
 void  feedVulnerabilitiesUnion();
 void  feedVulnerabilitiesStatement();
 void  feedVulnerabilitiesComment();
+void  weakMitigationTautology();
+void  weakMitigationUnion();
+void  weakMitigationStatement();
+void  weakMitigationComment();
+void  strongMitigation();
 
 int main()
 {
@@ -47,7 +52,7 @@ void feedQueryGeneration() {
 }
 
 /**************************************************
- * FEED VULNERABILITIES
+ * FEED VULNERABILITIES TAUTOLOGY
  * This function feeds the test cases that perform the
  * following attack: tautology.
  * ************************************************/
@@ -56,7 +61,7 @@ void  feedVulnerabilitiesTautology() {
 }
 
 /**************************************************
- * FEED VULNERABILITIES
+ * FEED VULNERABILITIES UNION QUERY ATTACK
  * This function feeds the test cases that perform the
  * following attack: union query attack.
  * ************************************************/
@@ -65,7 +70,7 @@ void  feedVulnerabilitiesUnion() {
 }
 
 /**************************************************
- * FEED VULNERABILITIES
+ * FEED VULNERABILITIES ADDITIONAL STATEMENT ATTACK
  * This function feeds the test cases that perform the
  * following attack:additional statement attack
  * ************************************************/
@@ -74,10 +79,56 @@ void  feedVulnerabilitiesStatement() {
 }
 
 /**************************************************
- * FEED VULNERABILITIES
+ * FEED VULNERABILITIES COMMENT ATTACK
  * This function feeds the test cases that perform the
  * following attacks: comment attack
  * ************************************************/
 void  feedVulnerabilitiesComment() {
+
+}
+
+
+/**************************************************
+ * WEAK MITIGATION TAUTOLOGY
+ * This function provides a weak mitigation for the
+ * tautology attacks using the dozen valid test cases. 
+ * ************************************************/
+void  weakMitigationTautology() {
+
+}
+
+/**************************************************
+ * WEAK MITIGATION UNION QUERY ATTACK
+ * This function provides a weak mitigation for the
+ * union query attacks using the dozen valid test cases.
+ * ************************************************/
+void  weakMitigationUnion() {
+
+}
+
+/**************************************************
+ * WEAK MITIGATION ADDITIONAL STATEMENT ATTACK
+ * This function provides a weak mitigation for the
+ * additional statement attacks using the dozen valid test cases.
+ * ************************************************/
+void  weakMitigationStatement() {
+
+}
+
+/**************************************************
+ * WEAK MITIGATION COMMENT ATTACK
+ * This function provides a weak mitigation for the
+ * comment attacks using the dozen valid test cases.
+ * ************************************************/
+void  weakMitigationComment() {
+
+}
+
+/**************************************************
+ * STRONG MITIGATION
+ * This function provides a strong mitigation against
+ * all command injection attacks. 
+ * ************************************************/
+void  strongMitigation() {
 
 }
