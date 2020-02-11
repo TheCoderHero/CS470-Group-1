@@ -55,7 +55,7 @@ string queryGeneration(string *username, string *password){
 }
 
 /*****************************************************
- * 
+ * Test Vulnerabilities
  * 
  * **************************************************/
 void testVulenrabilities(string results){
