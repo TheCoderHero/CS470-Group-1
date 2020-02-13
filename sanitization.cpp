@@ -50,6 +50,11 @@ vector <userpass>validCases {
    {"Home_1234","1234_Home"}   
 };
 
+vector <userpass>tautologyAttacks {
+   {"Jimmy","password' OR '1'='1"},
+   {"Jimmy","true OR 'x'='x"}
+};
+
 int main() {
 
    // Create 2 string variables to hold user input
@@ -68,6 +73,8 @@ int main() {
 
    cout << "Output from for valid test cases: \n";
    testValidCases();
+
+   cout << "Output for Tautology attacks:\n";
 
    // Test SQL string for vulnerabilities
    testVulnerabilities(sqlString);
@@ -120,6 +127,10 @@ void testValidCases(){
  * 
  * **************************************************/
 void testVulnerabilities(string sqlString){
+
+   for(vector<userpass>::iterator it = tautologyAttacks.begin(); it != tautologyAttacks.end(); it++){
+      cout << queryGeneration((*it).username,(*it).password) << "\n";
+   }
 
 }
 
