@@ -55,6 +55,21 @@ vector <userpass>tautologyAttacks {
    {"Jimmy","true OR 'x'='x"}
 };
 
+vector <userpass>unionQueryAttacks{
+   {"Jimmy", "password' UNION SELECT authenticate FROM passList"},
+   {"Jimmy", "password' UNION SELECT name FROM passList"}
+};
+
+vector <userpass>additionalStatementAttacks{
+   {"Jimmy", "password' INSERT INTO users(name, id) VALUES 'bob', '9"},
+   {"Jimmy", "password' INSERT INTO users(userName, password) VALUES 'jimbob', 'Gotcha_right_now"}
+};
+
+vector <userpass>commentAttacks{
+   {"Jimmy'; --", "password"},
+   {"Jimmy", "password'; --"}
+};
+
 int main() {
 
    // Create 2 string variables to hold user input
