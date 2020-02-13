@@ -20,13 +20,35 @@
  ************************************************************************/
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-void prompForSQLQuery(string prompt, string &query);
+void promptForSQLQuery(string prompt, string &query);
 string queryGeneration(string username, string password);
+void testValidCases();
 void testVulnerabilities(string results);
 void weakMitigation(string tuatology);
 void strongMitigation(string cmdInjection);
+
+struct userpass {
+   string username;
+   string password;
+};
+
+vector <userpass>validCases {
+   {"Jimmy","_P34Gu_234"},
+   {"culigan","Password_1234"},
+   {"Franky","1234_password"},
+   {"Franky_445","12_pass_34_Word"},
+   {"Arnold_2003","pass_34_12_worD"},
+   {"2005_Kerry","5678_pword_1234"},
+   {"3_3_Jake","p_1234567"},
+   {"Alf_1980","Hairy_alien_80s"},
+   {"Kade_Emily_2005","_Got_Married_2_2"},
+   {"username","password"},
+   {"My_House","House_My"},
+   {"Home_1234","1234_Home"}   
+};
 
 int main() {
 
@@ -40,6 +62,12 @@ int main() {
 
    // Create variable to hold SQL string
    string sqlString = queryGeneration(username, password);
+
+   cout << "Output from prompted values\n";
+   cout << sqlString << "\n\n";
+
+   cout << "Output from for valid test cases: \n";
+   testValidCases();
 
    // Test SQL string for vulnerabilities
    testVulnerabilities(sqlString);
@@ -71,15 +99,28 @@ void promptForSQLQuery(string prompt, string &query){
  * string is then returned to the main function. 
  * **************************************************/
 string queryGeneration(string username, string password){
-
+   return "SELECT authenticate FROM passwordList WHERE name='"+username+"' and passwd='"+password+"';";
 }
+
+/*****************************************************
+ * TEST VALID CASES
+ * This function takes the test cases for valid input
+ * and generates the SQL queries for each of the inputs;
+ * It outputs directly to the screen.
+ * **************************************************/
+void testValidCases(){
+   for(vector<userpass>::iterator it = validCases.begin(); it != validCases.end(); it++){
+      cout << queryGeneration((*it).username,(*it).password) << "\n";
+   }
+}
+
 
 /*****************************************************
  * TEST VULNERABILIES
  * 
  * **************************************************/
 void testVulnerabilities(string sqlString){
-s
+
 }
 
 /*****************************************************
