@@ -20,16 +20,89 @@
  ************************************************************************/
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-void prompForSQLQuery(string prompt, string &query);
+
+struct userpass {
+   string username;
+   string password;
+};
+
+void promptForSQLQuery(string prompt, string& query);
 string queryGeneration(string username, string password);
-void testVulnerabilities(string results);
-void weakMitigation(string tuatology);
-void strongMitigation(string cmdInjection);
+void testValidCases();
+void testVulnerabilities(string results, vector <userpass> testVector);
+void weakMitigation(string checkString, vector<userpass> testVector);
+void strongMitigation(vector<userpass> testVector);
+
+vector <userpass>validCases {
+   {"Jimmy","_P34Gu_234"},
+   {"culigan","Password_1234"},
+   {"Franky","1234_password"},
+   {"Franky_445","12_pass_34_Word"},
+   {"Arnold_2003","pass_34_12_worD"},
+   {"2005_Kerry","5678_pword_1234"},
+   {"3_3_Jake","p_1234567"},
+   {"Alf_1980","Hairy_alien_80s"},
+   {"Kade_Emily_2005","_Got_Married_2_2"},
+   {"username","password"},
+   {"My_House","House_My"},
+   {"Home_1234","1234_Home"}   
+};
+
+vector <userpass>tautologyAttacks {
+   {"Jimmy","password' OR '1'='1"},
+   {"Jimmy","true OR 'x'='x"}
+};
+
+vector <userpass>unionQueryAttacks{
+   {"Jimmy", "password' UNION SELECT authenticate FROM passList"},
+   {"Jimmy", "password' UNION SELECT name FROM passList"}
+};
+
+vector <userpass>additionalStatementAttacks{
+   {"Jimmy", "password' INSERT INTO users(name, id) VALUES 'bob', '9"},
+   {"Jimmy", "password' INSERT INTO users(userName, password) VALUES 'jimbob', 'Gotcha_right_now"}
+};
+
+vector <userpass>commentAttacks{
+   {"Jimmy'; --", "password"},
+   {"Jimmy", "password'; --"}
+};
+
+vector <userpass>allCases{
+   // Normal Test Cases
+   {"Jimmy","_P34Gu_234"},
+   {"culigan","Password_1234"},
+   {"Franky","1234_password"},
+   {"Franky_445","12_pass_34_Word"},
+   {"Arnold_2003","pass_34_12_worD"},
+   {"2005_Kerry","5678_pword_1234"},
+   {"3_3_Jake","p_1234567"},
+   {"Alf_1980","Hairy_alien_80s"},
+   {"Kade_Emily_2005","_Got_Married_2_2"},
+   {"username","password"},
+   {"My_House","House_My"},
+   {"Home_1234","1234_Home"},
+   // Tautology attacks
+   {"Jimmy","password' OR '1'='1"},
+   {"Jimmy","true OR 'x'='x"},
+   // Union Query attacks
+   {"Jimmy", "password' UNION SELECT authenticate FROM passList"},
+   {"Jimmy", "password' UNION SELECT name FROM passList"},
+   // Additional Statement Attacks
+   {"Jimmy", "password'; INSERT INTO users(name, id) VALUES 'bob', '9"},
+   {"Jimmy", "password'; INSERT INTO users(userName, password) VALUES 'jimbob', 'Gotcha_right_now"},
+   // Comment Attacks
+   {"Jimmy'; --", "password"},
+   {"Jimmy", "password'; --"}
+};
+
+
 
 int main() {
-
+/*
    // Create 2 string variables to hold user input
    string username = "";
    string password = "";
@@ -41,14 +114,33 @@ int main() {
    // Create variable to hold SQL string
    string sqlString = queryGeneration(username, password);
 
+   cout << "Output from prompted values\n";
+   cout << sqlString << "\n\n";
+
+   cout << "Output from for valid test cases: \n";
+   testValidCases();
+
    // Test SQL string for vulnerabilities
-   testVulnerabilities(sqlString);
+   cout << "Output for Tautology attacks:\n";
+   testVulnerabilities("", tautologyAttacks);
+   cout << "Output for Union Query attacks:\n";
+   testVulnerabilities("", unionQueryAttacks);
+   cout << "Output for Additional Statement attacks:\n";
+   testVulnerabilities("", additionalStatementAttacks);*/
 
    // Run SQL string through weak mitigation test
-   weakMitigation(sqlString);
+   cout << "Mitigation for Tautology Atacks:\n";
+   weakMitigation(" OR ", allCases);
+   cout << "Mitigation for Union Query Atacks:\n";
+   weakMitigation("UNION", allCases);
+   cout << "Mitigation for Additional Statement Atacks:\n";
+   weakMitigation(";", allCases);
+   cout << "Mitigation for Tautology Atacks:\n";
+   weakMitigation("--", allCases);
 
+   
    // Run SQL string through strong mitigation test
-   strongMitigation(sqlString);
+   strongMitigation(allCases);
 
    return 0;
 }
@@ -71,29 +163,85 @@ void promptForSQLQuery(string prompt, string &query){
  * string is then returned to the main function. 
  * **************************************************/
 string queryGeneration(string username, string password){
-
+   return "SELECT authenticate FROM passwordList WHERE name='"+username+"' and passwd='"+password+"';";
 }
+
+/*****************************************************
+ * TEST VALID CASES
+ * This function takes the test cases for valid input
+ * and generates the SQL queries for each of the inputs;
+ * It outputs directly to the screen.
+ * **************************************************/
+void testValidCases(){
+   for(vector<userpass>::iterator it = validCases.begin(); it != validCases.end(); it++){
+      cout << queryGeneration((*it).username,(*it).password) << "\n";
+   }
+}
+
 
 /*****************************************************
  * TEST VULNERABILIES
  * 
  * **************************************************/
-void testVulnerabilities(string sqlString){
+void testVulnerabilities(string sqlString, vector<userpass> testVector){
+
+   for(vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++){
+      cout << queryGeneration((*it).username,(*it).password) << "\n";
+   }
 
 }
 
 /*****************************************************
- * WEAK MITIGATION
- * 
+ * WEAK TAUTOLOGY MITIGATION
+ * This function takes a string
  * **************************************************/
-void weakMitigation(string tuatology){
+void weakMitigation(string checkString, vector<userpass> testVector){
+   int countPassed = 0;
+   for (vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++) {
 
+      // Check username and password for testcase.
+	  string originalPass = (*it).password;
+      size_t posPassword = string::npos;
+      do
+      {
+         posPassword = (*it).password.find(checkString);
+         if (posPassword != string::npos) {
+            (*it).password.erase(posPassword, checkString.length());
+         }
+      }
+      while (posPassword != string::npos);
+
+      string originalUser = (*it).username;
+      size_t posUser = string::npos;
+      do
+      {
+         posUser = (*it).username.find(checkString);
+         if (posUser != string::npos) {
+            (*it).username.erase(posUser, checkString.length());
+         }
+      }
+      while (posUser != string::npos);
+     
+	  if (originalPass == (*it).password && originalUser == (*it).username) {
+		 countPassed++;
+	  }
+	  else {
+		 cout << "Original:  " << queryGeneration(originalUser, originalPass) << "\n";
+		 cout << "Mitigated: " << queryGeneration((*it).username, (*it).password) << "\n";
+	  }
+  }
+   cout << countPassed << " test cases were unchanged.\n\n";
 }
 
 /*****************************************************
  * STRONG MITIGATION
  * 
  * **************************************************/
-void strongMitigation(string cmdInjection){
-
+void strongMitigation(vector<userpass> testVector){
+   for (vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++) {
+      
+      string outString = queryGeneration((*it).username, (*it).password);
+      //size_t pos = outString.find((*it))
+      //if()
+   }
 }
