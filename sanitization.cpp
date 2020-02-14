@@ -188,6 +188,7 @@ void testVulnerabilities(string sqlString, vector<userpass> testVector){
    for(vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++){
       cout << queryGeneration((*it).username,(*it).password) << "\n";
    }
+
 }
 
 /*****************************************************
