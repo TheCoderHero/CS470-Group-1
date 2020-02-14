@@ -23,21 +23,18 @@
 #include <vector>
 using namespace std;
 
-void promptForSQLQuery(string prompt, string &query);
-string queryGeneration(string username, string password);
-void testValidCases();
-void testVulnerabilities(string results);
-void weakTuatology(string attack);
-void weakUnion(string attack);
-void weakAdditionalStatement(string attack);
-void weakComment(string attack);
-
-void strongMitigation(string cmdInjection);
 
 struct userpass {
    string username;
    string password;
 };
+
+void promptForSQLQuery(string prompt, string& query);
+string queryGeneration(string username, string password);
+void testValidCases();
+void testVulnerabilities(string results, vector <userpass> testVector);
+void weakMitigation(string tuatology, vector <userpass> testVector);
+void strongMitigation(string cmdInjection, vector <userpass> testVector);
 
 vector <userpass>validCases {
    {"Jimmy","_P34Gu_234"},
@@ -74,6 +71,8 @@ vector <userpass>commentAttacks{
    {"Jimmy", "password'; --"}
 };
 
+
+
 int main() {
 
    // Create 2 string variables to hold user input
@@ -93,16 +92,19 @@ int main() {
    cout << "Output from for valid test cases: \n";
    testValidCases();
 
-   cout << "Output for Tautology attacks:\n";
-
    // Test SQL string for vulnerabilities
-   testVulnerabilities(sqlString);
+   cout << "Output for Tautology attacks:\n";
+   testVulnerabilities(sqlString, tautologyAttacks);
+   cout << "Output for Union Query attacks:\n";
+   testVulnerabilities(sqlString, unionQueryAttacks);
+   cout << "Output for Additional Statement attacks:\n";
+   testVulnerabilities(sqlString, additionalStatementAttacks);
 
    // Run SQL string through weak mitigation test
-   weakMitigation(sqlString);
+   weakMitigation(sqlString, tautologyAttacks);
 
    // Run SQL string through strong mitigation test
-   strongMitigation(sqlString);
+   strongMitigation(sqlString, tautologyAttacks);
 
    return 0;
 }
@@ -145,9 +147,9 @@ void testValidCases(){
  * TEST VULNERABILIES
  * 
  * **************************************************/
-void testVulnerabilities(string sqlString){
+void testVulnerabilities(string sqlString, vector<userpass> testVector){
 
-   for(vector<userpass>::iterator it = tautologyAttacks.begin(); it != tautologyAttacks.end(); it++){
+   for(vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++){
       cout << queryGeneration((*it).username,(*it).password) << "\n";
    }
 
@@ -157,14 +159,22 @@ void testVulnerabilities(string sqlString){
  * WEAK MITIGATION
  * 
  * **************************************************/
-void weakMitigation(string tuatology){
+void weakMitigation(string tuatology, vector <userpass> testVector){
+   /////for (vector<userpass>::iterator it = tautologyAttacks.begin(); it != tautologyAttacks.end(); it++) {
 
+   //   cout << queryGeneration((*it).username, (*it).password) << "\n";
+  // }
 }
 
 /*****************************************************
  * STRONG MITIGATION
  * 
  * **************************************************/
-void strongMitigation(string cmdInjection){
-
+void strongMitigation(string cmdInjection, vector <userpass> testVector){
+   for (vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++) {
+      
+      string outString = queryGeneration((*it).username, (*it).password);
+      //size_t pos = outString.find((*it))
+      //if()
+   }
 }
