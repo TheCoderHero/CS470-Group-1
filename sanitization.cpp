@@ -27,7 +27,11 @@ void promptForSQLQuery(string prompt, string &query);
 string queryGeneration(string username, string password);
 void testValidCases();
 void testVulnerabilities(string results);
-void weakMitigation(string tuatology);
+void weakTuatology(string attack);
+void weakUnion(string attack);
+void weakAdditionalStatement(string attack);
+void weakComment(string attack);
+
 void strongMitigation(string cmdInjection);
 
 struct userpass {
