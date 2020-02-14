@@ -238,7 +238,7 @@ void weakMitigation(string checkString, vector<userpass> testVector){
  * 
  * **************************************************/
 void strongMitigation(vector<userpass> testVector){
-   for (vector<userpass>::iterator it = tautologyAttacks.begin(); it != tautologyAttacks.end(); it++) {
+   for (vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++) {
       
       string outString = queryGeneration((*it).username, (*it).password);
       //size_t pos = outString.find((*it))
