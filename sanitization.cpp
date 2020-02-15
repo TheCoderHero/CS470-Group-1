@@ -34,7 +34,7 @@ string queryGeneration(string username, string password);
 void testValidCases();
 void testVulnerabilities(string results, vector <userpass> testVector);
 void weakMitigation(string checkString, vector<userpass> testVector);
-void strongMitigation(vector<userpass> testVector);
+void strongMitigation(string attacks[], vector<userpass> testVector);
 
 vector <userpass>validCases {
    {"Jimmy","_P34Gu_234"},
@@ -100,9 +100,9 @@ vector <userpass>allCases{
 };
 
 
-
 int main() {
-/*
+
+
    // Create 2 string variables to hold user input
    string username = "";
    string password = "";
@@ -126,21 +126,24 @@ int main() {
    cout << "Output for Union Query attacks:\n";
    testVulnerabilities("", unionQueryAttacks);
    cout << "Output for Additional Statement attacks:\n";
-   testVulnerabilities("", additionalStatementAttacks);*/
+   testVulnerabilities("", additionalStatementAttacks);
 
    // Run SQL string through weak mitigation test
-   cout << "Mitigation for Tautology Atacks:\n";
+   cout << "Weak Mitigation for Tautology Atacks:\n";
    weakMitigation(" OR ", allCases);
-   cout << "Mitigation for Union Query Atacks:\n";
+   cout << "Weak Mitigation for Union Query Atacks:\n";
    weakMitigation("UNION", allCases);
-   cout << "Mitigation for Additional Statement Atacks:\n";
+   cout << "Weak Mitigation for Additional Statement Atacks:\n";
    weakMitigation(";", allCases);
-   cout << "Mitigation for Tautology Atacks:\n";
+   cout << "Weak Mitigation for Tautology Atacks:\n";
    weakMitigation("--", allCases);
 
    
    // Run SQL string through strong mitigation test
-   strongMitigation(allCases);
+   cout << "Strong Mitigation for all Attacks:\n";
+   string Attacks[5] = { ";", "'", "UNION", "--", "OR" };
+   strongMitigation(Attacks, allCases);
+   cout << "\n";
 
    return 0;
 }
@@ -237,11 +240,46 @@ void weakMitigation(string checkString, vector<userpass> testVector){
  * STRONG MITIGATION
  * 
  * **************************************************/
-void strongMitigation(vector<userpass> testVector){
+void strongMitigation(string attacks[], vector<userpass> testVector) 
+{
+   int countPassed = 0;
+
    for (vector<userpass>::iterator it = testVector.begin(); it != testVector.end(); it++) {
-      
-      string outString = queryGeneration((*it).username, (*it).password);
-      //size_t pos = outString.find((*it))
-      //if()
+
+      // Check username and password for testcase.
+      string originalPass = (*it).password;
+      size_t posPassword = string::npos;
+      string originalUser = (*it).username;
+      size_t posUser = string::npos;
+      for (size_t i = 0; i < attacks->length(); i++)
+      {
+         string checkString = attacks[i];
+         posPassword = string::npos;
+         do
+         {
+            posPassword = (*it).password.find(checkString);
+            if (posPassword != string::npos) {
+               (*it).password.erase(posPassword, checkString.length());
+            }
+         } while (posPassword != string::npos);
+
+         posUser = string::npos;
+         do
+         {
+            posUser = (*it).username.find(checkString);
+            if (posUser != string::npos) {
+               (*it).username.erase(posUser, checkString.length());
+            }
+         } while (posUser != string::npos);
+      }
+
+      if (originalPass == (*it).password && originalUser == (*it).username) {
+         countPassed++;
+      }
+      else {
+         cout << "Original:  " << queryGeneration(originalUser, originalPass) << "\n";
+         cout << "Mitigated: " << queryGeneration((*it).username, (*it).password) << "\n";
+      }
    }
+   cout << countPassed << " test cases were unchanged.\n\n";
 }
