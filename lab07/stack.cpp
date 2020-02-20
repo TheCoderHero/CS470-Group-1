@@ -101,12 +101,12 @@ void two(long number)              // 345678
       ////////////////////////////////////////////////
       // Insert code here to display the callstack
       pLong = &(bow)-i;
-      // pChar = &(bow)-i;
-
-      cout << setw(4) << i << setw(16) << &(bow)-i 
-           << setw(20) << right << hex  << *pLong 
+      pChar = (char *) pLong;
+     
+      cout << '[' << setw(2) << i << ']' << setw(15) << &(bow)-i 
+           << right << setw(20) << hex <<  *pLong 
            << setw(20) << dec << *pLong 
-         
+           << setw(18) << right << displayCharArray(pChar)
            << "\n";
       //
       ////////////////////////////////////////////////
