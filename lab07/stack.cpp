@@ -101,7 +101,7 @@ void two(long number)              // 345678
       ////////////////////////////////////////////////
       // Insert code here to display the callstack
       pLong = &(bow)+i;
-      pChar = (char *) (&(bow)+i);
+      pChar = (char *) (pLong);
 
       cout << '[' << setw(2) << i << ']' << setw(15) << pLong 
            << setw(20) << right << showbase << hex <<  *pLong 
@@ -118,11 +118,12 @@ void two(long number)              // 345678
    // change text in main() to "*main**"
 
    // change number in main() to 654321
+   *(&(bow)+21) = (long)654321;
 
    // change pointerFunction in main() to point to pass
 
    // change message in main() to point to passMessage
-
+   // *(&(bow)+21)
    //
    ////////////////////////////////////////////////
 }
