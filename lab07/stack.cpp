@@ -1,4 +1,19 @@
 
+/***********************************************************************
+* Program:
+*    Lab 07, Stack Probe
+*    Brother Helfrich, CS470
+* Author:
+*    Osvaldo Carrillo Lira
+*    Aaron Eiche
+*    Zach Heiner
+*    Collin Steel
+*    John Tanner
+*    Jordon Thompson
+* Summary: 
+*    This program is designed to illustrate weaknesses in the stack.
+*
+************************************************************************/
 #include <iostream>
 #include <iomanip>
 #include <string>
