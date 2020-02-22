@@ -131,14 +131,13 @@ void two(long number)              // 345678
    // Insert code here to change the variables in main()
                                                                                 
    // change text in main() to "*main**"
-
+   *(&(bow)+17) = 0x2a2a6e69616d2a;
    // change number in main() to 654321
-   *(&(bow)+21) = (long)654321;
-
+   *(&(bow)+20) = (long)654321;
    // change pointerFunction in main() to point to pass
-
+   *(&(bow)+19) = (long)(void *)pass;
    // change message in main() to point to passMessage
-   // *(&(bow)+21)
-   //
+   *(&(bow)+18) = (long)(void *)passMessage;
+   // 0x2a2a6e69616d2a
    ////////////////////////////////////////////////
 }
