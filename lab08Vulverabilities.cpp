@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-void arrayVulnerability();
+void arrayVulnerability(int param);
 void arrayWorking();
 void arrayExploit();
 void arcVulnerability();
@@ -22,7 +22,6 @@ void intExploit();
 void ansiVulnerability();
 void  ansiWorking();
 void ansiExploit();
-
 /*************************************
 * Class  Vulnerability
 * This class is vulnerable to vtable smashing attack
@@ -38,26 +37,36 @@ public:
     }
 };
 
+
 /**********************************************
  * MAIN : The top of the callstack.
  **********************************************/
 int main()
 {
- 
+
     // prompt
     cout << "Please select an option:\n";
     cout << "  1.  Array Index Attack\n";
+    cout << "  2.  Pointer Subterfuge\n";
+    cout << "  3.  ARC Injection\n";
+    cout << "  4.  VTable Spraying\n";
+    cout << "  5.  Stack Smashing\n";
+    cout << "  6.  Heap Spraying\n";
+    cout << "  7.  Integer Overflow\n";
+    cout << "  8.  ANSI-Unicode Conversion\n";
 
     int selection;
     cin >> selection;
 
     switch (selection) {
-    case 1: vtableWorking();
+    case 1: arrayWorking(); arrayExploit();
+        break;
+    case 2:;
         break;
     default:
         cout << "Unkown option\n";
-            return 1;
-        
+        return 1;
+
     }
 
     return 0;
@@ -72,9 +81,25 @@ int main()
  * 2. The array index variable must be reachable through external input.
  * 3. There must not be bounds checking on the array index variable.
  ************************************/
-void arrayVulnerability() {
+void arrayVulnerability(int param) {
 
-   
+    /****NOT WORKING YET*****************/
+    // There must be an array
+    int array[4];
+    bool  anotherVar = 1;
+
+    array[param] = 2; // If param ==4 or >4, problems.
+    cout << "The new element to the array: " << endl;
+    cout << "The variable changed its value to: " << anotherVar << endl;
+
+    //cout << "The Boolean: " << &anotherVar << endl;
+    //cout << "The array vulnerability:" << &array[0] << endl;
+    //cout << "The array vulnerability:" << &array[1] << endl;
+    //cout << "The array vulnerability:" << &array[2] << endl;
+    //cout << "The array vulnerability:" << &array[3] << endl;
+    //cout << "The array vulnerability:" << &array[4] << endl;
+
+
 }
 
 /*************************************
@@ -82,11 +107,12 @@ void arrayVulnerability() {
  * This calls the array vulneravility function.
  * This do not exploit the vulnerability, but rather
  * demonstrades the array vulnerability function functions
- * normally under non-malicious input. 
+ * normally under non-malicious input.
  ************************************/
 void arrayWorking() {
 
-    cout << "arra" << "\n";
+    cout << "Array Working as expected\n";
+    arrayVulnerability(2);
 
 }
 
@@ -97,6 +123,8 @@ void arrayWorking() {
  *************************************/
 void arrayExploit()
 {
+    cout << "Array with vulnerability\n";
+    arrayVulnerability(5);
 }
 
 
@@ -256,7 +284,7 @@ void  ansiWorking() {
 /**************************************
  * ANSI EXPLOIT
  * This calls the the ansi vulnerability function
- * and demonstrates an ANSI_Unicode attack. 
+ * and demonstrates an ANSI_Unicode attack.
  *************************************/
 void ansiExploit() {
 
