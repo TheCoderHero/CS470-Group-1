@@ -22,6 +22,12 @@ void intExploit();
 void ansiVulnerability();
 void  ansiWorking();
 void ansiExploit();
+
+// Utilities
+void safe();
+void dangerous();
+int convert(char num[]);
+
 /*************************************
 * Class  Vulnerability
 * This class is vulnerable to vtable smashing attack
@@ -47,13 +53,12 @@ int main()
     // prompt
     cout << "Please select an option:\n";
     cout << "  1.  Array Index Attack\n";
-    cout << "  2.  Pointer Subterfuge\n";
-    cout << "  3.  ARC Injection\n";
-    cout << "  4.  VTable Spraying\n";
-    cout << "  5.  Stack Smashing\n";
-    cout << "  6.  Heap Spraying\n";
-    cout << "  7.  Integer Overflow\n";
-    cout << "  8.  ANSI-Unicode Conversion\n";
+    cout << "  2.  ARC Injection\n";
+    cout << "  3.  VTable Spraying\n";
+    cout << "  4.  Stack Smashing\n";
+    cout << "  5.  Heap Spraying\n";
+    cout << "  6.  Integer Overflow\n";
+    cout << "  7.  ANSI-Unicode Conversion\n";
 
     int selection;
     cin >> selection;
@@ -61,7 +66,7 @@ int main()
     switch (selection) {
     case 1: arrayWorking(); arrayExploit();
         break;
-    case 2:;
+    case 2: arcVulnerability();
         break;
     default:
         cout << "Unkown option\n";
@@ -92,14 +97,7 @@ void arrayVulnerability(int param) {
 
     array[param] = false; // If param ==4 or >4, problems.
     cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
-    //cout << "The array vulnerability:" << &array[-3] << endl;
-    //cout << "The array vulnerability:" << &array[-2] << endl;
-    //cout << "The array vulnerability:" << &array[-1] << endl;
-    //cout << "The array vulnerability:" << &array[0] << endl;
-    //cout << "The array vulnerability:" << &array[1] << endl;
-    //cout << "The array vulnerability:" << &array[2] << endl;
-    //cout << "The array vulnerability:" << &array[3] << endl;
-    //cout << "The array vulnerability:" << &array[4] << endl;
+
 
 
 }
@@ -132,10 +130,64 @@ void arrayExploit()
 
 /*************************************
 * ARC VULNERABILITY
-* This function is vulnerable to the ARC injection attack
+* This function is vulnerable to the ARC injection attack.
+* There must be a function pointer used in the code.
+* Through some vulnerability, there must be a way for user input to
+* overwrite the function pointer.
+* After the memory is overwritten, the function pointer must be
+* dereferenced.
 *************************************/
 void arcVulnerability() {
 
+    /** WORKING ON THIS */
+    long buffer[1];
+    void(*pointerFunction)() = safe;
+
+    cout << "Address of the dangerous function: " << *dangerous << endl;
+    cout << "Address of the safe function: " << *safe << endl;
+    cout << "Address of the pointer function safe: " << (void*)pointerFunction << endl;
+    cout << "Address of the pointer function: " << &pointerFunction << endl;
+
+    cout << "Buffer 0: " << &buffer[-3] << endl;
+    cout << "Buffer 1: " << &buffer[1] << endl;
+
+
+    void* pointint = &dangerous;
+    char* pChar;
+    pChar = (char*)pointint; //OK in both C and C++
+
+    const char* some = (char*)*dangerous;
+    cout << "Convertion: " << some << endl;
+
+    cout << "Input a Value: ";
+    cin >> buffer[-3];
+    pointerFunction();
+}
+
+void safe() {
+    cout << "This is a safe function" << endl;
+}
+
+void dangerous() {
+    cout << "This is a dangerours function" << endl;
+}
+
+//convert hexadecimal to decimal
+int convert(char num[]) {
+    int len = strlen(num);
+    int base = 1;
+    int temp = 0;
+    for (int i = len - 1; i >= 0; i--) {
+        if (num[i] >= '0' && num[i] <= '9') {
+            temp += (num[i] - 48) * base;
+            base = base * 16;
+        }
+        else if (num[i] >= 'A' && num[i] <= 'F') {
+            temp += (num[i] - 55) * base;
+            base = base * 16;
+        }
+    }
+    return temp;
 }
 
 /*************************************
