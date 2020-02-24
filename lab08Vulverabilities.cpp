@@ -83,16 +83,18 @@ int main()
  ************************************/
 void arrayVulnerability(int param) {
 
-    /****NOT WORKING YET*****************/
-    // There must be an array
+    /****NOTE: This solution might work in some compilers and in others no. The parameter assign to
+    this is '-3'****/
     int array[4];
-    bool  anotherVar = 1;
+    bool  authen = true;
 
-    array[param] = 2; // If param ==4 or >4, problems.
-    cout << "The new element to the array: " << endl;
-    cout << "The variable changed its value to: " << anotherVar << endl;
+    cout << "The Boolean 'authen' variable before being assign to the array: " << authen << endl;
 
-    //cout << "The Boolean: " << &anotherVar << endl;
+    array[param] = false; // If param ==4 or >4, problems.
+    cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
+    //cout << "The array vulnerability:" << &array[-3] << endl;
+    //cout << "The array vulnerability:" << &array[-2] << endl;
+    //cout << "The array vulnerability:" << &array[-1] << endl;
     //cout << "The array vulnerability:" << &array[0] << endl;
     //cout << "The array vulnerability:" << &array[1] << endl;
     //cout << "The array vulnerability:" << &array[2] << endl;
@@ -124,7 +126,7 @@ void arrayWorking() {
 void arrayExploit()
 {
     cout << "Array with vulnerability\n";
-    arrayVulnerability(5);
+    arrayVulnerability(-3);
 }
 
 
