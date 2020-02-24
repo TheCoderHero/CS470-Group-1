@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <sstream> //for std::stringstream 
+
 using namespace std;
 
 void arrayVulnerability(int param);
@@ -66,7 +68,7 @@ int main()
     switch (selection) {
     case 1: arrayWorking(); arrayExploit();
         break;
-    case 2: arcVulnerability();
+    case 2: /*arcWorking();*/ arcExploit();
         break;
     default:
         cout << "Unkown option\n";
@@ -137,27 +139,26 @@ void arrayExploit()
 * After the memory is overwritten, the function pointer must be
 * dereferenced.
 *************************************/
-void arcVulnerability() {
+void arcVulnerability(int param) {
 
     /** WORKING ON THIS */
     long buffer[1];
     void(*pointerFunction)() = safe;
 
-    cout << "Address of the dangerous function: " << *dangerous << endl;
-    cout << "Address of the safe function: " << *safe << endl;
-    cout << "Address of the pointer function safe: " << (void*)pointerFunction << endl;
-    cout << "Address of the pointer function: " << &pointerFunction << endl;
+    //cout << "Address of the dangerous function: " << *dangerous << endl;
+    //cout << "Address of the safe function: " << *safe << endl;
+    //cout << "Address of the pointer function safe: " << (void*)pointerFunction << endl;
+    //cout << "Address of the pointer function: " << &pointerFunction << endl;
 
-    cout << "Buffer 0: " << &buffer[-3] << endl;
-    cout << "Buffer 1: " << &buffer[1] << endl;
+    //cout << "Buffer 0: " << &buffer[-3] << endl;
+    //cout << "Buffer 1: " << &buffer[1] << endl;
+    cout << "Input: " << param << endl;
+    buffer[-3] = param;
 
-
-    char characters = &safe;
-    cout << "Convertion: " << characters << endl;
-
-    cout << "Input a Value: ";
-    cin >> buffer[-3];
     pointerFunction();
+
+
+
 }
 
 void safe() {
@@ -165,7 +166,9 @@ void safe() {
 }
 
 void dangerous() {
-    cout << "This is a dangerours function" << endl;
+
+    cout << "This is a dangerous function" << endl;
+
 }
 
 //convert hexadecimal to decimal
@@ -195,6 +198,10 @@ int convert(char num[]) {
  ************************************/
 void  arcWorking() {
 
+    /* NO WORKING YET*/
+    cout << "ARC Vulnerability working" << endl;
+    arcVulnerability(1);
+
 }
 
 /**************************************
@@ -204,6 +211,20 @@ void  arcWorking() {
  *************************************/
 void arcExploit() {
 
+    void* pDangerous = dangerous;
+    stringstream addressToString;
+    addressToString << pDangerous;
+    string address = addressToString.str();
+    /* cout << address << endl;*/
+
+     // Get the hexadeciaml to int
+    unsigned int x;
+    stringstream ss;
+    ss << std::hex << address;
+    ss >> x;
+    //cout << "The address :" << x << endl;
+    cout << "ARC Vulnerability exploit" << endl;
+    arcVulnerability(x);
 }
 
 
