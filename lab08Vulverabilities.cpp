@@ -152,12 +152,8 @@ void arcVulnerability() {
     cout << "Buffer 1: " << &buffer[1] << endl;
 
 
-    void* pointint = &dangerous;
-    char* pChar;
-    pChar = (char*)pointint; //OK in both C and C++
-
-    const char* some = (char*)*dangerous;
-    cout << "Convertion: " << some << endl;
+    char characters = &safe;
+    cout << "Convertion: " << characters << endl;
 
     cout << "Input a Value: ";
     cin >> buffer[-3];
