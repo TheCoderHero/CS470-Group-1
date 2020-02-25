@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <sstream> //for std::stringstream 
+#include <sstream> //for std::stringstream
 
 using namespace std;
 
@@ -8,21 +8,21 @@ void arrayVulnerability(int param);
 void arrayWorking();
 void arrayExploit();
 void arcVulnerability();
-void  arcWorking();
+void arcWorking();
 void arcExploit();
-void  vtableWorking();
+void vtableWorking();
 void vtableExploit();
 void stackVulnerability();
-void  stackWorking();
+void stackWorking();
 void stackExploit();
 void heapVulnerability();
-void  heapWorking();
+void heapWorking();
 void heapExploit();
 void intVulnerability();
-void  integerWorking();
+void integerWorking();
 void intExploit();
 void ansiVulnerability();
-void  ansiWorking();
+void ansiWorking();
 void ansiExploit();
 
 // Utilities
@@ -34,17 +34,19 @@ int convert(char num[]);
 * Class  Vulnerability
 * This class is vulnerable to vtable smashing attack
 *************************************/
-class Vulnerability {
+class Vulnerability
+{
 public:
-    void firstMethod() {
+    void firstMethod()
+    {
         cout << "First Method\n";
     }
 
-    void secondMethod() {
+    void secondMethod()
+    {
         cout << "Second Method\n";
     }
 };
-
 
 /**********************************************
  * MAIN : The top of the callstack.
@@ -65,22 +67,43 @@ int main()
     int selection;
     cin >> selection;
 
-    switch (selection) {
-    case 1: arrayWorking(); arrayExploit();
+    switch (selection)
+    {
+    case 1:
+        arrayWorking();
+        arrayExploit();
         break;
-    case 2: arcWorking(); arcExploit();
+    case 2:
+        arcWorking();
+        arcExploit();
+        break;
+    case 3:
+        vtableWorking();
+        vtableExploit();
+        break;
+    case 4:
+        stackWorking();
+        stackExploit();
+        break;
+    case 5:
+        heapWorking();
+        heapExploit();
+        break;
+    case 6:
+        integerWorking();
+        intExploit();
+        break;
+    case 7:
+        ansiWorking();
+        ansiExploit();
         break;
     default:
         cout << "Unkown option\n";
         return 1;
-
     }
 
     return 0;
-
-
 }
-
 
 /*************************************
  * ARRAY VULNERABILTY
@@ -88,20 +111,18 @@ int main()
  * 2. The array index variable must be reachable through external input.
  * 3. There must not be bounds checking on the array index variable.
  ************************************/
-void arrayVulnerability(int param) {
+void arrayVulnerability(int param)
+{
 
     /****NOTE: This solution might work in some compilers and in others no. The parameter assign to
     this is '-3'****/
     int array[4];
-    bool  authen = true;
+    bool authen = true;
 
     cout << "The Boolean 'authen' variable before being assign to the array: " << authen << endl;
 
     array[param] = false; // If param ==4 or >4, problems.
     cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
-
-
-
 }
 
 /*************************************
@@ -111,11 +132,11 @@ void arrayVulnerability(int param) {
  * demonstrades the array vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void arrayWorking() {
+void arrayWorking()
+{
 
     cout << "Array Working as expected\n";
     arrayVulnerability(2);
-
 }
 
 /**************************************
@@ -129,7 +150,6 @@ void arrayExploit()
     arrayVulnerability(-3);
 }
 
-
 /*************************************
 * ARC VULNERABILITY
 * This function is vulnerable to the ARC injection attack.
@@ -139,43 +159,49 @@ void arrayExploit()
 * After the memory is overwritten, the function pointer must be
 * dereferenced.
 *************************************/
-void arcVulnerability(int param) {
+void arcVulnerability(int param)
+{
 
-    /** WORKING ON THIS */
     long buffer[1];
-    void(*pointerFunction)() = safe;
+    void (*pointerFunction)() = safe;
     cout << "Input: " << param << endl;
 
     // We don't want to overwrite the original function
-    // This is for demonstration purposes. 
-    if (param > 100) {
+    // This is for demonstration purposes.
+    if (param > 100)
+    {
         buffer[-3] = param;
     }
 
     pointerFunction();
 }
 
-void safe() {
+void safe()
+{
     cout << "This is a safe function" << endl;
 }
 
-void dangerous() {
+void dangerous()
+{
 
     cout << "This is a dangerous function" << endl;
-
 }
 
 //convert hexadecimal to decimal
-int convert(char num[]) {
+int convert(char num[])
+{
     int len = strlen(num);
     int base = 1;
     int temp = 0;
-    for (int i = len - 1; i >= 0; i--) {
-        if (num[i] >= '0' && num[i] <= '9') {
+    for (int i = len - 1; i >= 0; i--)
+    {
+        if (num[i] >= '0' && num[i] <= '9')
+        {
             temp += (num[i] - 48) * base;
             base = base * 16;
         }
-        else if (num[i] >= 'A' && num[i] <= 'F') {
+        else if (num[i] >= 'A' && num[i] <= 'F')
+        {
             temp += (num[i] - 55) * base;
             base = base * 16;
         }
@@ -190,12 +216,12 @@ int convert(char num[]) {
  * demonstrades the arc vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void  arcWorking() {
+void arcWorking()
+{
 
     /* NO WORKING YET*/
     cout << "ARC Vulnerability working" << endl;
     arcVulnerability(1);
-
 }
 
 /**************************************
@@ -203,9 +229,10 @@ void  arcWorking() {
  * This calls the the arc vulnerability function
  * and demonstrade the concept of the array vulnerability
  *************************************/
-void arcExploit() {
+void arcExploit()
+{
 
-    void* pDangerous = dangerous;
+    void *pDangerous = dangerous;
     stringstream addressToString;
     addressToString << pDangerous;
     string address = addressToString.str();
@@ -219,7 +246,6 @@ void arcExploit() {
     arcVulnerability(x);
 }
 
-
 /*************************************
  * VTABLE WORKING
  * This instances the Vulneravility object and calls
@@ -228,7 +254,8 @@ void arcExploit() {
  * demonstrades the arc vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void  vtableWorking() {
+void vtableWorking()
+{
     Vulnerability instance;
     instance.firstMethod();
 }
@@ -237,16 +264,16 @@ void  vtableWorking() {
  * VTABLE EXPLOIT
  * This demonstrade the vtable sprying
  *************************************/
-void vtableExploit() {
-
+void vtableExploit()
+{
 }
 
 /*************************************
 * STACK VULNERABILITY
 * This function contains a stack smashing vulnerability
 *************************************/
-void stackVulnerability() {
-
+void stackVulnerability()
+{
 }
 
 /*************************************
@@ -256,8 +283,8 @@ void stackVulnerability() {
  * demonstrades the arc vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void  stackWorking() {
-
+void stackWorking()
+{
 }
 
 /**************************************
@@ -265,16 +292,16 @@ void  stackWorking() {
  * This calls the the stack vulnerability function
  * and demonstrade the concept of the array vulnerability
  *************************************/
-void stackExploit() {
-
+void stackExploit()
+{
 }
 
 /*************************************
 * HEAP VULNERABILITY
 * This function contains a heap smashing vulnerability
 *************************************/
-void heapVulnerability() {
-
+void heapVulnerability()
+{
 }
 
 /*************************************
@@ -284,8 +311,8 @@ void heapVulnerability() {
  * demonstrades the heap vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void  heapWorking() {
-
+void heapWorking()
+{
 }
 
 /**************************************
@@ -293,16 +320,16 @@ void  heapWorking() {
  * This calls the the heap vulnerability function
  * and demonstrates heap spraying.
  *************************************/
-void heapExploit() {
-
+void heapExploit()
+{
 }
 
 /*************************************
 * INTEGER OVERFLOW
 * This function is vulnerable to an integer overflow attack
 *************************************/
-void intVulnerability() {
-
+void intVulnerability()
+{
 }
 
 /*************************************
@@ -312,8 +339,8 @@ void intVulnerability() {
  * demonstrades the heap vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void  integerWorking() {
-
+void integerWorking()
+{
 }
 
 /**************************************
@@ -321,16 +348,16 @@ void  integerWorking() {
  * This calls the the integer vulnerability function
  * and demonstrates integer overflow attack.
  *************************************/
-void intExploit() {
-
+void intExploit()
+{
 }
 
 /*************************************
 * ANSI-UNICODE CONVERSION
 * This function is is vulnerable to an ANSI-Unicode attack.
 *************************************/
-void ansiVulnerability() {
-
+void ansiVulnerability()
+{
 }
 
 /*************************************
@@ -340,8 +367,8 @@ void ansiVulnerability() {
  * demonstrades the heap vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void  ansiWorking() {
-
+void ansiWorking()
+{
 }
 
 /**************************************
@@ -349,6 +376,6 @@ void  ansiWorking() {
  * This calls the the ansi vulnerability function
  * and demonstrates an ANSI_Unicode attack.
  *************************************/
-void ansiExploit() {
-
+void ansiExploit()
+{
 }
