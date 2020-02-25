@@ -68,7 +68,7 @@ int main()
     switch (selection) {
     case 1: arrayWorking(); arrayExploit();
         break;
-    case 2: /*arcWorking();*/ arcExploit();
+    case 2: arcWorking(); arcExploit();
         break;
     default:
         cout << "Unkown option\n";
@@ -145,15 +145,20 @@ void arcVulnerability(int param) {
     long buffer[1];
     void(*pointerFunction)() = safe;
 
-    //cout << "Address of the dangerous function: " << *dangerous << endl;
+    cout << "Address of the dangerous function: " << *dangerous << endl;
     //cout << "Address of the safe function: " << *safe << endl;
     //cout << "Address of the pointer function safe: " << (void*)pointerFunction << endl;
-    //cout << "Address of the pointer function: " << &pointerFunction << endl;
+    cout << "Address of the pointer function: " << &pointerFunction << endl;
 
-    //cout << "Buffer 0: " << &buffer[-3] << endl;
+    cout << "Buffer 0: " << &buffer[-3] << endl;
     //cout << "Buffer 1: " << &buffer[1] << endl;
     cout << "Input: " << param << endl;
-    buffer[-3] = param;
+
+    // We don't want to overwrite the original function
+    // This is for demonstration purposes. 
+    if (param > 100) {
+        buffer[-3] = param;
+    }
 
     pointerFunction();
 
