@@ -349,11 +349,11 @@ void heapExploit()
 * 2. The expression must have the potential for overflow.
 * 3. At least one of the numbers used to compute the sentinel must be
 * reachable through external input. This sentinel is a variable used to make
-* the security decision from the first requirement
+* the security decision from the first requirement.
 *************************************/
 void intVulnerability(int input){
 
-    // Variable to "simulate" user input #3
+    // Variable testCase to "simulate" user input #3
     int testCase = input;
     int sentinel = 2147483647;
 
