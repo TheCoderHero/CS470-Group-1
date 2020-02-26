@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream> //for std::stringstream
+#include <assert.h>     /* assert */
 
 using namespace std;
 
@@ -313,17 +314,26 @@ void stackExploit()
 *************************************/
 void heapVulnerability()
 {
+    // create vulnerability
+    char * buffer1 = new char[4];
+    char * buffer2 = new char[4];
+
+    assert(buffer1 < buffer2);
+
+    delete [] buffer2;
+    delete [] buffer1;
 }
 
 /*************************************
  * HEAP WORKING
  * This calls the heap vulneravility function.
- * This do not exploit the vulnerability, but rather
+ * This does not exploit the vulnerability, but rather
  * demonstrades the heap vulnerability function functions
  * normally under non-malicious input.
  ************************************/
 void heapWorking()
 {
+    // create working condition
 }
 
 /**************************************
