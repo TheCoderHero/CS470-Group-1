@@ -114,23 +114,21 @@ int main()
 void arrayVulnerability(int param)
 {
 
-    /****NOTE: This solution might work in some compilers and in others no. The parameter assign to
+    /****NOTE: This solution might work on some compilers and fail on others. The parameter assign to
     this is '-3'****/
     int array[4];
     bool authen = true;
 
     cout << "The Boolean 'authen' variable before being assign to the array: " << authen << endl;
 
-    array[param] = false; // If param ==4 or >4, problems.
+    array[param] = false; // If param == 4 or > 4, then it creates a problem.
     cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
 }
 
 /*************************************
  * ARRAY WORKING
- * This calls the array vulneravility function.
- * This do not exploit the vulnerability, but rather
- * demonstrades the array vulnerability function functions
- * normally under non-malicious input.
+ * Call arrayVulnerability() in a way that does
+ * not yield unexpected behavior
  ************************************/
 void arrayWorking()
 {
@@ -141,8 +139,11 @@ void arrayWorking()
 
 /**************************************
  * ARRAY EXPLOIT
- * This calls the the array vulnerability function
- * and demonstrade the concept of the array vulnerability
+ * 1. The attacker provides an array index value outside the expected range
+ * 2. The attacker must be able to provide input or redirect
+ *    existing input into the array at the index he provided
+ * 3. The injected value must alter program state in a way
+ *    that is desirable to the attacker
  *************************************/
 void arrayExploit()
 {
@@ -211,9 +212,9 @@ int convert(char num[])
 
 /*************************************
  * ARC WORKING
- * This calls the arc vulneravility function.
+ * This calls the arc vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the arc vulnerability function functions
+ * demonstrates the arc vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void arcWorking()
@@ -248,10 +249,10 @@ void arcExploit()
 
 /*************************************
  * VTABLE WORKING
- * This instances the Vulneravility object and calls
+ * This instances the vulnerability object and calls
  * the vulnerable method.
  * This do not exploit the vulnerability, but rather
- * demonstrades the arc vulnerability function functions
+ * demonstrates the arc vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void vtableWorking()
@@ -278,9 +279,9 @@ void stackVulnerability()
 
 /*************************************
  * STACK WORKING
- * This calls the stack vulneravility function.
+ * This calls the stack vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the arc vulnerability function functions
+ * demonstrates the arc vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void stackWorking()
@@ -306,9 +307,9 @@ void heapVulnerability()
 
 /*************************************
  * HEAP WORKING
- * This calls the heap vulneravility function.
+ * This calls the heap vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the heap vulnerability function functions
+ * demonstrates the heap vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void heapWorking()
@@ -325,31 +326,35 @@ void heapExploit()
 }
 
 /*************************************
-* INTEGER OVERFLOW
-* This function is vulnerable to an integer overflow attack
+* INTEGER VULNERABILITY
+* 1. There must be a security check represented by an expression.
+* 2. The expression must have the potential for overflow.
+* 3. At least one of the numbers used to compute the sentinel must be
+* reachable through external input. This sentinel is a variable used to make
+* the security decision from the first requirement
 *************************************/
-void intVulnerability()
-{
+void intVulnerability(){
+
 }
 
 /*************************************
  * INTEGER WORKING
- * This calls the integer vulneravility function.
- * This do not exploit the vulnerability, but rather
- * demonstrades the heap vulnerability function functions
- * normally under non-malicious input.
+ * Call intVulnerability() in a way that does
+ * not yield unexpected behavior
  ************************************/
-void integerWorking()
-{
+void integerWorking(){
+
 }
 
 /**************************************
  * INTEGER EXPLOIT
- * This calls the the integer vulnerability function
- * and demonstrates integer overflow attack.
+ * 1. Provide input, either a buffer size or a single value, that is directly or
+ * indirectly used in the vulnerable expression.
+ * 2. The input must exceed the valid bounds of the data-type, resulting in an
+ * overflow or underflow condition
  *************************************/
-void intExploit()
-{
+void intExploit(){
+
 }
 
 /*************************************
@@ -362,9 +367,9 @@ void ansiVulnerability()
 
 /*************************************
  * ANSI WORKING
- * This calls the ansi vulneravility function.
+ * This calls the ansi vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the heap vulnerability function functions
+ * demonstrates the heap vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void ansiWorking()
