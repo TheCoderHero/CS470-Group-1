@@ -18,7 +18,7 @@ void stackExploit();
 void heapVulnerability();
 void heapWorking();
 void heapExploit();
-void intVulnerability();
+void intVulnerability(int input);
 void integerWorking();
 void intExploit();
 void ansiVulnerability();
@@ -53,54 +53,72 @@ public:
  **********************************************/
 int main()
 {
+    cout << "LAB 08: VULNERABILITIES AND EXPLOITS\n\n";
 
-    // prompt
-    cout << "Please select an option:\n";
-    cout << "  1.  Array Index Attack\n";
-    cout << "  2.  ARC Injection\n";
-    cout << "  3.  VTable Spraying\n";
-    cout << "  4.  Stack Smashing\n";
-    cout << "  5.  Heap Spraying\n";
-    cout << "  6.  Integer Overflow\n";
-    cout << "  7.  ANSI-Unicode Conversion\n";
+    int menuOption = 0;
 
-    int selection;
-    cin >> selection;
+    do {
+        // prompt
+        cout << "\nPlease choose from the following menu items:\n\n";
+        cout << "  1.  Array Index Attack\n";
+        cout << "  2.  ARC Injection\n";
+        cout << "  3.  VTable Spraying\n";
+        cout << "  4.  Stack Smashing\n";
+        cout << "  5.  Heap Spraying\n";
+        cout << "  6.  Integer Overflow\n";
+        cout << "  7.  ANSI-Unicode Conversion\n";
+        cout << "  8.  EXIT PROGRAM\n\n";
+        cout << "Menu Selection: ";
 
-    switch (selection)
-    {
-    case 1:
-        arrayWorking();
-        arrayExploit();
-        break;
-    case 2:
-        arcWorking();
-        arcExploit();
-        break;
-    case 3:
-        vtableWorking();
-        vtableExploit();
-        break;
-    case 4:
-        stackWorking();
-        stackExploit();
-        break;
-    case 5:
-        heapWorking();
-        heapExploit();
-        break;
-    case 6:
-        integerWorking();
-        intExploit();
-        break;
-    case 7:
-        ansiWorking();
-        ansiExploit();
-        break;
-    default:
-        cout << "Unkown option\n";
-        return 1;
-    }
+        // Get user menu selection
+        cin >> menuOption;
+
+        // Handle menu selection error
+        if (cin.fail())
+        {
+            menuOption = 0;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+
+        cin.ignore();
+        cout << "\n";
+
+        switch (menuOption)
+        {
+        case 1:
+            arrayWorking();
+            arrayExploit();
+            break;
+        case 2:
+            arcWorking();
+            arcExploit();
+            break;
+        case 3:
+            vtableWorking();
+            vtableExploit();
+            break;
+        case 4:
+            stackWorking();
+            stackExploit();
+            break;
+        case 5:
+            heapWorking();
+            heapExploit();
+            break;
+        case 6:
+            integerWorking();
+            intExploit();
+            break;
+        case 7:
+            ansiWorking();
+            ansiExploit();
+            break;
+        default:
+            cout << "Unkown option\n";
+            return 1;
+        }
+    } while( menuOption != 8 );
 
     return 0;
 }
@@ -333,8 +351,20 @@ void heapExploit()
 * reachable through external input. This sentinel is a variable used to make
 * the security decision from the first requirement
 *************************************/
-void intVulnerability(){
+void intVulnerability(int input){
 
+    // Variable to "simulate" user input #3
+    int testCase = input;
+    int sentinel = 2147483647;
+
+    // Security check represented by an expression #1
+    // Expression has potential for overflow #2
+    if (testCase > 0 && testCase < sentinel) {
+        cout << "Overflow has been avoided!\n" << endl;
+    }
+    else {
+        cout << "Overflow has occurred!\n" << endl;
+    }
 }
 
 /*************************************
@@ -343,7 +373,7 @@ void intVulnerability(){
  * not yield unexpected behavior
  ************************************/
 void integerWorking(){
-
+    intVulnerability(1000);
 }
 
 /**************************************
@@ -354,7 +384,7 @@ void integerWorking(){
  * overflow or underflow condition
  *************************************/
 void intExploit(){
-
+    intVulnerability(2147483650);
 }
 
 /*************************************
