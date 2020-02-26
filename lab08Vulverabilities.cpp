@@ -19,7 +19,7 @@ void stackExploit();
 void heapVulnerability();
 void heapWorking();
 void heapExploit();
-void intVulnerability();
+void intVulnerability(int input);
 void integerWorking();
 void intExploit();
 void ansiVulnerability();
@@ -54,54 +54,72 @@ public:
  **********************************************/
 int main()
 {
+    cout << "LAB 08: VULNERABILITIES AND EXPLOITS\n\n";
 
-    // prompt
-    cout << "Please select an option:\n";
-    cout << "  1.  Array Index Attack\n";
-    cout << "  2.  ARC Injection\n";
-    cout << "  3.  VTable Spraying\n";
-    cout << "  4.  Stack Smashing\n";
-    cout << "  5.  Heap Spraying\n";
-    cout << "  6.  Integer Overflow\n";
-    cout << "  7.  ANSI-Unicode Conversion\n";
+    int menuOption = 0;
 
-    int selection;
-    cin >> selection;
+    do {
+        // prompt
+        cout << "\nPlease choose from the following menu items:\n\n";
+        cout << "  1.  Array Index Attack\n";
+        cout << "  2.  ARC Injection\n";
+        cout << "  3.  VTable Spraying\n";
+        cout << "  4.  Stack Smashing\n";
+        cout << "  5.  Heap Spraying\n";
+        cout << "  6.  Integer Overflow\n";
+        cout << "  7.  ANSI-Unicode Conversion\n";
+        cout << "  8.  EXIT PROGRAM\n\n";
+        cout << "Menu Selection: ";
 
-    switch (selection)
-    {
-    case 1:
-        arrayWorking();
-        arrayExploit();
-        break;
-    case 2:
-        arcWorking();
-        arcExploit();
-        break;
-    case 3:
-        vtableWorking();
-        vtableExploit();
-        break;
-    case 4:
-        stackWorking();
-        stackExploit();
-        break;
-    case 5:
-        heapWorking();
-        heapExploit();
-        break;
-    case 6:
-        integerWorking();
-        intExploit();
-        break;
-    case 7:
-        ansiWorking();
-        ansiExploit();
-        break;
-    default:
-        cout << "Unkown option\n";
-        return 1;
-    }
+        // Get user menu selection
+        cin >> menuOption;
+
+        // Handle menu selection error
+        if (cin.fail())
+        {
+            menuOption = 0;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+
+        cin.ignore();
+        cout << "\n";
+
+        switch (menuOption)
+        {
+        case 1:
+            arrayWorking();
+            arrayExploit();
+            break;
+        case 2:
+            arcWorking();
+            arcExploit();
+            break;
+        case 3:
+            vtableWorking();
+            vtableExploit();
+            break;
+        case 4:
+            stackWorking();
+            stackExploit();
+            break;
+        case 5:
+            heapWorking();
+            heapExploit();
+            break;
+        case 6:
+            integerWorking();
+            intExploit();
+            break;
+        case 7:
+            ansiWorking();
+            ansiExploit();
+            break;
+        default:
+            cout << "Unkown option\n";
+            return 1;
+        }
+    } while( menuOption != 8 );
 
     return 0;
 }
@@ -115,23 +133,21 @@ int main()
 void arrayVulnerability(int param)
 {
 
-    /****NOTE: This solution might work in some compilers and in others no. The parameter assign to
+    /****NOTE: This solution might work on some compilers and fail on others. The parameter assign to
     this is '-3'****/
     int array[4];
     bool authen = true;
 
     cout << "The Boolean 'authen' variable before being assign to the array: " << authen << endl;
 
-    array[param] = false; // If param ==4 or >4, problems.
+    array[param] = false; // If param == 4 or > 4, then it creates a problem.
     cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
 }
 
 /*************************************
  * ARRAY WORKING
- * This calls the array vulneravility function.
- * This do not exploit the vulnerability, but rather
- * demonstrades the array vulnerability function functions
- * normally under non-malicious input.
+ * Call arrayVulnerability() in a way that does
+ * not yield unexpected behavior
  ************************************/
 void arrayWorking()
 {
@@ -142,8 +158,11 @@ void arrayWorking()
 
 /**************************************
  * ARRAY EXPLOIT
- * This calls the the array vulnerability function
- * and demonstrade the concept of the array vulnerability
+ * 1. The attacker provides an array index value outside the expected range
+ * 2. The attacker must be able to provide input or redirect
+ *    existing input into the array at the index he provided
+ * 3. The injected value must alter program state in a way
+ *    that is desirable to the attacker
  *************************************/
 void arrayExploit()
 {
@@ -163,17 +182,8 @@ void arrayExploit()
 void arcVulnerability(int param)
 {
 
-    /** WORKING ON THIS */
     long buffer[1];
     void (*pointerFunction)() = safe;
-
-    cout << "Address of the dangerous function: " << *dangerous << endl;
-    //cout << "Address of the safe function: " << *safe << endl;
-    //cout << "Address of the pointer function safe: " << (void*)pointerFunction << endl;
-    cout << "Address of the pointer function: " << &pointerFunction << endl;
-
-    cout << "Buffer 0: " << &buffer[-3] << endl;
-    //cout << "Buffer 1: " << &buffer[1] << endl;
     cout << "Input: " << param << endl;
 
     // We don't want to overwrite the original function
@@ -221,9 +231,9 @@ int convert(char num[])
 
 /*************************************
  * ARC WORKING
- * This calls the arc vulneravility function.
+ * This calls the arc vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the arc vulnerability function functions
+ * demonstrates the arc vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void arcWorking()
@@ -246,24 +256,22 @@ void arcExploit()
     stringstream addressToString;
     addressToString << pDangerous;
     string address = addressToString.str();
-    /* cout << address << endl;*/
 
     // Get the hexadeciaml to int
     unsigned int x;
     stringstream ss;
     ss << std::hex << address;
     ss >> x;
-    //cout << "The address :" << x << endl;
     cout << "ARC Vulnerability exploit" << endl;
     arcVulnerability(x);
 }
 
 /*************************************
  * VTABLE WORKING
- * This instances the Vulneravility object and calls
+ * This instances the vulnerability object and calls
  * the vulnerable method.
  * This do not exploit the vulnerability, but rather
- * demonstrades the arc vulnerability function functions
+ * demonstrates the arc vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void vtableWorking()
@@ -290,9 +298,9 @@ void stackVulnerability()
 
 /*************************************
  * STACK WORKING
- * This calls the stack vulneravility function.
+ * This calls the stack vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the arc vulnerability function functions
+ * demonstrates the arc vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void stackWorking()
@@ -346,31 +354,47 @@ void heapExploit()
 }
 
 /*************************************
-* INTEGER OVERFLOW
-* This function is vulnerable to an integer overflow attack
+* INTEGER VULNERABILITY
+* 1. There must be a security check represented by an expression.
+* 2. The expression must have the potential for overflow.
+* 3. At least one of the numbers used to compute the sentinel must be
+* reachable through external input. This sentinel is a variable used to make
+* the security decision from the first requirement.
 *************************************/
-void intVulnerability()
-{
+void intVulnerability(int input){
+
+    // Variable testCase to "simulate" user input #3
+    int testCase = input;
+    int sentinel = 2147483647;
+
+    // Security check represented by an expression #1
+    // Expression has potential for overflow #2
+    if (testCase > 0 && testCase < sentinel) {
+        cout << "Overflow has been avoided!\n" << endl;
+    }
+    else {
+        cout << "Overflow has occurred!\n" << endl;
+    }
 }
 
 /*************************************
  * INTEGER WORKING
- * This calls the integer vulneravility function.
- * This do not exploit the vulnerability, but rather
- * demonstrades the heap vulnerability function functions
- * normally under non-malicious input.
+ * Call intVulnerability() in a way that does
+ * not yield unexpected behavior
  ************************************/
-void integerWorking()
-{
+void integerWorking(){
+    intVulnerability(1000);
 }
 
 /**************************************
  * INTEGER EXPLOIT
- * This calls the the integer vulnerability function
- * and demonstrates integer overflow attack.
+ * 1. Provide input, either a buffer size or a single value, that is directly or
+ * indirectly used in the vulnerable expression.
+ * 2. The input must exceed the valid bounds of the data-type, resulting in an
+ * overflow or underflow condition
  *************************************/
-void intExploit()
-{
+void intExploit(){
+    intVulnerability(2147483650);
 }
 
 /*************************************
@@ -383,9 +407,9 @@ void ansiVulnerability()
 
 /*************************************
  * ANSI WORKING
- * This calls the ansi vulneravility function.
+ * This calls the ansi vulnerability function.
  * This do not exploit the vulnerability, but rather
- * demonstrades the heap vulnerability function functions
+ * demonstrates the heap vulnerability function executes
  * normally under non-malicious input.
  ************************************/
 void ansiWorking()
