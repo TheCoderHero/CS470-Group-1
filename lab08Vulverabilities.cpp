@@ -16,7 +16,7 @@ void vtableExploit();
 void stackVulnerability();
 void stackWorking();
 void stackExploit();
-void heapVulnerability();
+void heapVulnerability(char input);
 void heapWorking();
 void heapExploit();
 void intVulnerability(int input);
@@ -182,51 +182,51 @@ void arrayExploit()
 void arcVulnerability(int param)
 {
 
-    long buffer[1];
-    void (*pointerFunction)() = safe;
-    cout << "Input: " << param << endl;
+//     long buffer[1];
+//     void (*pointerFunction)() = safe;
+//     cout << "Input: " << param << endl;
 
-    // We don't want to overwrite the original function
-    // This is for demonstration purposes.
-    if (param > 100)
-    {
-        buffer[-3] = param;
-    }
+//     // We don't want to overwrite the original function
+//     // This is for demonstration purposes.
+//     if (param > 100)
+//     {
+//         buffer[-3] = param;
+//     }
 
-    pointerFunction();
-}
+//     pointerFunction();
+// }
 
-void safe()
-{
-    cout << "This is a safe function" << endl;
-}
+// void safe()
+// {
+//     cout << "This is a safe function" << endl;
+// }
 
-void dangerous()
-{
+// void dangerous()
+// {
 
-    cout << "This is a dangerous function" << endl;
-}
+//     cout << "This is a dangerous function" << endl;
+// }
 
-//convert hexadecimal to decimal
-int convert(char num[])
-{
-    int len = strlen(num);
-    int base = 1;
-    int temp = 0;
-    for (int i = len - 1; i >= 0; i--)
-    {
-        if (num[i] >= '0' && num[i] <= '9')
-        {
-            temp += (num[i] - 48) * base;
-            base = base * 16;
-        }
-        else if (num[i] >= 'A' && num[i] <= 'F')
-        {
-            temp += (num[i] - 55) * base;
-            base = base * 16;
-        }
-    }
-    return temp;
+// //convert hexadecimal to decimal
+// int convert(char num[])
+// {
+//     int len = strlen(num);
+//     int base = 1;
+//     int temp = 0;
+//     for (int i = len - 1; i >= 0; i--)
+//     {
+//         if (num[i] >= '0' && num[i] <= '9')
+//         {
+//             temp += (num[i] - 48) * base;
+//             base = base * 16;
+//         }
+//         else if (num[i] >= 'A' && num[i] <= 'F')
+//         {
+//             temp += (num[i] - 55) * base;
+//             base = base * 16;
+//         }
+//     }
+//     return temp;
 }
 
 /*************************************
@@ -240,8 +240,8 @@ void arcWorking()
 {
 
     /* NO WORKING YET*/
-    cout << "ARC Vulnerability working" << endl;
-    arcVulnerability(1);
+    // cout << "ARC Vulnerability working" << endl;
+    // arcVulnerability(1);
 }
 
 /**************************************
@@ -252,18 +252,18 @@ void arcWorking()
 void arcExploit()
 {
 
-    void *pDangerous = dangerous;
-    stringstream addressToString;
-    addressToString << pDangerous;
-    string address = addressToString.str();
+    // void *pDangerous = dangerous;
+    // stringstream addressToString;
+    // addressToString << pDangerous;
+    // string address = addressToString.str();
 
-    // Get the hexadeciaml to int
-    unsigned int x;
-    stringstream ss;
-    ss << std::hex << address;
-    ss >> x;
-    cout << "ARC Vulnerability exploit" << endl;
-    arcVulnerability(x);
+    // // Get the hexadeciaml to int
+    // unsigned int x;
+    // stringstream ss;
+    // ss << std::hex << address;
+    // ss >> x;
+    // cout << "ARC Vulnerability exploit" << endl;
+    // arcVulnerability(x);
 }
 
 /*************************************
@@ -320,15 +320,27 @@ void stackExploit()
 * HEAP VULNERABILITY
 * This function contains a heap smashing vulnerability
 *************************************/
-void heapVulnerability()
+void heapVulnerability(stringstream & input)
 {
     // create vulnerability
-    char * buffer1 = new char[4];
-    char * buffer2 = new char[4];
+    char * buffer1 = new char[5];
+    char * buffer2 = new char[5];
+
+    cout << "buffer1: " << *buffer1 << " " << buffer1 << endl;
+    cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
 
     assert(buffer1 < buffer2);
+    
+    // get input
+    for (int i = 0; !input.eof(); i++) {
+    input >> buffer1;
+    }
+
+    cout << "buffer1: " << *buffer1 << " " << buffer1 << endl;
+    cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
 
     delete [] buffer2;
+    cout << "buffer1: " << *buffer1 << endl;
     delete [] buffer1;
 }
 
@@ -339,9 +351,12 @@ void heapVulnerability()
  * demonstrades the heap vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void heapWorking()
+void  heapWorking()
 {
-    // create working condition
+    stringstream test;
+    test << 't' << 'e' << 's' << 't' << '\n';
+    heapVulnerability(test);
+    // return test;
 }
 
 /**************************************
@@ -351,6 +366,9 @@ void heapWorking()
  *************************************/
 void heapExploit()
 {
+    stringstream test;
+    test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
+    heapVulnerability(test);
 }
 
 /*************************************
