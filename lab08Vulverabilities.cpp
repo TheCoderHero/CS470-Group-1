@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream> //for std::stringstream
+#include <cstring>
 
 using namespace std;
 
@@ -34,75 +35,120 @@ int convert(char num[]);
 * Class  Vulnerability
 * This class is vulnerable to vtable smashing attack
 *************************************/
-class Vulnerability
+class Base
+{
+
+ private:
+   char buffer[10];
+public:
+   virtual void firstMethod()
+   {
+      printf("%s\n", buffer);
+   }
+   virtual void secondMethod()
+   {
+      printf("%s\n", buffer);
+   }
+   void setBuffer(const char* value)
+   {
+      printf("%S\n", value);
+      strcpy_s(buffer, value);
+   }
+   
+
+};
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Vulnerability : public Base
 {
 public:
-    void firstMethod()
-    {
-        cout << "First Method\n";
-    }
-
-    void secondMethod()
-    {
-        cout << "Second Method\n";
-    }
+   void firstMethod()
+   {
+      printf("FirstMeth: ");
+      Base::firstMethod();
+   }
+   void secondMethod()
+   {
+      printf("SecondMeth: ");
+      Base::secondMethod();
+   }
+   
 };
-
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Vulnerability1 : public Base
+{
+public:
+   void firstMethod()
+   {
+      printf("SecondClass: ");
+      Base::firstMethod();
+   }
+   void secondMethod()
+   {
+      printf("SecondClass: ");
+      Base::secondMethod();
+   }
+};
 /**********************************************
  * MAIN : The top of the callstack.
  **********************************************/
 int main()
 {
 
-    // prompt
-    cout << "Please select an option:\n";
-    cout << "  1.  Array Index Attack\n";
-    cout << "  2.  ARC Injection\n";
-    cout << "  3.  VTable Spraying\n";
-    cout << "  4.  Stack Smashing\n";
-    cout << "  5.  Heap Spraying\n";
-    cout << "  6.  Integer Overflow\n";
-    cout << "  7.  ANSI-Unicode Conversion\n";
+   // prompt
+   cout << "Please select an option:\n";
+   cout << "  1.  Array Index Attack\n";
+   cout << "  2.  ARC Injection\n";
+   cout << "  3.  VTable Spraying\n";
+   cout << "  4.  Stack Smashing\n";
+   cout << "  5.  Heap Spraying\n";
+   cout << "  6.  Integer Overflow\n";
+   cout << "  7.  ANSI-Unicode Conversion\n";
 
-    int selection;
-    cin >> selection;
+   int selection;
+   cin >> selection;
 
-    switch (selection)
-    {
-    case 1:
-        arrayWorking();
-        arrayExploit();
-        break;
-    case 2:
-        arcWorking();
-        arcExploit();
-        break;
-    case 3:
-        vtableWorking();
-        vtableExploit();
-        break;
-    case 4:
-        stackWorking();
-        stackExploit();
-        break;
-    case 5:
-        heapWorking();
-        heapExploit();
-        break;
-    case 6:
-        integerWorking();
-        intExploit();
-        break;
-    case 7:
-        ansiWorking();
-        ansiExploit();
-        break;
-    default:
-        cout << "Unkown option\n";
-        return 1;
-    }
+   switch (selection)
+   {
+   case 1:
+      arrayWorking();
+      arrayExploit();
+      break;
+   case 2:
+      arcWorking();
+      arcExploit();
+      break;
+   case 3:
+      vtableWorking();
+      vtableExploit();
+      break;
+   case 4:
+      stackWorking();
+      stackExploit();
+      break;
+   case 5:
+      heapWorking();
+      heapExploit();
+      break;
+   case 6:
+      integerWorking();
+      intExploit();
+      break;
+   case 7:
+      ansiWorking();
+      ansiExploit();
+      break;
+   default:
+      cout << "Unkown option\n";
+      return 1;
+   }
 
-    return 0;
+   return 0;
 }
 
 /*************************************
@@ -114,15 +160,15 @@ int main()
 void arrayVulnerability(int param)
 {
 
-    /****NOTE: This solution might work in some compilers and in others no. The parameter assign to
-    this is '-3'****/
-    int array[4];
-    bool authen = true;
+   /****NOTE: This solution might work in some compilers and in others no. The parameter assign to
+   this is '-3'****/
+   int array[4];
+   bool authen = true;
 
-    cout << "The Boolean 'authen' variable before being assign to the array: " << authen << endl;
+   cout << "The Boolean 'authen' variable before being assign to the array: " << authen << endl;
 
-    array[param] = false; // If param ==4 or >4, problems.
-    cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
+   array[param] = false; // If param ==4 or >4, problems.
+   cout << "The Boolean 'authen' variable after being assign to the array: " << authen << endl;
 }
 
 /*************************************
@@ -135,8 +181,8 @@ void arrayVulnerability(int param)
 void arrayWorking()
 {
 
-    cout << "Array Working as expected\n";
-    arrayVulnerability(2);
+   cout << "Array Working as expected\n";
+   arrayVulnerability(2);
 }
 
 /**************************************
@@ -146,8 +192,8 @@ void arrayWorking()
  *************************************/
 void arrayExploit()
 {
-    cout << "Array with vulnerability\n";
-    arrayVulnerability(-3);
+   cout << "Array with vulnerability\n";
+   arrayVulnerability(-3);
 }
 
 /*************************************
@@ -162,51 +208,51 @@ void arrayExploit()
 void arcVulnerability(int param)
 {
 
-    long buffer[1];
-    void (*pointerFunction)() = safe;
-    cout << "Input: " << param << endl;
+   long buffer[1];
+   void (*pointerFunction)() = safe;
+   cout << "Input: " << param << endl;
 
-    // We don't want to overwrite the original function
-    // This is for demonstration purposes.
-    if (param > 100)
-    {
-        buffer[-3] = param;
-    }
+   // We don't want to overwrite the original function
+   // This is for demonstration purposes.
+   if (param > 100)
+   {
+      buffer[-3] = param;
+   }
 
-    pointerFunction();
+   pointerFunction();
 }
 
 void safe()
 {
-    cout << "This is a safe function" << endl;
+   cout << "This is a safe function" << endl;
 }
 
 void dangerous()
 {
 
-    cout << "This is a dangerous function" << endl;
+   cout << "This is a dangerous function" << endl;
 }
 
 //convert hexadecimal to decimal
 int convert(char num[])
 {
-    int len = strlen(num);
-    int base = 1;
-    int temp = 0;
-    for (int i = len - 1; i >= 0; i--)
-    {
-        if (num[i] >= '0' && num[i] <= '9')
-        {
-            temp += (num[i] - 48) * base;
-            base = base * 16;
-        }
-        else if (num[i] >= 'A' && num[i] <= 'F')
-        {
-            temp += (num[i] - 55) * base;
-            base = base * 16;
-        }
-    }
-    return temp;
+   int len = strlen(num);
+   int base = 1;
+   int temp = 0;
+   for (int i = len - 1; i >= 0; i--)
+   {
+      if (num[i] >= '0' && num[i] <= '9')
+      {
+         temp += (num[i] - 48) * base;
+         base = base * 16;
+      }
+      else if (num[i] >= 'A' && num[i] <= 'F')
+      {
+         temp += (num[i] - 55) * base;
+         base = base * 16;
+      }
+   }
+   return temp;
 }
 
 /*************************************
@@ -219,9 +265,9 @@ int convert(char num[])
 void arcWorking()
 {
 
-    /* NO WORKING YET*/
-    cout << "ARC Vulnerability working" << endl;
-    arcVulnerability(1);
+   /* NO WORKING YET*/
+   cout << "ARC Vulnerability working" << endl;
+   arcVulnerability(1);
 }
 
 /**************************************
@@ -232,18 +278,18 @@ void arcWorking()
 void arcExploit()
 {
 
-    void *pDangerous = dangerous;
-    stringstream addressToString;
-    addressToString << pDangerous;
-    string address = addressToString.str();
+   /*void *pDangerous = dangerous;
+   stringstream addressToString;
+   addressToString << pDangerous;
+   string address = addressToString.str();
 
-    // Get the hexadeciaml to int
-    unsigned int x;
-    stringstream ss;
-    ss << std::hex << address;
-    ss >> x;
-    cout << "ARC Vulnerability exploit" << endl;
-    arcVulnerability(x);
+   // Get the hexadeciaml to int
+   unsigned int x;
+   stringstream ss;
+   ss << std::hex << address;
+   ss >> x;
+   cout << "ARC Vulnerability exploit" << endl;
+   arcVulnerability(x);*/
 }
 
 /*************************************
@@ -256,8 +302,18 @@ void arcExploit()
  ************************************/
 void vtableWorking()
 {
-    Vulnerability instance;
-    instance.firstMethod();
+   Base *instance[2];
+   instance[0] = new Vulnerability;
+   instance[1] = new Vulnerability1;
+
+   instance[0]->setBuffer("First Buf");
+   instance[0]->firstMethod();
+   instance[0]->secondMethod();
+    
+   instance[1]->setBuffer("Sec Buf");
+   instance[1]->firstMethod();
+   instance[1]->secondMethod();   
+   
 }
 
 /**************************************
@@ -266,6 +322,27 @@ void vtableWorking()
  *************************************/
 void vtableExploit()
 {
+   Base* instance[2];
+   instance[0] = new Vulnerability;
+   instance[1] = new Vulnerability1;
+   long spray = (long)&instance[0];
+   long spray1 = (long)&instance[1];
+
+   char temp[18] = "First Buf";
+   char temp1[10];
+   sprintf_s(temp1, "%d", spray);
+   strcat_s(temp, temp1);
+   instance[0]->setBuffer(temp);
+   instance[0]->firstMethod();
+   instance[0]->secondMethod();
+
+   char temp2[18] = "Second Bu";
+   char temp3[10];
+   sprintf_s(temp3, "%d", spray1);
+   strcat_s(temp2, temp3);
+   instance[1]->setBuffer(temp2);
+   instance[1]->firstMethod();
+   instance[1]->secondMethod();
 }
 
 /*************************************
