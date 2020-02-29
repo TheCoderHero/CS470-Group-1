@@ -305,7 +305,6 @@ void vtableWorking()
    Base *instance[2];
    instance[0] = new Vulnerability;
    instance[1] = new Vulnerability1;
-<<<<<<< HEAD
 
    instance[0]->setBuffer("First Buf");
    instance[0]->firstMethod();
@@ -315,14 +314,6 @@ void vtableWorking()
    instance[1]->firstMethod();
    instance[1]->secondMethod();   
    
-=======
-   instance[0]->setBuffer("First Buf");
-   instance[0]->firstMethod();
-   instance[0]->secondMethod();
-   instance[1]->setBuffer("Sec Buf");
-   instance[1]->firstMethod();
-   instance[1]->secondMethod();
->>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
 }
 
 /**************************************
@@ -336,10 +327,6 @@ void vtableExploit()
    instance[1] = new Vulnerability1;
    long spray = (long)&instance[0];
    long spray1 = (long)&instance[1];
-<<<<<<< HEAD
-
-=======
->>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
    char temp[18] = "First Buf";
    char temp1[10];
    sprintf_s(temp1, "%d", spray);
@@ -347,10 +334,6 @@ void vtableExploit()
    instance[0]->setBuffer(temp);
    instance[0]->firstMethod();
    instance[0]->secondMethod();
-<<<<<<< HEAD
-
-=======
->>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
    char temp2[18] = "Second Bu";
    char temp3[10];
    sprintf_s(temp3, "%d", spray1);
@@ -471,27 +454,48 @@ void stackExploit()
 * HEAP VULNERABILITY
 * This function contains a heap smashing vulnerability
 *************************************/
-void heapVulnerability()
+/*************************************
+* HEAP VULNERABILITY
+* This function contains a heap smashing vulnerability
+*************************************/
+void heapVulnerability(stringstream & input)
 {
+    // create vulnerability
+    char * buffer1 = new char[5];
+    char * buffer2 = new char[5];
+
+    cout << "buffer1: " << *buffer1 << " " << buffer1 << endl;
+    cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
+
+    assert(buffer1 < buffer2);
+    
+    // get input
+    for (int i = 0; !input.eof(); i++) {
+    input >> buffer1;
+    }
+
+    cout << "buffer1: " << *buffer1 << " " << buffer1 << endl;
+    cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
+
+    delete [] buffer2;
+    cout << "buffer1: " << *buffer1 << endl;
+    delete [] buffer1;
 }
 
 /*************************************
  * HEAP WORKING
  * This calls the heap vulneravility function.
- * This do not exploit the vulnerability, but rather
+ * This does not exploit the vulnerability, but rather
  * demonstrades the heap vulnerability function functions
  * normally under non-malicious input.
  ************************************/
-void heapWorking()
+void  heapWorking()
 {
-<<<<<<< HEAD
-=======
     stringstream test;
     //test << 't' << 'e' << 's' << 't' << '\n';
     test.str("test");
     heapVulnerability(test);
     // return test;
->>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
 }
 
 /**************************************
@@ -501,13 +505,10 @@ void heapWorking()
  *************************************/
 void heapExploit()
 {
-<<<<<<< HEAD
-=======
     stringstream test;
     // test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
     test.str("brokentest");
     heapVulnerability(test);
->>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
 }
 
 /*************************************
