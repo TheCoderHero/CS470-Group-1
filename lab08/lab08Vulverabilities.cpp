@@ -433,8 +433,8 @@ void heapVulnerability(stringstream &input)
    char *buffer1 = new char[5];
    char *buffer2 = new char[5];
 
-   cout << "buffer1: " << *buffer1 << *(buffer1 + 1) << " " << buffer1 << endl;
-   cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
+   cout << "buffer1 before: " << *buffer1 << " " << buffer1 << endl;
+   cout << "buffer2 before: " << *buffer2 << " " << buffer2 << endl;
 
    assert(buffer1 < buffer2);
 
@@ -444,11 +444,21 @@ void heapVulnerability(stringstream &input)
       input >> buffer1;
    }
 
-   cout << "buffer1: " << *buffer1 << " " << buffer1 << endl;
-   cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
+   cout << "buffer1 after : " << *buffer1 << " " << buffer1 << endl;
+   cout << "buffer2 after : " << *buffer2 << " " << buffer2 << endl;
 
+   // delete second buffer first
    delete[] buffer2;
-   cout << "buffer1: " << *buffer1 << endl;
+
+   // create test input
+   stringstream test;
+   test.str("test");
+
+   // Try to insert new data into buffer 1 to see if it still works
+   for (int i = 0; !test.eof(); i++)
+   {
+      test >> buffer1;
+   }
    delete[] buffer1;
 }
 
@@ -461,9 +471,10 @@ void heapVulnerability(stringstream &input)
  ************************************/
 void heapWorking()
 {
+   cout << "-- Heap Working Test --" << endl;
    stringstream test;
    //test << 't' << 'e' << 's' << 't' << '\n';
-   test.str("test");
+   test.str("data");
    heapVulnerability(test);
    // return test;
 }
@@ -475,6 +486,7 @@ void heapWorking()
  *************************************/
 void heapExploit()
 {
+   cout << "-- Heap Exploit Test --" << endl;
    stringstream test;
    // test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
    test.str("brokentest");
