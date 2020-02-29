@@ -268,15 +268,23 @@ void arcExploit()
 
 /*************************************
  * VTABLE WORKING
- * This instances the vulnerability object and calls
+ * This instances the Vulneravility object and calls
  * the vulnerable method.
  * This do not exploit the vulnerability, but rather
- * demonstrates the arc vulnerability function executes
+ * demonstrades the arc vulnerability function functions
  * normally under non-malicious input.
  ************************************/
 void vtableWorking()
 {
-    
+   Base *instance[2];
+   instance[0] = new Vulnerability;
+   instance[1] = new Vulnerability1;
+   instance[0]->setBuffer("First Buf");
+   instance[0]->firstMethod();
+   instance[0]->secondMethod();
+   instance[1]->setBuffer("Sec Buf");
+   instance[1]->firstMethod();
+   instance[1]->secondMethod();
 }
 
 /**************************************
@@ -285,8 +293,85 @@ void vtableWorking()
  *************************************/
 void vtableExploit()
 {
+   Base* instance[2];
+   instance[0] = new Vulnerability;
+   instance[1] = new Vulnerability1;
+   long spray = (long)&instance[0];
+   long spray1 = (long)&instance[1];
+   char temp[18] = "First Buf";
+   char temp1[10];
+   sprintf_s(temp1, "%d", spray);
+   strcat_s(temp, temp1);
+   instance[0]->setBuffer(temp);
+   instance[0]->firstMethod();
+   instance[0]->secondMethod();
+   char temp2[18] = "Second Bu";
+   char temp3[10];
+   sprintf_s(temp3, "%d", spray1);
+   strcat_s(temp2, temp3);
+   instance[1]->setBuffer(temp2);
+   instance[1]->firstMethod();
+   instance[1]->secondMethod();
 }
-
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Base
+{
+ private:
+   char buffer[10];
+public:
+   virtual void firstMethod()
+   {
+      printf("%s\n", buffer);
+   }
+   virtual void secondMethod()
+   {
+      printf("%s\n", buffer);
+   }
+   void setBuffer(const char* value)
+   {
+      printf("%S\n", value);
+      strcpy_s(buffer, value);
+   }
+};
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Vulnerability : public Base
+{
+public:
+   void firstMethod()
+   {
+      printf("FirstMeth: ");
+      Base::firstMethod();
+   }
+   void secondMethod()
+   {
+      printf("SecondMeth: ");
+      Base::secondMethod();
+   }
+};
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Vulnerability1 : public Base
+{
+public:
+   void firstMethod()
+   {
+      printf("SecondClass: ");
+      Base::firstMethod();
+   }
+   void secondMethod()
+   {
+      printf("SecondClass: ");
+      Base::secondMethod();
+   }
+};
 /*************************************
 * STACK VULNERABILITY
 * This function contains a stack smashing vulnerability
