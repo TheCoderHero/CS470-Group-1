@@ -305,6 +305,7 @@ void vtableWorking()
    Base *instance[2];
    instance[0] = new Vulnerability;
    instance[1] = new Vulnerability1;
+<<<<<<< HEAD
 
    instance[0]->setBuffer("First Buf");
    instance[0]->firstMethod();
@@ -314,6 +315,14 @@ void vtableWorking()
    instance[1]->firstMethod();
    instance[1]->secondMethod();   
    
+=======
+   instance[0]->setBuffer("First Buf");
+   instance[0]->firstMethod();
+   instance[0]->secondMethod();
+   instance[1]->setBuffer("Sec Buf");
+   instance[1]->firstMethod();
+   instance[1]->secondMethod();
+>>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
 }
 
 /**************************************
@@ -327,7 +336,10 @@ void vtableExploit()
    instance[1] = new Vulnerability1;
    long spray = (long)&instance[0];
    long spray1 = (long)&instance[1];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
    char temp[18] = "First Buf";
    char temp1[10];
    sprintf_s(temp1, "%d", spray);
@@ -335,7 +347,10 @@ void vtableExploit()
    instance[0]->setBuffer(temp);
    instance[0]->firstMethod();
    instance[0]->secondMethod();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
    char temp2[18] = "Second Bu";
    char temp3[10];
    sprintf_s(temp3, "%d", spray1);
@@ -344,13 +359,83 @@ void vtableExploit()
    instance[1]->firstMethod();
    instance[1]->secondMethod();
 }
-
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Base
+{
+ private:
+   char buffer[10];
+public:
+   virtual void firstMethod()
+   {
+      printf("%s\n", buffer);
+   }
+   virtual void secondMethod()
+   {
+      printf("%s\n", buffer);
+   }
+   void setBuffer(const char* value)
+   {
+      printf("%S\n", value);
+      strcpy_s(buffer, value);
+   }
+};
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Vulnerability : public Base
+{
+public:
+   void firstMethod()
+   {
+      printf("FirstMeth: ");
+      Base::firstMethod();
+   }
+   void secondMethod()
+   {
+      printf("SecondMeth: ");
+      Base::secondMethod();
+   }
+};
+/*************************************
+* Class  Vulnerability
+* This class is vulnerable to vtable smashing attack
+*************************************/
+class Vulnerability1 : public Base
+{
+public:
+   void firstMethod()
+   {
+      printf("SecondClass: ");
+      Base::firstMethod();
+   }
+   void secondMethod()
+   {
+      printf("SecondClass: ");
+      Base::secondMethod();
+   }
+};
 /*************************************
 * STACK VULNERABILITY
 * This function contains a stack smashing vulnerability
 *************************************/
-void stackVulnerability()
+void exploited()
 {
+    cout << "exploited" << endl;
+}
+
+void stackVulnerability(long int input[], long int size)
+{
+    long int buffer[1];
+
+    for (long int i=0; i < size; i++)
+    {
+        buffer[i] = input[i];
+        cout << i << "" << buffer[i] << endl;
+    }
 }
 
 /*************************************
@@ -362,6 +447,11 @@ void stackVulnerability()
  ************************************/
 void stackWorking()
 {
+    long int buffer[1] = {1};
+
+    stackVulnerability(buffer, 1);
+    cout << "worked!";
+
 }
 
 /**************************************
@@ -371,7 +461,11 @@ void stackWorking()
  *************************************/
 void stackExploit()
 {
+    long int buffer[8] = {0, 7, 4, 8, 9, (long int) &exploited};
+    stackVulnerability(buffer, 8);
+    cout << "Gotcha!";
 }
+
 
 /*************************************
 * HEAP VULNERABILITY
@@ -390,6 +484,14 @@ void heapVulnerability()
  ************************************/
 void heapWorking()
 {
+<<<<<<< HEAD
+=======
+    stringstream test;
+    //test << 't' << 'e' << 's' << 't' << '\n';
+    test.str("test");
+    heapVulnerability(test);
+    // return test;
+>>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
 }
 
 /**************************************
@@ -399,6 +501,13 @@ void heapWorking()
  *************************************/
 void heapExploit()
 {
+<<<<<<< HEAD
+=======
+    stringstream test;
+    // test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
+    test.str("brokentest");
+    heapVulnerability(test);
+>>>>>>> 0188ba0407edf8361acec8be9b126c35b98b73d7
 }
 
 /*************************************
