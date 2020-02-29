@@ -292,8 +292,20 @@ void vtableExploit()
 * STACK VULNERABILITY
 * This function contains a stack smashing vulnerability
 *************************************/
-void stackVulnerability()
+void exploited()
 {
+    cout << "exploited" << endl;
+}
+
+void stackVulnerability(long int input[], long int size)
+{
+    long int buffer[1];
+
+    for (long int i=0; i < size; i++)
+    {
+        buffer[i] = input[i];
+        cout << i << "" << buffer[i] << endl;
+    }
 }
 
 /*************************************
@@ -305,6 +317,11 @@ void stackVulnerability()
  ************************************/
 void stackWorking()
 {
+    long int buffer[1] = {1};
+
+    stackVulnerability(buffer, 1);
+    cout << "worked!";
+
 }
 
 /**************************************
@@ -314,7 +331,11 @@ void stackWorking()
  *************************************/
 void stackExploit()
 {
+    long int buffer[8] = {0, 7, 4, 8, 9, (long int) &exploited};
+    stackVulnerability(buffer, 8);
+    cout << "Gotcha!";
 }
+
 
 /*************************************
 * HEAP VULNERABILITY
