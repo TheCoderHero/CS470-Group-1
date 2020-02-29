@@ -472,11 +472,11 @@ void heapVulnerability(stringstream &input)
 void heapWorking()
 {
    cout << "-- Heap Working Test --" << endl;
+
    stringstream test;
-   //test << 't' << 'e' << 's' << 't' << '\n';
    test.str("data");
+
    heapVulnerability(test);
-   // return test;
 }
 
 /**************************************
@@ -487,9 +487,10 @@ void heapWorking()
 void heapExploit()
 {
    cout << "-- Heap Exploit Test --" << endl;
+
    stringstream test;
-   // test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
    test.str("brokentest");
+
    heapVulnerability(test);
 }
 
