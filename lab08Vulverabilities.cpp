@@ -375,7 +375,8 @@ void heapVulnerability(stringstream & input)
 void  heapWorking()
 {
     stringstream test;
-    test << 't' << 'e' << 's' << 't' << '\n';
+    //test << 't' << 'e' << 's' << 't' << '\n';
+    test.str("test");
     heapVulnerability(test);
     // return test;
 }
@@ -388,7 +389,8 @@ void  heapWorking()
 void heapExploit()
 {
     stringstream test;
-    test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
+    // test << 't' << 'e' << 's' << 't' << 'b' << 'r' << 'o' << 'k' << 'e' << 'n';
+    test.str("brokentest");
     heapVulnerability(test);
 }
 
