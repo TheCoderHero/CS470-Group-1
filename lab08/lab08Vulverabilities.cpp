@@ -507,18 +507,20 @@ void intVulnerability(int input)
    // Variable testCase to "simulate" user input #3
    int testCase = input;
    int sentinel = 2147483647;
-
+   
    // Security check represented by an expression #1
    // Expression has potential for overflow #2
    if (testCase > 0 && testCase < sentinel)
    {
-      cout << "Overflow has been avoided!\n"
-           << endl;
+      cout << "Overflow has been avoided! User input meets type boundaries.\n";
+      cout << "User provided input: " << testCase << "\n" << endl;
+      cout << "Upper boundary of int: " << sentinel << "\n" << endl;
    }
    else
    {
-      cout << "Overflow has occurred!\n"
-           << endl;
+      cout << "Overflow has occurred! User input exceeded type boundaries.\n";
+      cout << "User provided input: " << testCase << "\n" << endl;
+      cout << "Upper boundary of int: " << sentinel << "\n" << endl;
    }
 }
 
