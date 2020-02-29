@@ -23,7 +23,7 @@ void heapExploit();
 void intVulnerability(int input);
 void integerWorking();
 void intExploit();
-void ansiVulnerability();
+void ansiVulnerability(wchar_t (&entryText)[32]);
 void ansiWorking();
 void ansiExploit();
 
@@ -296,18 +296,18 @@ void arcWorking()
  *************************************/
 void arcExploit()
 {
-   void *pDangerous = dangerous;
-   stringstream addressToString;
-   addressToString << pDangerous;
-   string address = addressToString.str();
+   // void *pDangerous = dangerous;
+   // stringstream addressToString;
+   // addressToString << pDangerous;
+   // string address = addressToString.str();
 
-   // Get the hexadeciaml to int
-   unsigned int x;
-   stringstream ss;
-   ss << std::hex << address;
-   ss >> x;
-   cout << "ARC Vulnerability exploit" << endl;
-   arcVulnerability(x);
+   // // Get the hexadeciaml to int
+   // unsigned int x;
+   // stringstream ss;
+   // ss << std::hex << address;
+   // ss >> x;
+   // cout << "ARC Vulnerability exploit" << endl;
+   // arcVulnerability(x);
 }
 
 /*************************************
@@ -403,7 +403,7 @@ void stackWorking()
 
    //The buffer is small but it works
    stackVulnerability(buffer, 1);
-   
+
    cout << "The buffer is not overloaded!";
 }
 
@@ -416,10 +416,10 @@ void stackExploit()
 {
    //overload the buffer with more than it will hold and add a function pointer to something different
    long int buffer[8] = {0, 7, 4, 8, 9, (long int)&exploited};
-   
+
    //this is bigger than the buffer can handle
    stackVulnerability(buffer, 8);
-   
+
    cout << "The buffer has been overloaded!";
 }
 
@@ -433,7 +433,7 @@ void heapVulnerability(stringstream &input)
    char *buffer1 = new char[5];
    char *buffer2 = new char[5];
 
-   cout << "buffer1: " << *buffer1 << *(buffer1+1) << " " << buffer1 << endl;
+   cout << "buffer1: " << *buffer1 << *(buffer1 + 1) << " " << buffer1 << endl;
    cout << "buffer2: " << *buffer2 << " " << buffer2 << endl;
 
    assert(buffer1 < buffer2);
@@ -538,28 +538,28 @@ void intExploit()
 *************************************/
 void ansiVulnerability(wchar_t (&entryText)[32])
 {
-   // ​ int vowelCount = 0;
+   int vowelCount = 0;
 
-   // wcout << "Original Sentence: " << entryText << "\n"
-   //       << "Vowels:            ";
-   // ​ for (int i = 0; i < sizeof(entryText); i++)
-   // {
-   //    ​ if (tolower(entryText[i]) == 'a' ||
-   //            tolower(entryText[i]) == 'e' ||
-   //            tolower(entryText[i]) == 'i' ||
-   //            tolower(entryText[i]) == 'o' ||
-   //            tolower(entryText[i]) == 'u')
-   //    {
-   //       wcout << entryText[i];
-   //       vowelCount++;
-   //    }
-   //    else
-   //    {
-   //       wcout << " ";
-   //    }
-   // }
-   // wcout << "\n\nYou have " << vowelCount << " vowel(s) in your sentence.\n";
-   // wcout << "=====================================\n";
+   wcout << "Original Sentence: " << entryText << "\n"
+         << "Vowels:            ";
+   for (int i = 0; i < sizeof(entryText); i++)
+   {
+      if (tolower(entryText[i]) == 'a' ||
+              tolower(entryText[i]) == 'e' ||
+              tolower(entryText[i]) == 'i' ||
+              tolower(entryText[i]) == 'o' ||
+              tolower(entryText[i]) == 'u')
+      {
+         wcout << entryText[i];
+         vowelCount++;
+      }
+      else
+      {
+         wcout << " ";
+      }
+   }
+   wcout << "\n\nYou have " << vowelCount << " vowel(s) in your sentence.\n";
+   wcout << "=====================================\n";
 }
 
 /*************************************
@@ -571,12 +571,12 @@ void ansiVulnerability(wchar_t (&entryText)[32])
  ************************************/
 void ansiWorking()
 {
-   // wchar_t vowelSentence[32] = {'T', 'h', 'i', 's', ' ', 'i', 's', ' ', 'a',
-   //                              's', ' ', 'l', 'o', 'n', 'g', ' ', 'a', 's',
-   //                              ' ', 'I', ' ', 'c', 'a', 'n', ' ', 'g', 'e',
-   //                              't', '.'};
+   wchar_t vowelSentence[32] = {'T', 'h', 'i', 's', ' ', 'i', 's', ' ', 'a',
+                                's', ' ', 'l', 'o', 'n', 'g', ' ', 'a', 's',
+                                ' ', 'I', ' ', 'c', 'a', 'n', ' ', 'g', 'e',
+                                't', '.'};
 
-   // ansiVulnerability(vowelSentence);
+   ansiVulnerability(vowelSentence);
 }
 
 /**************************************
@@ -586,32 +586,30 @@ void ansiWorking()
  *************************************/
 void ansiExploit()
 {
-   //    wchar_t vowelSentence[32] = {'I', ' ', 'a', 'm', ' ', 'a', ' ', 'g', 'r', 'e', 'a', 't', ' ',
-   //                                 'h', 'a', 'c', 'k', 'k', 'e', 'r', '!', ' ', 'I', ' ', 'h', 'a', 'v', 'e', ' ', 'b', 'e', 'a'};
-   //    ​
-   //        /*    wcout << ((long * ) (&vowelSentence[31]) ) << "\n";
-   //    wcout << (wchar_t) *((long * ) (&vowelSentence[31]) ) << "\n";
-   //    wcout << ((long * ) (&vowelSentence[33]) ) << "\n";
-   // ​
-   //    wcout << "+1 " << ((long * ) (&vowelSentence[32])+1 ) << "\n";
-   // ​
-   //    wcout << "+2 " << ((long * ) (&vowelSentence[32])+2 ) << "\n";
-   //    wcout << "+4 " << ((long * ) (&vowelSentence[32])+4 ) << "\n";
-   //  */
-   //        /*    *((long * ) (&vowelSentence[31]) + 1) = 't';
-   //    *((long * ) (&vowelSentence[31]) + 2) = ' ';
-   //    *((long * ) (&vowelSentence[31]) + 3) = 'Y';
-   //    *((long * ) (&vowelSentence[31]) + 4) = 'o';
-   //    *((long * ) (&vowelSentence[31]) + 5) = 'u';
-   //  */
+   wchar_t vowelSentence[32] = {'I', ' ', 'a', 'm', ' ', 'a', ' ', 'g', 'r', 'e', 'a', 't', ' ',
+                                'h', 'a', 'c', 'k', 'k', 'e', 'r', '!', ' ', 'I', ' ', 'h', 'a', 'v', 'e', ' ', 'b', 'e', 'a'};
+       /*    wcout << ((long * ) (&vowelSentence[31]) ) << "\n";
+      wcout << (wchar_t) *((long * ) (&vowelSentence[31]) ) << "\n";
+      wcout << ((long * ) (&vowelSentence[33]) ) << "\n";
+   ​
+      wcout << "+1 " << ((long * ) (&vowelSentence[32])+1 ) << "\n";
+   ​
+      wcout << "+2 " << ((long * ) (&vowelSentence[32])+2 ) << "\n";
+      wcout << "+4 " << ((long * ) (&vowelSentence[32])+4 ) << "\n";
+    */
+       /*    *((long * ) (&vowelSentence[31]) + 1) = 't';
+      *((long * ) (&vowelSentence[31]) + 2) = ' ';
+      *((long * ) (&vowelSentence[31]) + 3) = 'Y';
+      *((long * ) (&vowelSentence[31]) + 4) = 'o';
+      *((long * ) (&vowelSentence[31]) + 5) = 'u';
+    */
 
-   //        *((long *)(&vowelSentence[32])) = 't';
-   //    *((long *)(&vowelSentence[33])) = 'e';
-   //    *((long *)(&vowelSentence[34])) = 'n';
-   //    *((long *)(&vowelSentence[35])) = ' ';
-   //    *((long *)(&vowelSentence[36])) = 'Y';
-   //    *((long *)(&vowelSentence[37])) = 'O';
-   //    *((long *)(&vowelSentence[38])) = 'U';
-   //    ​
-   //        ansiVulnerability(vowelSentence);
+   *((long *)(&vowelSentence[32])) = 't';
+   *((long *)(&vowelSentence[33])) = 'e';
+   *((long *)(&vowelSentence[34])) = 'n';
+   *((long *)(&vowelSentence[35])) = ' ';
+   *((long *)(&vowelSentence[36])) = 'Y';
+   *((long *)(&vowelSentence[37])) = 'O';
+   *((long *)(&vowelSentence[38])) = 'U';
+   ansiVulnerability(vowelSentence);
 }
