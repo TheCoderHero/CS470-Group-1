@@ -276,8 +276,7 @@ void arcExploit()
  ************************************/
 void vtableWorking()
 {
-    Vulnerability instance;
-    instance.firstMethod();
+    
 }
 
 /**************************************
