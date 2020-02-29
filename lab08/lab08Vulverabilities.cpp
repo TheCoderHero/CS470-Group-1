@@ -385,6 +385,8 @@ void stackVulnerability(long int input[], long int size)
       buffer[i] = input[i];
       cout << i << "" << buffer[i] << endl;
    }
+
+   cout << buffer << endl;
 }
 
 /*************************************
@@ -396,10 +398,13 @@ void stackVulnerability(long int input[], long int size)
  ************************************/
 void stackWorking()
 {
+   //this is a short buffer
    long int buffer[1] = {1};
 
+   //The buffer is small but it works
    stackVulnerability(buffer, 1);
-   cout << "worked!";
+   
+   cout << "The buffer is not overloaded!";
 }
 
 /**************************************
@@ -409,9 +414,13 @@ void stackWorking()
  *************************************/
 void stackExploit()
 {
+   //overload the buffer with more than it will hold and add a function pointer to something different
    long int buffer[8] = {0, 7, 4, 8, 9, (long int)&exploited};
+   
+   //this is bigger than the buffer can handle
    stackVulnerability(buffer, 8);
-   cout << "Gotcha!";
+   
+   cout << "The buffer has been overloaded!";
 }
 
 /*************************************
