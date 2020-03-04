@@ -430,25 +430,25 @@ void stackExploit()
 void heapVulnerability(stringstream &input)
 {
    // create vulnerability
-   char *buffer1 = new char[5];
-   char *buffer2 = new char[5];
+   char *namebuffer = new char[5];
+   char *extrabuffer = new char[5];
 
-   cout << "buffer1 before: " << *buffer1 << " " << buffer1 << endl;
-   cout << "buffer2 before: " << *buffer2 << " " << buffer2 << endl;
+   cout << "namebuffer before: " << *namebuffer << " " << namebuffer << endl;
+   cout << "extrabuffer before: " << *extrabuffer << " " << extrabuffer << endl;
 
-   assert(buffer1 < buffer2);
+   assert(namebuffer < extrabuffer);
 
    // get input
    for (int i = 0; !input.eof(); i++)
    {
-      input >> buffer1;
+      input >> namebuffer;
    }
 
-   cout << "buffer1 after : " << *buffer1 << " " << buffer1 << endl;
-   cout << "buffer2 after : " << *buffer2 << " " << buffer2 << endl;
+   cout << "namebuffer after : " << *namebuffer << " " << namebuffer << endl;
+   cout << "extrabuffer after: " << *extrabuffer << " " << extrabuffer << endl;
 
    // delete second buffer first
-   delete[] buffer2;
+   delete[] extrabuffer;
 
    // create test input
    stringstream test;
@@ -457,9 +457,9 @@ void heapVulnerability(stringstream &input)
    // Try to insert new data into buffer 1 to see if it still works
    for (int i = 0; !test.eof(); i++)
    {
-      test >> buffer1;
+      test >> namebuffer;
    }
-   delete[] buffer1;
+   delete[] namebuffer;
 }
 
 /*************************************
@@ -474,7 +474,7 @@ void heapWorking()
    cout << "-- Heap Working Test --" << endl;
 
    stringstream test;
-   test.str("data");
+   test.str("Dave");
 
    heapVulnerability(test);
 }
@@ -489,7 +489,7 @@ void heapExploit()
    cout << "-- Heap Exploit Test --" << endl;
 
    stringstream test;
-   test.str("brokentest");
+   test.str("Superman");
 
    heapVulnerability(test);
 }
@@ -513,14 +513,14 @@ void intVulnerability(int input)
    // Expression has potential for overflow #2
    if (testCase > 0 && testCase < sentinel)
    {
-      cout << "Overflow has been avoided! User input meets type boundaries.\n";
-      cout << "User provided input: " << testCase << "\n" << endl;
+      cout << "Overflow has been avoided!\nUser input meets type boundaries.\n";
+      cout << "User provided input: " << testCase << endl;
       cout << "Upper boundary of int: " << sentinel << "\n" << endl;
    }
    else
    {
-      cout << "Overflow has occurred! User input exceeded type boundaries.\n";
-      cout << "User provided input: " << testCase << "\n" << endl;
+      cout << "Overflow has occurred!\nUser input exceeded type boundaries.\n";
+      cout << "User provided input: " << testCase << endl;
       cout << "Upper boundary of int: " << sentinel << "\n" << endl;
    }
 }
