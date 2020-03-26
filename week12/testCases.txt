@@ -1,0 +1,23 @@
+TestSecret
+   1- As AdmiralAbe sign in and see if I can read anything in a lower classification (should be possible)
+   2- As AdmiralAbe sign in and see if I can write anything in a lower classification (should not be possible)
+   3- As AdmiralAbe sign in and see if I can read anything in a higher classification (should not be possible)
+   4- As AdmiralAbe sign in and see if I can write anything in a higher classification (should be possible)
+
+TestPrivileged
+   1- As CaptainCharley sign in and see if I can read anything in a lower classification (should be possible)
+   2- As CaptainCharley sign in and see if I can write anything in a lower classification (should not be possible)
+   3- As CaptainCharley sign in and see if I can read anything in a higher classification (should not be possible)
+   4- As CaptainCharley sign in and see if I can write anything in a higher classification (should be possible)
+
+TestConfidential
+   1- As SeamanSam sign in and see if I can read anything in a lower classification (should be possible)
+   2- As SeamanSam sign in and see if I can write anything in a lower classification (should not be possible)
+   3- As SeamanSam sign in and see if I can read anything in a higher classification (should not be possible)
+   4- As SeamanSam sign in and see if I can write anything in a higher classification (should be possible) 
+
+TestPublic
+   1- As ZachHeiner sign in and see if I can read anything in a lower classification (should be possible)
+   2- As ZachHeiner sign in and see if I can write anything in a lower classification (should not be possible)
+   3- As ZachHeiner sign in and see if I can read anything in a higher classification (should not be possible)
+   4- As ZachHeiner sign in and see if I can write anything in a higher classification (should be possible)

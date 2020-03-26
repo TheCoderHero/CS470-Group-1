@@ -14,8 +14,8 @@
 ##############################################################
 # The main rule
 ##############################################################
-a.out: lab12.cpp control.h interact.o message.o messages.o makefile
-	g++ -o a.out lab12.cpp interact.o message.o messages.o -std=c++11
+a.exe: lab12.cpp control.h interact.o message.o messages.o makefile
+	g++ -o a.exe lab12.cpp interact.o message.o messages.o -std=c++11
 	tar -cf lab12.tar *.h *.cpp makefile
 
 ##############################################################

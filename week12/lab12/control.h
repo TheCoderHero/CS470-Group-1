@@ -9,4 +9,25 @@
 
 #pragma once
 
-// you may need to put something here...
+// levels of secrecy
+enum Control
+{
+   PUBLIC,
+   CONFIDENTIAL,
+   PRIVILEGED,
+   SECRET
+};
+
+// Authenticate function
+
+bool securityConditionRead(const Control &controlAsset,
+                       const Control &controlSubject)
+{
+   return controlSubject >= controlAsset;
+}
+
+bool securityConditionWrite(const Control &controlAsset,
+                       const Control &controlSubject)
+{
+   return controlSubject <= controlAsset;
+}
