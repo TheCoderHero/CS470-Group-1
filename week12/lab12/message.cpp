@@ -28,10 +28,12 @@ Message ::  Message()
  * MESSAGE NON-DEFAULT CONSTRUCTOR
  * Create a message and fill it
  **************************************************/
-Message::Message(const string & text,
+Message::Message(const Control & assetControl,
+                 const string & text,
                  const string & author,
                  const string & date)
 {
+   this->assetControl = assetControl;
    this->text = text;
    this->author = author;
    this->date = date;

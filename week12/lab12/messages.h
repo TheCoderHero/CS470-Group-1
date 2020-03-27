@@ -38,7 +38,8 @@ public:
    void remove(int id);
 
    // add a new message
-   void add(const std::string & text,
+   void add(const Control & assetControl,
+            const std::string & text,
             const std::string & author,
             const std::string & date);
 

@@ -73,11 +73,12 @@ void Messages::remove(int id)
  * MESSAGES :: ADD
  * add a new message
  **********************************************/
-void Messages::add(const string & text,
+void Messages::add(const Control & assetControl,
+                   const string & text,
                    const string & author,
                    const string & date)
 {
-   Message message(text, author, date);
+   Message message(assetControl, text, author, date);
    messages.push_back(message);
 }
 
@@ -111,7 +112,7 @@ void Messages::readMessages(const char * fileName)
 
       if (!fin.fail())
       {
-         Message message(text, author, date);
+         Message message(textControl, text, author, date);
          messages.push_back(message);
       }
    }

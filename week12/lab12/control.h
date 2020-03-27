@@ -9,39 +9,42 @@
 
 #pragma once
 
-// levels of secrecy
-enum Control
-{
-   PUBLIC,
-   CONFIDENTIAL,
-   PRIVILEGED,
-   SECRET
-};
 
-// Authenticate function
-Control authenticate(const string &userName,
-                     const string &password)
-{
-   if (userName == "AdmiralAbe" && password == "password")
-      return SECRET;
+   // levels of secrecy
+   enum Control
+   {
+      PUBLIC,
+      CONFIDENTIAL,
+      PRIVILEGED,
+      SECRET
+   };
 
-   if (userName == "CaptainCharlie" && password == "password")
-      return CONFIDENTIAL;
+   // Authenticate function
+   Control authenticate(const string &userName,
+                          const string &password)
+   {
+      if (userName == "AdmiralAbe" && password == "password")
+         return SECRET;
 
-   if ((userName == "SeamanSam" || userName == "SeamanSue" || userName == "SeamanSly") && password == "password")
-      return PRIVILEGED;
+      if (userName == "CaptainCharlie" && password == "password")
+         return CONFIDENTIAL;
 
-   return PUBLIC;
-}
+      if ((userName == "SeamanSam" || userName == "SeamanSue" || userName == "SeamanSly") && password == "password")
+         return PRIVILEGED;
 
-bool securityConditionRead(const Control &controlAsset,
-                           const Control &controlSubject)
-{
-   return controlSubject >= controlAsset;
-}
+      return PUBLIC;
+   }
 
-bool securityConditionWrite(const Control &controlAsset,
-                            const Control &controlSubject)
-{
-   return controlSubject <= controlAsset;
-}
+   bool securityConditionRead(const Control &controlAsset,
+                              const Control &controlSubject)
+   {
+      return controlSubject >= controlAsset;
+   }
+
+   bool securityConditionWrite(const Control &controlAsset,
+                               const Control &controlSubject)
+   {
+      return controlSubject <= controlAsset;
+   }
+
+   Control subjectControl = authenticate("AdmiralAbe", "password");
