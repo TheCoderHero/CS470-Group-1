@@ -19,15 +19,29 @@ enum Control
 };
 
 // Authenticate function
+Control authenticate(const string &userName,
+                     const string &password)
+{
+   if (userName == "AdmiralAbe" && password == "password")
+      return SECRET;
+
+   if (userName == "CaptainCharlie" && password == "password")
+      return CONFIDENTIAL;
+
+   if ((userName == "SeamanSam" || userName == "SeamanSue" || userName == "SeamanSly") && password == "password")
+      return PRIVILEGED;
+
+   return PUBLIC;
+}
 
 bool securityConditionRead(const Control &controlAsset,
-                       const Control &controlSubject)
+                           const Control &controlSubject)
 {
    return controlSubject >= controlAsset;
 }
 
 bool securityConditionWrite(const Control &controlAsset,
-                       const Control &controlSubject)
+                            const Control &controlSubject)
 {
    return controlSubject <= controlAsset;
 }
