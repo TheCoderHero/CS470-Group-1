@@ -21,6 +21,8 @@
 class Messages
 {
 public:
+   Control subjectControl;
+
    // constructor: read a file to fill the messages
    Messages(const char * fileName) { readMessages(fileName); }
 
@@ -38,7 +40,7 @@ public:
    void remove(int id);
 
    // add a new message
-   void add(const Control & assetControl,
+   void add(const std::string & assetControl,
             const std::string & text,
             const std::string & author,
             const std::string & date);

@@ -8,43 +8,57 @@
  ************************************************************************/
 
 #pragma once
+#include <map>
+#include <string>
 
+// levels of secrecy
+enum Control
+{
+   PUBLIC,
+   CONFIDENTIAL,
+   PRIVILEGED,
+   SECRET
+};
 
-   // levels of secrecy
-   enum Control
-   {
-      PUBLIC,
-      CONFIDENTIAL,
-      PRIVILEGED,
-      SECRET
-   };
+Control subjectControl;
+// Authenticate function
+Control authenticateControl(const std::string &userName,
+                     const std::string &password)
+{
+   // std::map<string, Control>::iterator it;
+   std::map<std::string, Control> perm;
+   perm["AdmiralAbe"] = SECRET;
+   perm["CaptainCharlie"] = PRIVILEGED;
+   perm["SeamanSam"] = CONFIDENTIAL;
+   perm["SeamanSue"] = CONFIDENTIAL;
+   perm["SeamanSly"] = CONFIDENTIAL;
+   if (perm[userName] && password == "password")
+      return perm[userName];
 
-   // Authenticate function
-   Control authenticate(const string &userName,
-                          const string &password)
-   {
-      if (userName == "AdmiralAbe" && password == "password")
-         return SECRET;
+   return PUBLIC;   
+}
 
-      if (userName == "CaptainCharlie" && password == "password")
-         return CONFIDENTIAL;
+Control convertControl(std::string key)
+{
+   std::map<std::string, Control> perm;
+   perm["PUBLIC"] = PUBLIC;
+   perm["CONFIDENTIAL"] = CONFIDENTIAL;
+   perm["PRIVILEGED"] = PRIVILEGED;
+   perm["SECRET"] = SECRET;
+   
+   if(perm[key])
+      return perm[key];
 
-      if ((userName == "SeamanSam" || userName == "SeamanSue" || userName == "SeamanSly") && password == "password")
-         return PRIVILEGED;
+   return PUBLIC;   
+}
+bool securityConditionRead(const Control &controlAsset,
+                           const Control &controlSubject)
+{
+   return controlSubject >= controlAsset;
+}
 
-      return PUBLIC;
-   }
-
-   bool securityConditionRead(const Control &controlAsset,
-                              const Control &controlSubject)
-   {
-      return controlSubject >= controlAsset;
-   }
-
-   bool securityConditionWrite(const Control &controlAsset,
-                               const Control &controlSubject)
-   {
-      return controlSubject <= controlAsset;
-   }
-
-   Control subjectControl = authenticate("AdmiralAbe", "password");
+bool securityConditionWrite(const Control &controlAsset,
+                            const Control &controlSubject)
+{
+   return controlSubject <= controlAsset;
+}

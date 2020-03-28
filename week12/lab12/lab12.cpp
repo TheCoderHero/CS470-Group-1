@@ -15,6 +15,8 @@
 #include <cassert>    // because I am paraniod
 #include "interact.h" // the interaction code
 #include "messages.h" // the collectio of messages
+#include "control.h"
+
 using namespace std;
 
 const char * FILE_NAME = "/home/cs470/week12/messages.txt";
@@ -58,6 +60,8 @@ void session(Messages & messages)
    // start a session
    Interact interact(userName, password, messages);
    cout << "Welcome, " << userName << " please select an option:\n";
+   subjectControl = authenticateControl(userName, password);
+
    displayOptions();
 
    // inteact loop
@@ -90,6 +94,7 @@ void session(Messages & messages)
             break;
          case 'l':
             cout << "Goodbye, " << userName << ".\n";
+            subjectControl = PUBLIC;
             return;
          default:
             cout << "Unknown option: '" << option << "'\n";

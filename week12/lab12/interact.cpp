@@ -12,7 +12,6 @@
 #include <cassert>    // because I am paraniod
 #include <stdlib.h>   // for atoi 
 #include "messages.h" // to interact with the collection of messages
-#include "control.h"  // all the Bell-LaPadula stuff
 #include "interact.h" // the interact class and User structure
 
 using namespace std;
@@ -69,7 +68,8 @@ void Interact::display() const
  ****************************************************/
 void Interact::add()
 {
-   pMessages->add(promptForLine("message"),
+   pMessages->add(promptForLine("Security Level"),
+                  promptForLine("message"),
                   userName,
                   promptForLine("date"));
 }
