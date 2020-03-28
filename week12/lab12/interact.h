@@ -2,7 +2,7 @@
  * COMPONENT:
  *    INTERACT
  * Author:
- *    Br. Helfrich, <your name here if you made a change>
+ *    Br. Helfrich, Osvaldo Carrillo Lira, Aaron Eiche, Zach Heiner, Collin Steel, John Tanner, Jordon Thompson
  * Summary:
  *    This class allows one user to interact with the system
  ************************************************************************/

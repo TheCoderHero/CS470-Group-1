@@ -2,7 +2,7 @@
  * COMPONENT:
  *    MESSAGES
  * Author:
- *    Br. Helfrich, <your name here if you made a change>
+ *    Br. Helfrich, Osvaldo Carrillo Lira, Aaron Eiche, Zach Heiner, Collin Steel, John Tanner, Jordon Thompson
  * Summary:
  *    This class stores the notion of a collection of messages
  ************************************************************************/
