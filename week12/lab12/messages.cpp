@@ -12,8 +12,6 @@
 #include <iostream>   // standard input and output
 #include <fstream>    // the messages are read from a file
 #include <cassert>    // because I am paraniod
-#include "control.h"  // all the Bell-LaPadula code
-#include "message.h"  // all the code about a single message
 #include "messages.h" // a collection messages
 
 using namespace std;

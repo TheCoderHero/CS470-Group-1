@@ -11,7 +11,6 @@
 
 #include <string>     // for convenience
 #include "messages.h" // to interact with the collection of messages
-#include "control.h"  // all the Bell-LaPadula stuff
 
 /**************************************************************
  * USER

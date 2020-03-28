@@ -11,7 +11,6 @@
 
 #include <string>     // for convenience
 #include <list>       // to store the messages
-#include "control.h"  // all the Bell-LaPadula code
 #include "message.h"  // all the code about a single message
 
 /***********************************************
@@ -21,7 +20,6 @@
 class Messages
 {
 public:
-   Control subjectControl;
 
    // constructor: read a file to fill the messages
    Messages(const char * fileName) { readMessages(fileName); }

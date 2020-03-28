@@ -15,12 +15,11 @@
 #include <cassert>    // because I am paraniod
 #include "interact.h" // the interaction code
 #include "messages.h" // the collectio of messages
-#include "control.h"
 
 using namespace std;
 
 const char * FILE_NAME = "/home/cs470/week12/messages.txt";
-
+Control subjectControl;
 
 /***********************************************
  * DISPLAY OPTIONS
