@@ -17,7 +17,9 @@ enum Control
    PUBLIC,
    CONFIDENTIAL,
    PRIVILEGED,
-   SECRET
+   RESTRICTED,
+   SECRET,
+   TOPSECRET
 };
 
 extern Control subjectControl;
@@ -25,7 +27,9 @@ extern Control subjectControl;
 
 Control authenticateControl(const std::string& userName,
    const std::string& password);
+
 Control convertControl(std::string key);
+
 bool securityConditionRead(const Control& controlAsset,
    const Control& controlSubject);
 

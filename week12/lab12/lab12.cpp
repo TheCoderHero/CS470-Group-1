@@ -18,7 +18,8 @@
 
 using namespace std;
 
-const char * FILE_NAME = "/home/cs470/week12/messages.txt";
+//const char* FILE_NAME = "/home/cs470/week12/messages.txt";
+const char * FILE_NAME = "C:\\School\\cs470\\GitRepo\\CS470-Group-1\\week12\\lab12\\messages.txt";
 Control subjectControl;
 
 /***********************************************

@@ -26,7 +26,10 @@ const User users[] =
    { "CaptainCharlie", "password" }, 
    { "SeamanSam",      "password" },
    { "SeamanSue",      "password" },
-   { "SeamanSly",      "password" }
+   { "SeamanSly",      "password" },
+   { "Lefty",           "password"},
+   { "PirateJack",      "password" }
+
 };
 
 const int ID_INVALID = -1;

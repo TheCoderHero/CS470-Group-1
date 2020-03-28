@@ -28,10 +28,7 @@ void Messages::display() const
       if (securityConditionRead(it->getControl(), subjectControl)){
          it->displayProperties();
       }
-      else
-      {
-         cout << "User does not have adequate permissions to display message\n";
-      }
+      
 }
 
 /***********************************************
@@ -70,17 +67,14 @@ void Messages::update(int id, const string &text)
          }
          else
          {
-            cout << "User does not have adequate permissions to update message\n";
+            cout << "User permissions are to high to update message\n";
          }
       }
-      else
-      {
-          cout << "Requested message does not exist.\n";
-      }
+      
    }
 }
 
-   /***********************************************
+ /***********************************************
  * MESSAGES :: REMOVE
  * remove a single message
  **********************************************/
@@ -100,7 +94,7 @@ void Messages::update(int id, const string &text)
             }
    }
 
-   /***********************************************
+ /***********************************************
  * MESSAGES :: ADD
  * add a new message
  **********************************************/
