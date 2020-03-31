@@ -5,16 +5,15 @@
 ********************************************************************/
 #ifndef CIPHER01_H
 #define CIPHER01_H
-#include <string>
-#include "cipher.h"
+
 /********************************************************************
  * CLASS
  *******************************************************************/
 class Cipher01 : public Cipher
 {
 public:
-   virtual std::string getPseudoAuth()  { return "pseudocode author"; }
-   virtual std::string getCipherName()  { return "cipher name"; }
+   virtual std::string getPseudoAuth()  { return "Collin Steel"; }
+   virtual std::string getCipherName()  { return "Multiplicative Cipher"; }
    virtual std::string getEncryptAuth() { return "encrypt author"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
@@ -24,7 +23,7 @@ public:
     ***********************************************************/
    virtual std::string getCipherCitation()
    {
-      return std::string("citation");
+      return std::string("“Multiplicative Cipher”, Tutorialspoint,  https://www.tutorialspoint.com/cryptography_with_python/cryptography_with_python_multiplicative_cipher.htm");
    }
    
    /**********************************************************
@@ -37,10 +36,10 @@ public:
 
       // TODO: please format your pseudocode
       // The encrypt pseudocode
-      str =  "insert the encryption pseudocode\n";
+      str =  "DECLARE alphebet: enum\n\nFunction encrypt\n\tINPUT password, plaintext\n\tINIT cipher : string, key : byte\n\n\tFOR each char in password\n\t\tCOMPUTE key += ascii value of each char\n\t\tCOMPUTE key as key modulus 26\n\n\t\tFOR char in plaintext\n\t\t\tCOMPUTE cipherChar as(char* key) % enumlength\n\t\t\tCOMPUTE cipher += cipherChar\n\t\tENDFOR\nRETURN cipher\n";
 
       // The decrypt pseudocode
-      str += "insert the decryption pseudocode\n";
+      str += "Function decrypt/nINPUT password, cipher\n\tINIT plaintext : string, key : byte\n\n\tFOR each char in password\n\t\tCOMPUTE key as key plus ascii value of char\n\tENDFOR\n\tCOMPUTE key as key modulus 26\n\tFOR each char in cipher\n\t\tFOR n = 0 to n = 25\n\t\t\tIF(n multiplied by key) modulus enumlength equals cipher[]\n\t\t\t\tCOMPUTE plaintext plus plainChar\n\t\t\t\tCONTINUE\n\t\tENDFOR\n\tENDFOR\nRETURN plaintext\n";
 
       return str;
    }
