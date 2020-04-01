@@ -5,6 +5,7 @@
 #ifndef CIPHER02_H
 #define CIPHER02_H
 #include <string>
+#include <cctype>
 #include "cipher.h"
 /********************************************************************
  * CLASS
@@ -12,8 +13,8 @@
 class Cipher02 : public Cipher
 {
 public:
-   virtual std::string getPseudoAuth()  { return "Jordon Thompson"; }
-   virtual std::string getCipherName()  { return "Beaufort Cipher"; }
+   virtual std::string getPseudoAuth() { return "Jordon Thompson"; }
+   virtual std::string getCipherName() { return "Beaufort Cipher"; }
    virtual std::string getEncryptAuth() { return "encrypt author"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
@@ -29,7 +30,7 @@ public:
       s += "http://practicalcryptography.com/ciphers/beaufort-cipher/";
       return s;
    }
-   
+
    /**********************************************************
     * GET PSEUDOCODE
     * Returns the pseudocode as a string to be used by the caller.
@@ -39,9 +40,9 @@ public:
       std::string str;
 
       // The encrypt pseudocode
-      str =  "encrypt(plainText, password)\n";
+      str = "encrypt(plainText, password)\n";
       str += "   RETURN beaufort(plainText, password)\n\n";
-     
+
       // The decrypt pseudocode
       str += "decrypt(cipherText, password)\n";
       str += "   RETURN beaufort(cipherText, password)\n\n";
@@ -50,20 +51,18 @@ public:
       str += "beaufort(text, password)\n";
       str += "   INIT alphabet\n";
       str += "   INIT output\n";
-      str += "   text <- change text to all uppercase with no spaces\n";
-      str += "   password <- change password to all uppercase with no spaces\n";
       str += "   FOR i is all letters in text\n";
       str += "      INIT a <- text[i]\n";
-      str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat 
+      str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat
       str += "      INIT begin <- 0\n";
-      str += "      FOR j is all letters in alpabet\n"; 
-      str += "         IF alphabet = a\n";
+      str += "      FOR j is all letters in alpabet\n";
+      str += "         IF alphabet[i] = a(changed to lowercase)\n";
       str += "            begin <- j\n";
       str += "            BREAK\n";
       str += "      INIT offset <- 0\n";
       str += "      FOR k starts at begin and counts to begin + sizeOfAlphabet\n";
       str += "         INIT c <- k \% sizeOfAlphabet\n";
-      str += "         IF alphabet[c] = b\n";
+      str += "         IF alphabet[c] = b(changed to lowercase)\n";
       str += "            BREAK\n";
       str += "         offset = offset + 1\n";
       str += "      output += alphabet[offset]\n";
@@ -76,11 +75,11 @@ public:
     * ENCRYPT
     * TODO: ADD description
     **********************************************************/
-   virtual std::string encrypt(const std::string & plainText,
-                               const std::string & password)
+   virtual std::string encrypt(const std::string &plainText,
+                               const std::string &password)
    {
-      std::string cipherText = plainText;
-      // TODO - Add your code here
+      std::string cipherText = beaufort(plainText, password);
+      
       return cipherText;
    }
 
@@ -88,12 +87,22 @@ public:
     * DECRYPT
     * TODO: ADD description
     **********************************************************/
-   virtual std::string decrypt(const std::string & cipherText,
-                               const std::string & password)
+   virtual std::string decrypt(const std::string &cipherText,
+                               const std::string &password)
    {
-      std::string plainText = cipherText;
-      // TODO - Add your code here
+      std::string plainText = beaufort(cipherText, password);
+
       return plainText;
+   }
+
+   virtual std::string beaufort(const std::string &text,
+                                const std::string &password)
+   {
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+      std::string output = text;
+
+      
+      return output;
    }
 };
 
