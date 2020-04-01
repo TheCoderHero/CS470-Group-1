@@ -1,7 +1,6 @@
 /********************************************************************
 * Header:
-*    Implement your cipher here. You can view 'example.h' to see the
-*    completed Caesar Cipher example.
+*    Beaufort Cipher
 ********************************************************************/
 #ifndef CIPHER02_H
 #define CIPHER02_H
@@ -24,7 +23,11 @@ public:
     ***********************************************************/
    virtual std::string getCipherCitation()
    {
-      return std::string("citation");
+      std::string s;
+      s += "PracticalCryptography.com,";
+      s += "\"Practical Cryptography - Beaufort Cipher \",\n   retrieved: ";
+      s += "http://practicalcryptography.com/ciphers/beaufort-cipher/";
+      return s;
    }
    
    /**********************************************************
@@ -35,12 +38,36 @@ public:
    {
       std::string str;
 
-      // TODO: please format your pseudocode
       // The encrypt pseudocode
-      str =  "insert the encryption pseudocode\n";
-
+      str =  "encrypt(plainText, password)\n";
+      str += "   RETURN beaufort(plainText, password)\n\n";
+     
       // The decrypt pseudocode
-      str += "insert the decryption pseudocode\n";
+      str += "decrypt(cipherText, password)\n";
+      str += "   RETURN beaufort(cipherText, password)\n\n";
+
+      // beaufort cipher algorithm
+      str += "beaufort(text, password)\n";
+      str += "   INIT alphabet\n";
+      str += "   INIT output\n";
+      str += "   text <- change text to all uppercase\n";
+      str += "   password <- change password to all uppercase\n";
+      str += "   FOR i is all letters in text\n";
+      str += "      INIT a <- text[i]\n";
+      str += "      INIT b <- password[i \% sizeOfPassword]\n";
+      str += "      INIT begin <- 0\n";
+      str += "      FOR j is all letters in alpabet\n"; 
+      str += "         IF alphabet = a\n";
+      str += "            begin <- j\n";
+      str += "            BREAK\n";
+      str += "      INIT offset <- 0\n";
+      str += "      FOR k starts at begin and counts to begin + sizeOfAlphabet\n";
+      str += "         INIT c <- k \% sizeOfAlphabet\n";
+      str += "         IF alphabet[c] = b\n";
+      str += "            BREAK\n";
+      str += "         offset = offset + 1\n";
+      str += "      output += alphabet[offset]\n";
+      str += "   RETURN output\n";
 
       return str;
    }
