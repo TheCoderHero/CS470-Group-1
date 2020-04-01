@@ -12,8 +12,8 @@
 class Cipher02 : public Cipher
 {
 public:
-   virtual std::string getPseudoAuth()  { return "pseudocode author"; }
-   virtual std::string getCipherName()  { return "cipher name"; }
+   virtual std::string getPseudoAuth()  { return "Jordon Thompson"; }
+   virtual std::string getCipherName()  { return "Beaufort Cipher"; }
    virtual std::string getEncryptAuth() { return "encrypt author"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
@@ -50,11 +50,11 @@ public:
       str += "beaufort(text, password)\n";
       str += "   INIT alphabet\n";
       str += "   INIT output\n";
-      str += "   text <- change text to all uppercase\n";
-      str += "   password <- change password to all uppercase\n";
+      str += "   text <- change text to all uppercase with no spaces\n";
+      str += "   password <- change password to all uppercase with no spaces\n";
       str += "   FOR i is all letters in text\n";
       str += "      INIT a <- text[i]\n";
-      str += "      INIT b <- password[i \% sizeOfPassword]\n";
+      str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat 
       str += "      INIT begin <- 0\n";
       str += "      FOR j is all letters in alpabet\n"; 
       str += "         IF alphabet = a\n";
