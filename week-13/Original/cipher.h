@@ -5,6 +5,8 @@
 #ifndef CIPHER_H
 #define CIPHER_H
 #include <string>
+#include <cstddef>
+#include <iostream>
 /********************************************************************
  * CLASS CIPHER
  *******************************************************************/

@@ -15,7 +15,7 @@ class Cipher02 : public Cipher
 public:
    virtual std::string getPseudoAuth() { return "Jordon Thompson"; }
    virtual std::string getCipherName() { return "Beaufort Cipher"; }
-   virtual std::string getEncryptAuth() { return "encrypt author"; }
+   virtual std::string getEncryptAuth() { return "Collin Steel"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
    /***********************************************************
@@ -98,11 +98,37 @@ public:
    virtual std::string beaufort(const std::string &text,
                                 const std::string &password)
    {
-      std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
-      std::string output = text;
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
+      std::string output = "";
 
-      
+      for (int i = 0; i < text.length(); i++)
+      {
+         char a = text[i];
+         char b = password[i % password.length()];
+         int begin = 0;
+         for (int j = 0; j < alphabet.length(); j++)
+         {
+            if (alphabet[j] == a)
+            {
+               begin = j;
+               break;
+            }
+         }
+         int offset = 0;
+         for (int k = begin; k < (begin + alphabet.length()); k++)
+         {
+            int c = k % alphabet.length();
+            if (alphabet[c] == b)
+            {
+               break;
+            }
+            offset = offset++;
+         }
+         output += alphabet[offset];
+         
+      }
       return output;
+      
    }
 };
 
