@@ -91,10 +91,10 @@ public:
 
       for (int j = 0; j < plainText.length(); j++)
       {
-         int cipherIndex = (key * alphabet.find(plainText[j])) % alphabet.length();
-         cipherText += alphabet[cipherIndex];
-      }    
-      
+         int index = (key * alphabet.find(plainText[j])) % alphabet.length();
+         cipherText += alphabet[index];
+      }
+
       return cipherText;
    }
 
@@ -105,32 +105,9 @@ public:
    virtual std::string decrypt(const std::string & cipherText, 
                                const std::string & password)
    {
-      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
-      std::string plainText = "";
-      int key = 0;
-
-      for (int i = 0; i < password.length(); i++)
-      {
-         key += alphabet.find(password[i]);
-      }
-
-      for (int j = 0; j < cipherText.length(); j++)
-      {
-         for (int n = 0; n < alphabet.length(); n++)
-         {
-            int index = (n * key) % alphabet.length();
-            if (alphabet[index] == cipherText[j])
-            {
-               plainText += alphabet[n];
-               break;
-            }
-         }         
-      }
-     
-      return plainText;
-      // std::string plainText = cipherText;
+       std::string plainText = cipherText;
       // // TODO - Add your code here
-      // return plainText;
+       return plainText;
    }
 };
 
