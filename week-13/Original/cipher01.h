@@ -1,7 +1,6 @@
 /********************************************************************
 * Header:
-*    Implement your cipher here. You can view 'example.h' to see the
-*    completed Caesar Cipher example.
+*    Multiplicative Cipher
 ********************************************************************/
 #ifndef CIPHER01_H
 #define CIPHER01_H
@@ -14,7 +13,7 @@ class Cipher01 : public Cipher
 public:
    virtual std::string getPseudoAuth()  { return "Collin Steel"; }
    virtual std::string getCipherName()  { return "Multiplicative Cipher"; }
-   virtual std::string getEncryptAuth() { return "encrypt author"; }
+   virtual std::string getEncryptAuth() { return "Jordon Thompson"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
    /***********************************************************
