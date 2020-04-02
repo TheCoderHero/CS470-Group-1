@@ -41,32 +41,45 @@ public:
 
       // The encrypt pseudocode
       str = "encrypt(plainText, password)\n";
-      str += "   RETURN beaufort(plainText, password)\n\n";
-
-      // The decrypt pseudocode
-      str += "decrypt(cipherText, password)\n";
-      str += "   RETURN beaufort(cipherText, password)\n\n";
-
-      // beaufort cipher algorithm
-      str += "beaufort(text, password)\n";
       str += "   INIT alphabet\n";
-      str += "   INIT output\n";
-      str += "   FOR i is all letters in text\n";
-      str += "      INIT a <- text[i]\n";
+      str += "   INIT cipherText\n";
+      str += "   FOR i is all characters in plainText\n";
+      str += "      INIT a <- plainText[i]\n";
       str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat
       str += "      INIT begin <- 0\n";
-      str += "      FOR j is all letters in alpabet\n";
-      str += "         IF alphabet[i] = a(changed to lowercase)\n";
+      str += "      FOR j is all characters in alpabet\n";
+      str += "         IF alphabet[j] = a\n";
       str += "            begin <- j\n";
       str += "            BREAK\n";
       str += "      INIT offset <- 0\n";
       str += "      FOR k starts at begin and counts to begin + sizeOfAlphabet\n";
       str += "         INIT c <- k \% sizeOfAlphabet\n";
-      str += "         IF alphabet[c] = b(changed to lowercase)\n";
+      str += "         IF alphabet[c] = b\n";
       str += "            BREAK\n";
       str += "         offset = offset + 1\n";
-      str += "      output += alphabet[offset]\n";
-      str += "   RETURN output\n";
+      str += "      cipherText += alphabet[offset]\n";
+      str += "   RETURN cipherText\n";
+
+      // The decrypt pseudocode
+      str += "decrypt(cipherText, password)\n";
+      str += "   INIT alphabet\n";
+      str += "   INIT plainText\n";
+      str += "   FOR i is all letters in cipherText\n";
+      str += "      INIT a <- cipherText[i]\n";
+      str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat
+      str += "      INIT begin <- 0\n";
+      str += "      FOR j is all letters in alpabet\n";
+      str += "         IF alphabet[j] = a\n";
+      str += "            begin <- j\n";
+      str += "            BREAK\n";
+      str += "      INIT offset <- 0\n";
+      str += "      FOR k starts at begin and counts to begin + sizeOfAlphabet\n";
+      str += "         INIT c <- k \% sizeOfAlphabet\n";
+      str += "         IF alphabet[c] = b\n";
+      str += "            BREAK\n";
+      str += "         offset = offset + 1\n";
+      str += "      plainText += alphabet[offset]\n";
+      str += "   RETURN plainText\n";
 
       return str;
    }
@@ -78,32 +91,12 @@ public:
    virtual std::string encrypt(const std::string &plainText,
                                const std::string &password)
    {
-      std::string cipherText = beaufort(plainText, password);
-      
-      return cipherText;
-   }
-
-   /**********************************************************
-    * DECRYPT
-    * TODO: ADD description
-    **********************************************************/
-   virtual std::string decrypt(const std::string &cipherText,
-                               const std::string &password)
-   {
-      std::string plainText = beaufort(cipherText, password);
-
-      return plainText;
-   }
-
-   virtual std::string beaufort(const std::string &text,
-                                const std::string &password)
-   {
       std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
-      std::string output = "";
+      std::string cipherText = "";
 
-      for (int i = 0; i < text.length(); i++)
+      for (int i = 0; i < plainText.length(); i++)
       {
-         char a = text[i];
+         char a = plainText[i];
          char b = password[i % password.length()];
          int begin = 0;
          for (int j = 0; j < alphabet.length(); j++)
@@ -122,13 +115,23 @@ public:
             {
                break;
             }
-            offset = offset++;
+            offset++;
          }
-         output += alphabet[offset];
-         
+         cipherText += alphabet[offset];
       }
-      return output;
-      
+      return cipherText;
+   }
+
+   /**********************************************************
+    * DECRYPT
+    * TODO: ADD description
+    **********************************************************/
+   virtual std::string decrypt(const std::string &cipherText,
+                               const std::string &password)
+   {
+      std::string plainText = cipherText;
+      // TODO - Add your code here
+      return plainText;
    }
 };
 
