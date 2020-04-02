@@ -36,14 +36,42 @@ public:
 
       // TODO: please format your pseudocode
       // The encrypt pseudocode
-      str =  "DECLARE alphebet: enum\n\nFunction encrypt\n\tINPUT password, plaintext\n\tINIT cipher : string, key : byte\n\n\tFOR each char in password\n\t\tCOMPUTE key += ascii value of each char\n\t\tCOMPUTE key as key modulus 26\n\n\t\tFOR char in plaintext\n\t\t\tCOMPUTE cipherChar as(char* key) % enumlength\n\t\t\tCOMPUTE cipher += cipherChar\n\t\tENDFOR\nRETURN cipher\n";
+      str =  "Function encrypt\n";
+      str += "   INPUT password, plaintext\n";
+      str += "   INIT alphebet : string\n";
+      str += "   INIT cipher : string, key : int\n\n";
+      str += "   FOR each char in password\n";
+      str += "      COMPUTE key as key + index of password char in alphabet\n";
+      str += "   ENDFOR\n\n";
+      str += "   FOR each char in plaintext\n";
+      str += "      INIT cipherChar\n";
+      str += "      COMPUTE cipherChar as(key * index of plaintext char in alphabet) modulus sizeofalphabet\n";
+      str += "      COMPUTE cipher as cipher + cipherChar\n";
+      str += "   ENDFOR\n\n";
+      str += "RETURN cipher\n\n";
 
+      
       // The decrypt pseudocode
-      str += "Function decrypt/nINPUT password, cipher\n\tINIT plaintext : string, key : byte\n\n\tFOR each char in password\n\t\tCOMPUTE key as key plus ascii value of char\n\tENDFOR\n\tCOMPUTE key as key modulus 26\n\tFOR each char in cipher\n\t\tFOR n = 0 to n = 25\n\t\t\tIF(n multiplied by key) modulus enumlength equals cipher[]\n\t\t\t\tCOMPUTE plaintext plus plainChar\n\t\t\t\tCONTINUE\n\t\tENDFOR\n\tENDFOR\nRETURN plaintext\n";
+      str += "Function decrpyt\n";
+      str += "   INPUT password, plaintext\n";
+      str += "   INIT alphebet : string\n";
+      str += "   INIT cipher : string, key : int\n\n";
+      str += "   FOR each char in password\n";
+      str += "      COMPUTE key as key + index of password char in alphabet\n";
+      str += "   ENDFOR\n\n";
+      str += "   FOR each char in cipherText\n";
+      str += "      FOR n from 0 to sizeofalphabet\n";
+      str += "         IF (n * key) modulus sizeofalphabet == char\n";
+      str += "            COMPUTE plainText as plainText + char\n";
+      str += "         ENDIF\n";
+      str += "      ENDFOR\n";
+      str += "   ENDFOR\n\n";
+      str += "RETURN cipher\n\n";
 
       return str;
    }
 
+   
    /**********************************************************
     * ENCRYPT
     * TODO: ADD description
@@ -52,7 +80,7 @@ public:
                                const std::string & password)
    {
       std::string cipherText = plainText;
-      // TODO - Add your code here
+      
       return cipherText;
    }
 
