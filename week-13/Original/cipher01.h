@@ -42,6 +42,7 @@ public:
       str += "   FOR each char in password\n";
       str += "      COMPUTE key as key + index of password char in alphabet\n";
       str += "   ENDFOR\n\n";
+      str += "   key as key modulus 7\n\n";
       str += "   FOR each char in plaintext\n";
       str += "      INIT index\n";
       str += "      COMPUTE index as(key * index of plaintext char in alphabet) modulus sizeofalphabet\n";
@@ -58,6 +59,7 @@ public:
       str += "   FOR each char in password\n";
       str += "      COMPUTE key as key + index of password char in alphabet\n";
       str += "   ENDFOR\n\n";
+      str += "   key as key modulus 7\n\n";
       str += "   FOR each char in cipherText\n";
       str += "      FOR n from 0 to sizeofalphabet\n";
       str += "         IF (n * key) modulus sizeofalphabet == char of cipherText\n";
@@ -87,6 +89,7 @@ public:
       {
          key += alphabet.find(password[i]);
       }
+      key %= 7;
 
       for (int j = 0; j < plainText.length(); j++)
       {
@@ -104,9 +107,9 @@ public:
    virtual std::string decrypt(const std::string & cipherText, 
                                const std::string & password)
    {
-       std::string plainText = cipherText;
-      // // TODO - Add your code here
-       return plainText;
+      std::string plainText = cipherText;
+      // TODO - Add your code here
+      return plainText;
    }
 };
 
