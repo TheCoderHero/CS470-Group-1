@@ -91,21 +91,24 @@ public:
       std::string cipherText = "";
       int key = 0;
 
-      for (int i = 0; i < password.length(); i++)
+      //for (int i = 0; i < password.length(); i++)
+      if (password.length() > 1)
       {
-         key += password[i];
+         key = password.length();
       }
+      else
+         key = 7;
 
 
       for (int j = 0; j < plainText.length(); j++)
       {
-         if (plainText[j] != ' ')
-         {
+         //if (plainText[j] != ' ')
+         //{
             int index = (key * alphabet.find(plainText[j])) % alphabet.length();
             cipherText += alphabet[index];
-         }
-         else
-            cipherText += " ";
+         //}
+         //else
+         //   cipherText += " ";
       }
 
       return cipherText;
@@ -122,15 +125,17 @@ public:
       std::string plainText = "";
       int key = 0;
 
-      for (int i = 0; i < password.length(); i++)
+      if (password.length() > 1)
       {
-         key += password[i];
+         key = password.length();
       }
+      else
+         key = 7;
 
       for (int j = 0; j < cipherText.length(); j++)
       {
-         if (cipherText[j] != ' ')
-         {
+         //if (cipherText[j] != ' ')
+         //{
             for (int n = 0; n < alphabet.length(); n++)
             {
                int index = (n * key) % alphabet.length();
@@ -140,9 +145,9 @@ public:
                   break;
                }
             }
-         }
-         else 
-            plainText += " ";
+         //}
+         //else 
+        //    plainText += " ";
 
       }
       return plainText;
