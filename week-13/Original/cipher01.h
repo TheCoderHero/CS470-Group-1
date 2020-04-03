@@ -16,6 +16,7 @@ public:
    virtual std::string getEncryptAuth() { return "Jordon Thompson"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
+
    /***********************************************************
     * GET CIPHER CITATION
     * Returns the citation from which we learned about the cipher
@@ -73,6 +74,11 @@ public:
       return str;
    }
 
+   int gcd(int a, int b) {
+      if (b == 0)
+         return a;
+      return gcd(b, a % b);
+   }
    
    /**********************************************************
     * ENCRYPT
@@ -81,20 +87,25 @@ public:
    virtual std::string encrypt(const std::string & plainText, 
                                const std::string & password)
    {
-      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ `!\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
       std::string cipherText = "";
       int key = 0;
 
       for (int i = 0; i < password.length(); i++)
       {
-         key += alphabet.find(password[i]);
+         key += password[i];
       }
-      key %= 7;
+
 
       for (int j = 0; j < plainText.length(); j++)
       {
-         int index = (key * alphabet.find(plainText[j])) % alphabet.length();
-         cipherText += alphabet[index];
+         if (plainText[j] != ' ')
+         {
+            int index = (key * alphabet.find(plainText[j])) % alphabet.length();
+            cipherText += alphabet[index];
+         }
+         else
+            cipherText += " ";
       }
 
       return cipherText;
@@ -107,10 +118,36 @@ public:
    virtual std::string decrypt(const std::string & cipherText, 
                                const std::string & password)
    {
-      std::string plainText = cipherText;
-      // TODO - Add your code here
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ `!\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
+      std::string plainText = "";
+      int key = 0;
+
+      for (int i = 0; i < password.length(); i++)
+      {
+         key += password[i];
+      }
+
+      for (int j = 0; j < cipherText.length(); j++)
+      {
+         if (cipherText[j] != ' ')
+         {
+            for (int n = 0; n < alphabet.length(); n++)
+            {
+               int index = (n * key) % alphabet.length();
+               if (alphabet[index] == cipherText[j])
+               {
+                  plainText += alphabet[n];
+                  break;
+               }
+            }
+         }
+         else 
+            plainText += " ";
+
+      }
       return plainText;
    }
 };
+
 
 #endif // CIPHER01_H

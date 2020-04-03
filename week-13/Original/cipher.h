@@ -7,6 +7,8 @@
 #include <string>
 #include <cstddef>
 #include <iostream>
+#include <math.h>
+#include <algorithm>
 /********************************************************************
  * CLASS CIPHER
  *******************************************************************/
