@@ -26,7 +26,12 @@ public:
      ***********************************************************/
     virtual std::string getCipherCitation()
     {
-        return std::string("citation");
+        return std::string("LearnCryptography.com (2016), \n\
+            \"Learn Cryptography - Vigenère and Gronsfeld Cipher\', \n   retrieved: \n\
+            http://practicalcryptography.com/ciphers/vigenere-gronsfeld-and-autokey-cipher/\n\
+            \n\
+            “Vigenère cipher,” Wikipedia, 07-Mar-2020. [Online].\n\
+            Available: https://en.wikipedia.org/wiki/Vigenère_cipher.\n");
     }
 
     /**********************************************************
