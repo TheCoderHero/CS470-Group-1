@@ -12,8 +12,8 @@
 class Cipher05 : public Cipher
 {
 public:
-   virtual std::string getPseudoAuth()  { return "pseudocode author"; }
-   virtual std::string getCipherName()  { return "cipher name"; }
+   virtual std::string getPseudoAuth()  { return "Aaron Eiche"; }
+   virtual std::string getCipherName()  { return "Vigenère cipher"; }
    virtual std::string getEncryptAuth() { return "encrypt author"; }
    virtual std::string getDecryptAuth() { return "decrypt author"; }
 
@@ -23,7 +23,15 @@ public:
     ***********************************************************/
    virtual std::string getCipherCitation()
    {
-      return std::string("citation");
+
+      // “Crypto,” Practical Cryptography. [Online]. Available: http://practicalcryptography.com/ciphers/vigenere-gronsfeld-and-autokey-cipher/. [Accessed: 04-Apr-2020].
+
+      return std::string("LearnCryptography.com (2016), \n\
+      \"Learn Cryptography - Vigenère and Gronsfeld Cipher\', \n   retrieved: \n\
+      http://practicalcryptography.com/ciphers/vigenere-gronsfeld-and-autokey-cipher/\n\
+      \n\
+      “Vigenère cipher,” Wikipedia, 07-Mar-2020. [Online].\n\
+      Available: https://en.wikipedia.org/wiki/Vigenère_cipher.\n");
    }
    
    /**********************************************************
@@ -33,14 +41,39 @@ public:
    virtual std::string getPseudocode()
    {
       std::string str;
-
-      // TODO: please format your pseudocode
       // The encrypt pseudocode
-      str =  "insert the encryption pseudocode\n";
+      str =  "ENCRYPT PSUEDOCODE:\n\
+      encrypt(message,key)\n\
+        eKey <- extendKey(key)\n\
+        FOR character in message\n\
+            c <- index of character in alphabet\n\
+            k <- index of (the correlated character of the key) in alphabet \n\
+            cryptogram <- cryptogram + index of c+k%26 in alphabet\n\
+        RETURN cryptogram\n\n";
 
       // The decrypt pseudocode
-      str += "insert the decryption pseudocode\n";
+      str += "DECRYPT PSUEDOCODE:\n\
+         decrypt(message,key)\n\
+            eKey <- extendKey(key)\n\
+            FOR character in message\n\
+               c <- index of character in alphabet\n\
+               k <- index of (the correlated character of the eKey) in alphabet\n\
+               IF c is greater than k \n\
+                     c <- c + 26\n\
+               cryptogram <- cryptogram + index of c - k % 26 in alphabet\n\n";
 
+      str += "HELPER FUNCTION:\n\
+      extendKey(key)\n\
+         IF length of KEY is greater than the length of MESSAGE\n\
+            keycount <- length of message divided by length of key\n\
+            WHILE keycount is greater than zero\n\
+                  extendedKey <- extendedKey + key\n\
+                  keycount <- keycount - 1\n\
+            remainder <- length of message modulus (%) length of extendedKey\n\
+            WHILE i is less than or equal to remainder\n\
+                  extendedKey <- extendedKey + character at index i of key\n\
+                  i <- i + 1\n\
+         RETURN extendedKey\n";
       return str;
    }
 
