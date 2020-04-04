@@ -102,7 +102,7 @@ public:
       for (int i = 0; i < cipherText.length(); i++) {
          int text = alphabet.find(cipherText[i]);
          int pass = alphabet.find(password[i % password.length()]);
-         int sum = pass - text;
+         int sum = text - pass;
          if (sum < 0) {
             sum += alphabet.length();
          }
