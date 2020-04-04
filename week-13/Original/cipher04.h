@@ -46,10 +46,74 @@ public:
 
         // TODO: please format your pseudocode
         // The encrypt pseudocode
-        str = "insert the encryption pseudocode\n";
+        str = "Function encrypt\n";
+        str += "   INPUT password, plaintext\n";
+        str += "   INIT cipher : string\n";
+        str += "   INIT column.length : int, row.length / col : int, jIndex: int\n\n";
+        str += "   IF plaintext.length %  column.length\n";
+        str += "      row.length += 1\n";
+        str += "   INIT matrix = NEW : int [row]\n";
+        str += "   FOR INIT iIndex 0 < row\n";
+        str += "      matrix[iIndex] = NEW : int[columns]\n";
+        str += "   FOR INIT iIndex 0 < row\n";
+        str += "   FOR INIT kIndex 0 < column\n";
+        str += "   IF plaintext == \\0\n";
+        str += "      matrix[iIndex][jIndex] = '_'\n";
+        str += "      jIndex++\n";
+        str += "   IF isAlpha(plaintext[kIndex]) OR isAlphe(plaintext[kIndex] == ' ')\n";
+        str += "      matrix[iIndex][jIndex] = plaintext[kIndex]\n";
+        str += "      jIndex++\n";
+        str += "   kIndex++\n\n";
+        str += "   ENDFOR\n\n";
+        str += "   ENDFOR\n\n";
+        str += "   FOR keyMap : map int = iterator = keyMap BEGIN; keyMap END iterator++\n";
+        str += "   jIndex = iterator -> SECOND\n\n";
+        str += "   FOR INIT iIndex < row\n";
+        str += "   IF isAlpha(matrix[iIndex][jIndex]) OR matrix[iIndex][jIndex] == ' ' OR matrix[iIndex][jIndex]== '_')\n";
+        str += "      matrix[iIndex][jIndex] = plaintext[kIndex]\n";
+        str += "   ENDFOR\n\n";
+        str += "   ENDFOR\n\n";
+
+
+
 
         // The decrypt pseudocode
-        str += "insert the decryption pseudocode\n";
+        str += "Function decrpyt\n";
+        str += "   INPUT password, plaintext\n";
+        str += "   INIT column = password.length : int, row = plaintext.length / colomn\n";
+        str += "   INIT cipherM = NEW : int [row]\n";
+        str += "   FOR INIT iIndex 0 < row\n";
+        str += "      cipherM[iIndex] = NEW : int[columns]\n";
+        str += "   ENDFOR\n\n";
+        str += "   FOR INIT kIndex jIndex 0 < column\n";
+        str += "     FOR INIT iIndex 0 < row\n";
+        str += "     cipherM[iIndex][jIndex] = plaintext[kIndex] \n";
+        str += "     ENDFOR\n\n";
+        str += "   ENDFOR\n\n";
+        str += "   INIT index : int\n";
+        str += "   FOR keyMap : map int = iterator = keyMap BEGIN; keyMap END iterator++\n";
+        str += "     iterator -> SECOND = index++\n\n";
+        str += "   ENDFOR\n\n";
+        str += "   INIT deCipher = NEW : int [row]\n";
+        str += "   FOR INIT iIndex 0 < row\n";
+        str += "      deCipher[iIndex] = NEW : int[columns]\n";
+        str += "   ENDFOR\n\n";
+        str += "   INIT kIndex : int\n";
+        str += "   FOR INIT jIndex iIndex; password[iIndex] IN NOT EQUAL = \\0 row\n";
+        str += "    jIndex = keyMap[password[iIndex++]]\n";
+        str += "   FOR INIT kIndex 0 < row\n";
+        str += "    deCipher[iIndex][kIndex] = cipherMat[iIndex][jIndex]\n";
+        str += "   ENDFOR\n";
+        str += "   ENDFOR\n\n";
+        str += "   INIT cipher : string\n";
+        str += "   FOR INIT iIndex < row \n";
+        str += "   FOR INIT jIndex 0 < column\n";
+        str += "    IF deCipher[iIndex][jIndex] != '_'\n";
+        str += "         ciper += deCipher[iIndex][jIndex]\n";
+        str += "   ENDFOR\n";
+        str += "   ENDFOR\n\n";
+        str += "RETURN cipher\n\n";
+
 
         return str;
     }
