@@ -1,7 +1,6 @@
 /********************************************************************
 * Header:
-*    Implement your cipher here. You can view 'example.h' to see the
-*    completed Caesar Cipher example.
+*   Vernam Cipher
 ********************************************************************/
 #ifndef CIPHER03_H
 #define CIPHER03_H
@@ -13,10 +12,10 @@
 class Cipher03 : public Cipher
 {
 public:
-   virtual std::string getPseudoAuth()  { return "pseudocode author"; }
-   virtual std::string getCipherName()  { return "cipher name"; }
-   virtual std::string getEncryptAuth() { return "encrypt author"; }
-   virtual std::string getDecryptAuth() { return "decrypt author"; }
+   virtual std::string getPseudoAuth()  { return "Zach Heiner"; }
+   virtual std::string getCipherName()  { return "Vernam Cipher"; }
+   virtual std::string getEncryptAuth() { return "Aaron Eiche"; }
+   virtual std::string getDecryptAuth() { return "Jordan Thompson"; }
 
    /***********************************************************
     * GET CIPHER CITATION
@@ -24,7 +23,11 @@ public:
     ***********************************************************/
    virtual std::string getCipherCitation()
    {
-      return std::string("citation");
+      std::string s;
+      s += "Geeksforgeeks.com,";
+      s += "\"Vernam Cipher in Cryptography \",\n   retrieved: ";
+      s += "https://www.geeksforgeeks.org/vernam-cipher-in-cryptography/?ref=rp";
+      return s;
    }
    
    /**********************************************************
@@ -37,11 +40,26 @@ public:
 
       // TODO: please format your pseudocode
       // The encrypt pseudocode
-      str =  "insert the encryption pseudocode\n";
+      str =  "encrypt(plainText, password\n";
+      str += "    INIT cipherText\n";
+      str += "    IF sizeOfPassword <= sizeOfPlainText \n";
+      str += "        PROMPT for newPassword\n";
+      str += "    FOR i in all letters in plainText\n";
+      str += "       cipherText[i] = plainText[i] ^ password[j]\n";
+      str += "       j++\n";
+      str += "       IF j >= sizeOFPassword\n";
+      str += "          j = 0\n";
+      str += "    RETURN cipherText\n";
 
       // The decrypt pseudocode
-      str += "insert the decryption pseudocode\n";
-
+      str =  "decrypt(cipherText, password\n";
+      str += "    INIT plainText\n";
+      str += "    FOR i in all letters in cipherText\n";
+      str += "       plainText[i] = cipherText[i] ^ password[j]\n";
+      str += "       j++\n";
+      str += "       IF j >= sizeOFPassword\n";
+      str += "          j = 0\n";
+      str += "    RETURN plainText\n";
       return str;
    }
 
