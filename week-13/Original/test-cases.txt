@@ -1,0 +1,17 @@
+plainText: I have a lovely bunch of coconuts deedlydeedee
+password:  There they are a standing in a row bum bum bum 
+
+plainText: Do you think you can find this text
+password:  I really dont think that you can find it. 
+
+plainText: Defend yourself at all $$$>!
+password:  If NOT C0r0na will get you!
+
+plainText: Hello world!$$$!
+password:  T00 3asy Br0!@
+
+plainText: OK I really $$$ think )( ciphers are cool
+password:  NOT!Today
+
+plainText: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+password: Wonder if all of them will work with a shorter password?
