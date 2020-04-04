@@ -11,7 +11,6 @@
 
 using namespace std;
 // Key for Columnar Transposition 
-string const key = "HACK";
 map<int, int> keyMap;
 string encryptMessage(string msg, string password);
 string decryptMessage(string cipher, string password);
@@ -128,15 +127,6 @@ public:
         std::string cipherText = plainText;
         // TODO - Add your code here+
 
-
-        const string mypass = "HACKE";
-        setPermutationOrder(mypass);
-
-        string cipher = encryptMessage("Josh", mypass);
-        cout << cipher << " <= THE CIPHER" << endl;
-        string decryption = decryptMessage(cipher, mypass);
-        cout << decryption << " <= DECRYPT" << endl;
-
         return cipherText;
     }
 
@@ -149,9 +139,13 @@ public:
     {
         std::string plainText = cipherText;
         // TODO - Add your code here
+        //setPermutationOrder(password);
+
+        //string plainText = decryptMessage(cipherText, password);
         return plainText;
     }
 };
+
 
 
 // Encryption  
@@ -206,6 +200,7 @@ string encryptMessage(string msg, string password)
                 cipher += matrix[i][j];
         }
     }
+
 
     for (int i = 0; i < row; i++)
         delete[] matrix[i];
