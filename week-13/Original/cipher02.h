@@ -45,7 +45,7 @@ public:
       str += "   INIT cipherText\n";
       str += "   FOR i is all characters in plainText\n";
       str += "      INIT a <- plainText[i]\n";
-      str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat
+      str += "      INIT b <- password[i % sizeOfPassword]\n"; // This will allow the key to repeat
       str += "      INIT begin <- 0\n";
       str += "      FOR j is all characters in alpabet\n";
       str += "         IF alphabet[j] = a\n";
@@ -53,7 +53,7 @@ public:
       str += "            BREAK\n";
       str += "      INIT offset <- 0\n";
       str += "      FOR k starts at begin and counts to begin + sizeOfAlphabet\n";
-      str += "         INIT c <- k \% sizeOfAlphabet\n";
+      str += "         INIT c <- k % sizeOfAlphabet\n";
       str += "         IF alphabet[c] = b\n";
       str += "            BREAK\n";
       str += "         offset = offset + 1\n";
@@ -66,7 +66,7 @@ public:
       str += "   INIT plainText\n";
       str += "   FOR i is all letters in cipherText\n";
       str += "      INIT a <- cipherText[i]\n";
-      str += "      INIT b <- password[i \% sizeOfPassword]\n"; // This will allow the key to repeat
+      str += "      INIT b <- password[i % sizeOfPassword]\n"; // This will allow the key to repeat
       str += "      INIT begin <- 0\n";
       str += "      FOR j is all letters in alpabet\n";
       str += "         IF alphabet[j] = a\n";
@@ -74,7 +74,7 @@ public:
       str += "            BREAK\n";
       str += "      INIT offset <- 0\n";
       str += "      FOR k starts at begin and counts to begin + sizeOfAlphabet\n";
-      str += "         INIT c <- k \% sizeOfAlphabet\n";
+      str += "         INIT c <- k % sizeOfAlphabet\n";
       str += "         IF alphabet[c] = b\n";
       str += "            BREAK\n";
       str += "         offset = offset + 1\n";

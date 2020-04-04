@@ -15,10 +15,10 @@ string generateKey(string str, string key);
 class Cipher05 : public Cipher
 {
 public:
-    virtual std::string getPseudoAuth() { return "pseudocode author"; }
-    virtual std::string getCipherName() { return "Vigenère Cipher"; }
+    virtual std::string getPseudoAuth() { return "Aaron Eiche"; }
+    virtual std::string getCipherName() { return "Vigenere Cipher"; }
     virtual std::string getEncryptAuth() { return "Osvaldo Carrillo"; }
-    virtual std::string getDecryptAuth() { return "decrypt author"; }
+    virtual std::string getDecryptAuth() { return "Collin Steel"; }
 
     /***********************************************************
      * GET CIPHER CITATION
@@ -38,11 +38,23 @@ public:
         std::string str;
 
         // TODO: please format your pseudocode
-        // The encrypt pseudocode
-        str = "insert the encryption pseudocode\n";
+        str = "ENCRYPT PSUEDOCODE:\n\
+      encrypt(message,key)\n\
+        FOR character in message\n\
+            c <- index of character in alphabet\n\
+            k <- index of (the correlated character of the key) in alphabet \n\
+            cryptogram <- cryptogram + index of c+k%26 in alphabet\n\
+        RETURN cryptogram\n\n";
 
         // The decrypt pseudocode
-        str += "insert the decryption pseudocode\n";
+        str += "DECRYPT PSUEDOCODE:\n\
+         decrypt(message,key)\n\
+            FOR character in message\n\
+               c <- index of character in alphabet\n\
+               k <- index of (the correlated character of the eKey) in alphabet\n\
+               IF c is greater than k \n\
+                     c <- c + 26\n\
+               cryptogram <- cryptogram + index of c - k % 26 in alphabet\n\n";
 
         return str;
     }
@@ -58,27 +70,19 @@ public:
      * ENCRYPT
      * TODO: ADD description
      **********************************************************/
-    virtual std::string encrypt(const std::string& plainText,
-        const std::string& password)
+    virtual std::string encrypt(const std::string &plainText,
+                                const std::string &password)
     {
-        std::string cipherText;
-        // TODO - Add your code here
+        std::string cipherText = "";
+        std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
 
         //string cipher_text;
-        string keyPassword = generateKey(plainText, password);
-
-        for (int i = 0; i < plainText.size(); i++)
+        for (int i = 0; i < plainText.length(); i++)
         {
-            // converting in range 0-25 
-            int x = (plainText[i] + keyPassword[i]) % 26;
-
-            // convert into alphabets(ASCII) 
-            x += 'A';
-
-            cipherText.push_back(x);
+            int c = alphabet.find(plainText[i]);
+            int k = alphabet.find(password[i % alphabet.length()]);
+            cipherText += alphabet[(c + k) % alphabet.length()];
         }
-
-        savedKey = keyPassword;
         return cipherText;
     }
 
@@ -86,41 +90,22 @@ public:
      * DECRYPT
      * TODO: ADD description
      **********************************************************/
-    virtual std::string decrypt(const std::string& cipherText,
-        const std::string& password)
+    virtual std::string decrypt(const std::string &cipherText,
+                                const std::string &password)
     {
-        std::string plainText;
+        std::string plainText = "";
+        std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
 
-        for (int i = 0; i < cipherText.size(); i++)
+        for (int i = 0; i < cipherText.length(); i++)
         {
-            // converting in range 0-25 
-            int x = (cipherText[i] - savedKey[i] + 26) % 26;
-
-            // convert into alphabets(ASCII) 
-            x += 'A';
-            plainText.push_back(x);
+            int c = alphabet.find(cipherText[i]);
+            int k = alphabet.find(password[i % alphabet.length()]);
+            if (c > k)
+                c += alphabet.length();
+            plainText += alphabet[(c - k) % alphabet.length()];
         }
 
         return plainText;
-    }
-
-
-    // This function generates the key in 
- // a cyclic manner until it's length isi'nt 
- // equal to the length of original text 
-    string generateKey(string str, string key)
-    {
-        int x = str.size();
-
-        for (int i = 0; ; i++)
-        {
-            if (x == i)
-                i = 0;
-            if (key.size() == str.size())
-                break;
-            key.push_back(key[i]);
-        }
-        return key;
     }
 };
 

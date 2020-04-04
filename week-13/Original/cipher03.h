@@ -45,7 +45,7 @@ public:
       str += "   INIT text = FIND in alphabet, plainText at i\n";
       str += "   INIT pass = FIND in alphabet , password at i % length of password\n";
       str += "   INIT sum = pass + text\n";
-      str += "   IF sum > length of alphabet\n";
+      str += "   IF sum >= length of alphabet\n";
       str += "       sum -= length of alphabet\n";
       str += "   cipherText += alphabet at sum";
       str += "   RETURN cipherText\n";
@@ -72,7 +72,19 @@ public:
    virtual std::string encrypt(const std::string & plainText,
                                const std::string & password)
    {      
-      std::string cipherText = plainText;
+      std::string cipherText = "";
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
+      // std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+      for (int i = 0; i < plainText.length(); i++) {
+         int text = alphabet.find(plainText[i]);
+         int pass = alphabet.find(password[i % password.length()]);
+         int sum = text + pass;
+         if (sum >= alphabet.length()) {
+            sum -= alphabet.length();
+         }
+         cipherText += alphabet[sum];
+      }
       return cipherText;
    }
 

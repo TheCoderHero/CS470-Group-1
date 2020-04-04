@@ -11,3 +11,6 @@ std::string cipherText = "";
          }
          cipherText += alphabet[sum];
       }
+
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lor
+      eeeT3#teeeT3#teeeT3#teeeT3#teeeT3#teeeT3#teeeT3#teeeT3#teeeT3#teeeT3#teeeT3#t
