@@ -15,7 +15,7 @@ public:
    virtual std::string getPseudoAuth()  { return "Zach Heiner"; }
    virtual std::string getCipherName()  { return "Vernam Cipher"; }
    virtual std::string getEncryptAuth() { return "Aaron Eiche"; }
-   virtual std::string getDecryptAuth() { return "Jordan Thompson"; }
+   virtual std::string getDecryptAuth() { return "Jordon Thompson"; }
 
    /***********************************************************
     * GET CIPHER CITATION
@@ -69,35 +69,24 @@ public:
     **********************************************************/
    virtual std::string encrypt(const std::string & plainText,
                                const std::string & password)
-   {
-      std::string cipherText = "";
-      // std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
-      std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-      for (int i = 0; i < plainText.length(); i++) {
-         int text = alphabet.find(plainText[i]);
-         int pass = alphabet.find(password[i % password.length()]);
-         int sum = pass + text;
-         if (sum > alphabet.length()) {
-            sum -= alphabet.length();
-         }
-         cipherText += alphabet[sum];
-      }
-      // std::string cipherText = plainText;
-      // // TODO - Add your code here
+   {      
+      std::string cipherText = plainText;
       return cipherText;
    }
 
    /**********************************************************
     * DECRYPT
-    * TODO: ADD description
+    * This function takes cipher text and a password. for each
+    * cipherText and password character it gets the index value
+    * of the char from the alphabet. Then subtract password int
+    * from the cipherText int. check alphabet size and then add
+    * result to plainText. 
     **********************************************************/
    virtual std::string decrypt(const std::string & cipherText,
                                const std::string & password)
    {
       std::string plainText = "";
-      // std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
-      std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
 
       for (int i = 0; i < cipherText.length(); i++) {
          int text = alphabet.find(cipherText[i]);
