@@ -38,28 +38,28 @@ public:
    {
       std::string str;
 
-      // TODO: please format your pseudocode
-      // The encrypt pseudocode
       str =  "encrypt(plainText, password\n";
-      str += "    INIT cipherText\n";
-      str += "    IF sizeOfPassword <= sizeOfPlainText \n";
-      str += "        PROMPT for newPassword\n";
-      str += "    FOR i in all letters in plainText\n";
-      str += "       cipherText[i] = plainText[i] ^ password[j]\n";
-      str += "       j++\n";
-      str += "       IF j >= sizeOFPassword\n";
-      str += "          j = 0\n";
-      str += "    RETURN cipherText\n";
+      str += "   INIT alphabet\n";
+      str += "   INIT cipherText\n";
+      str += "   IF sizeOfPassword <= sizeOfPlainText \n";
+      str += "      PROMPT for newPassword\n";
+      str += "   FOR i in all letters in plainText\n";
+      str += "      cipherText[i] = plainText[i] ^ password[j]\n";
+      str += "      j++\n";
+      str += "      IF j >= sizeOFPassword\n";
+      str += "         j = 0\n";
+      str += "   RETURN cipherText\n";
 
       // The decrypt pseudocode
       str =  "decrypt(cipherText, password\n";
-      str += "    INIT plainText\n";
-      str += "    FOR i in all letters in cipherText\n";
-      str += "       plainText[i] = cipherText[i] ^ password[j]\n";
-      str += "       j++\n";
-      str += "       IF j >= sizeOFPassword\n";
-      str += "          j = 0\n";
-      str += "    RETURN plainText\n";
+      str += "   INIT alphabet\n";
+      str += "   INIT plainText\n";
+      str += "   FOR i in all letters in cipherText\n";
+      str += "      plainText[i] = cipherText[i] ^ password[j]\n";
+      str += "      j++\n";
+      str += "      IF j >= sizeOFPassword\n";
+      str += "         j = 0\n";
+      str += "   RETURN plainText\n";
       return str;
    }
 
@@ -70,8 +70,21 @@ public:
    virtual std::string encrypt(const std::string & plainText,
                                const std::string & password)
    {
-      std::string cipherText = plainText;
-      // TODO - Add your code here
+      std::string cipherText = "";
+      // std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+      for (int i = 0; i < plainText.length(); i++) {
+         int a = alphabet.find(plainText[i]) + 1;
+         int b = alphabet.find(password[i % password.length()]) + 1;
+         int sum = b - a;
+         if (sum > alphabet.length()) {
+            sum -= alphabet.length();
+         }
+         cipherText += alphabet[sum];
+      }
+      // std::string cipherText = plainText;
+      // // TODO - Add your code here
       return cipherText;
    }
 
@@ -82,8 +95,20 @@ public:
    virtual std::string decrypt(const std::string & cipherText,
                                const std::string & password)
    {
-      std::string plainText = cipherText;
-      // TODO - Add your code here
+      std::string plainText = "";
+      // std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
+      std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+      for (int i = 0; i < cipherText.length(); i++) {
+         int a = alphabet.find(cipherText[i]) + 1;
+         int b = alphabet.find(password[i % password.length()]) + 1;
+         int sum = b - a;
+         if (sum < 0) {
+            sum += alphabet.length();
+         }
+         plainText += alphabet[sum];
+      }
+
       return plainText;
    }
 };
