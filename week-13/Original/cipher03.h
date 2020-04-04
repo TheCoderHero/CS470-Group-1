@@ -75,9 +75,9 @@ public:
       std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
       for (int i = 0; i < plainText.length(); i++) {
-         int a = alphabet.find(plainText[i]) + 1;
-         int b = alphabet.find(password[i % password.length()]) + 1;
-         int sum = b - a;
+         int text = alphabet.find(plainText[i]);
+         int pass = alphabet.find(password[i % password.length()]);
+         int sum = pass + text;
          if (sum > alphabet.length()) {
             sum -= alphabet.length();
          }
@@ -100,9 +100,9 @@ public:
       std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
       for (int i = 0; i < cipherText.length(); i++) {
-         int a = alphabet.find(cipherText[i]) + 1;
-         int b = alphabet.find(password[i % password.length()]) + 1;
-         int sum = b - a;
+         int text = alphabet.find(cipherText[i]);
+         int pass = alphabet.find(password[i % password.length()]);
+         int sum = pass - text;
          if (sum < 0) {
             sum += alphabet.length();
          }
