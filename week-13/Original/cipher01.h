@@ -40,10 +40,11 @@ public:
       str += "   INPUT password, plaintext\n";
       str += "   INIT alphebet : string\n";
       str += "   INIT cipher : string, key : int\n\n";
-      str += "   FOR each char in password\n";
-      str += "      COMPUTE key as key + index of password char in alphabet\n";
-      str += "   ENDFOR\n\n";
-      str += "   key as key modulus 7\n\n";
+      str += "   IF password > 1\n";
+      str += "      COMPUTE key as sizeofpassword\n";
+      str += "   ELSE\n";
+      str += "      key as 7\n\n";
+      str += "   ENDif\n\n";
       str += "   FOR each char in plaintext\n";
       str += "      INIT index\n";
       str += "      COMPUTE index as(key * index of plaintext char in alphabet) modulus sizeofalphabet\n";
@@ -57,10 +58,11 @@ public:
       str += "   INPUT password, plaintext\n";
       str += "   INIT alphebet : string\n";
       str += "   INIT cipher : string, key : int\n\n";
-      str += "   FOR each char in password\n";
-      str += "      COMPUTE key as key + index of password char in alphabet\n";
-      str += "   ENDFOR\n\n";
-      str += "   key as key modulus 7\n\n";
+      str += "   IF password > 1\n";
+      str += "      COMPUTE key as sizeofpassword\n";
+      str += "   ELSE\n";
+      str += "      key as 7\n\n";
+      str += "   ENDif\n\n";
       str += "   FOR each char in cipherText\n";
       str += "      FOR n from 0 to sizeofalphabet\n";
       str += "         IF (n * key) modulus sizeofalphabet == char of cipherText\n";
@@ -91,7 +93,6 @@ public:
       std::string cipherText = "";
       int key = 0;
 
-      //for (int i = 0; i < password.length(); i++)
       if (password.length() > 1)
       {
          key = password.length();
@@ -102,15 +103,9 @@ public:
 
       for (int j = 0; j < plainText.length(); j++)
       {
-         //if (plainText[j] != ' ')
-         //{
-            int index = (key * alphabet.find(plainText[j])) % alphabet.length();
-            cipherText += alphabet[index];
-         //}
-         //else
-         //   cipherText += " ";
+         int index = (key * alphabet.find(plainText[j])) % alphabet.length();
+         cipherText += alphabet[index];
       }
-
       return cipherText;
    }
 
@@ -134,20 +129,15 @@ public:
 
       for (int j = 0; j < cipherText.length(); j++)
       {
-         //if (cipherText[j] != ' ')
-         //{
-            for (int n = 0; n < alphabet.length(); n++)
+         for (int n = 0; n < alphabet.length(); n++)
+         {
+            int index = (n * key) % alphabet.length();
+            if (alphabet[index] == cipherText[j])
             {
-               int index = (n * key) % alphabet.length();
-               if (alphabet[index] == cipherText[j])
-               {
-                  plainText += alphabet[n];
-                  break;
-               }
+               plainText += alphabet[n];
+               break;
             }
-         //}
-         //else 
-        //    plainText += " ";
+         }
 
       }
       return plainText;
