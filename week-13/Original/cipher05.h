@@ -74,13 +74,14 @@ public:
                                 const std::string &password)
     {
         std::string cipherText = "";
+        //std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
 
         //string cipher_text;
         for (int i = 0; i < plainText.length(); i++)
         {
             int c = alphabet.find(plainText[i]);
-            int k = alphabet.find(password[i % alphabet.length()]);
+            int k = alphabet.find(password[i % password.length()]);
             cipherText += alphabet[(c + k) % alphabet.length()];
         }
         return cipherText;
@@ -94,13 +95,14 @@ public:
                                 const std::string &password)
     {
         std::string plainText = "";
+        //std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&'()*+-,./:;<=>?@[]\\^_{}0123456789";
 
         for (int i = 0; i < cipherText.length(); i++)
         {
             int c = alphabet.find(cipherText[i]);
-            int k = alphabet.find(password[i % alphabet.length()]);
-            if (c > k)
+            int k = alphabet.find(password[i % password.length()]);
+            if (c < k)
                 c += alphabet.length();
             plainText += alphabet[(c - k) % alphabet.length()];
         }
