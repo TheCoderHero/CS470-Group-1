@@ -41,24 +41,26 @@ public:
       str =  "encrypt(plainText, password\n";
       str += "   INIT alphabet\n";
       str += "   INIT cipherText\n";
-      str += "   IF sizeOfPassword <= sizeOfPlainText \n";
-      str += "      PROMPT for newPassword\n";
       str += "   FOR i in all letters in plainText\n";
-      str += "      cipherText[i] = plainText[i] ^ password[j]\n";
-      str += "      j++\n";
-      str += "      IF j >= sizeOFPassword\n";
-      str += "         j = 0\n";
+      str += "   INIT text = FIND in alphabet, plainText at i\n";
+      str += "   INIT pass = FIND in alphabet , password at i % length of password\n";
+      str += "   INIT sum = pass + text\n";
+      str += "   IF sum > length of alphabet\n";
+      str += "       sum -= length of alphabet\n";
+      str += "   cipherText += alphabet at sum";
       str += "   RETURN cipherText\n";
 
       // The decrypt pseudocode
       str =  "decrypt(cipherText, password\n";
       str += "   INIT alphabet\n";
-      str += "   INIT plainText\n";
+      str += "   INIT cipherText\n";
       str += "   FOR i in all letters in cipherText\n";
-      str += "      plainText[i] = cipherText[i] ^ password[j]\n";
-      str += "      j++\n";
-      str += "      IF j >= sizeOFPassword\n";
-      str += "         j = 0\n";
+      str += "   INIT text = FIND in alphabet, cipherText at i\n";
+      str += "   INIT pass = FIND in alphabet , password at i % length of password\n";
+      str += "   INIT sum = text - pass\n";
+      str += "   IF sum < 0\n";
+      str += "       sum += length of alphabet\n";
+      str += "   plainText += alphabet at sum";
       str += "   RETURN plainText\n";
       return str;
    }
